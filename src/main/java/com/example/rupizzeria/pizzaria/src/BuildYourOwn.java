@@ -1,17 +1,13 @@
 package com.example.rupizzeria.pizzaria.src;
 
-
 import java.util.ArrayList;
-
 
 public class BuildYourOwn extends Pizza{
     public BuildYourOwn(ArrayList<Topping> arr, Crust crust, Size size) {
         super(arr, crust, size);
     }
 
-
     public BuildYourOwn(){}
-
 
     @Override
     public double price() {
@@ -25,8 +21,6 @@ public class BuildYourOwn extends Pizza{
         else if(this.getSize().equals(Size.LARGE)){
             price += 19.99;
         }
-
-
         if(this.getToppings().size() <= 7){
             price += (1.69 * this.getToppings().size());
         }
