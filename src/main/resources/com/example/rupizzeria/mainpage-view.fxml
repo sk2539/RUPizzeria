@@ -1,16 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.rupizzeria.HelloController">
-  <padding>
-    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-  </padding>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-  <Label fx:id="welcomeText"/>
-  <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="388.0" prefWidth="934.0" style="-fx-background-color: ebe7df;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rupizzeria.MainPageController">
+   <children>
+      <Text layoutX="251.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to RU Pizzeria!">
+         <font>
+            <Font name="Kristen ITC" size="30.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="121.0" fitWidth="149.0" layoutX="57.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../../Downloads/7176a1d7881d9bccebe9d75e47e41287_processed.jpg" />
+         </image>
+      </ImageView>
+      <Text layoutX="61.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click the menu button to see the delicious options we offer!" textAlignment="CENTER" wrappingWidth="136.2818450927735">
+         <font>
+            <Font name="Algerian" size="12.0" />
+         </font>
+      </Text>
+      <Button layoutX="647.0" layoutY="32.0" mnemonicParsing="false" text="Menu">
+         <font>
+            <Font name="Algerian" size="15.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="41.0" fitWidth="38.0" layoutX="864.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/shoppingcart.jpg" />
+         </image>
+      </ImageView>
+      <Button layoutX="720.0" layoutY="32.0" mnemonicParsing="false" text="Orders Placed">
+         <font>
+            <Font name="Algerian" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="364.0" layoutY="336.0" mnemonicParsing="false" text="Chicago Pizza" />
+      <Button layoutX="657.0" layoutY="336.0" mnemonicParsing="false" text="New York Pizza" />
+      <ImageView fitHeight="414.0" fitWidth="349.0" layoutX="13.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/papapizzeria_processed.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="221.0" fitWidth="233.0" layoutX="294.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/chicagopizza.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="221.0" fitWidth="224.0" layoutX="595.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/nypizza.jpg" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

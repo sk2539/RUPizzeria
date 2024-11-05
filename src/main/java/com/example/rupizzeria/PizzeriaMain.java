@@ -11,8 +11,8 @@ public class PizzeriaMain extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(PizzeriaMain.class.getResource("mainpage-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+        Scene scene = new Scene(fxmlLoader.load(), 863, 374);
+        stage.setTitle("Main Page");
         stage.setScene(scene);
         stage.show();
     }
