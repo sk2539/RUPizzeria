@@ -54,4 +54,18 @@ public class MainPageController {
         }
     }
 
+    @FXML
+    private void handleOpenMenuView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("menu-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("RU Pizzeria Menu");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
