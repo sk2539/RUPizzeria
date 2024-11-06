@@ -14,11 +14,6 @@
             <Font name="Kristen ITC" size="30.0" />
          </font>
       </Text>
-      <ImageView fitHeight="121.0" fitWidth="149.0" layoutX="57.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../../../../Downloads/7176a1d7881d9bccebe9d75e47e41287_processed.jpg" />
-         </image>
-      </ImageView>
       <Text layoutX="61.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click the menu button to see the delicious options we offer!" textAlignment="CENTER" wrappingWidth="136.2818450927735">
          <font>
             <Font name="Algerian" size="12.0" />
@@ -29,7 +24,7 @@
             <Font name="Algerian" size="15.0" />
          </font>
       </Button>
-      <ImageView fitHeight="41.0" fitWidth="38.0" layoutX="864.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="41.0" fitWidth="38.0" layoutX="864.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#handleOpenCurrentOrdersView">
          <image>
             <Image url="@../../../images/shoppingcart.jpg" />
          </image>
@@ -39,9 +34,9 @@
             <Font name="Algerian" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="364.0" layoutY="336.0" mnemonicParsing="false" text="Chicago Pizza" />
-      <Button layoutX="657.0" layoutY="336.0" mnemonicParsing="false" text="New York Pizza" />
-      <ImageView fitHeight="414.0" fitWidth="349.0" layoutX="13.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <Button layoutX="364.0" layoutY="336.0" mnemonicParsing="false" onAction="#handleOpenChicagoView" text="Chicago Pizza" />
+      <Button layoutX="657.0" layoutY="336.0" mnemonicParsing="false" text="New York Pizza" onAction="#handleOpenNewYorkView"/>
+      <ImageView fitHeight="414.0" fitWidth="349.0" layoutX="13.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/papapizzeria_processed.jpg" />
          </image>
@@ -54,6 +49,11 @@
       <ImageView fitHeight="221.0" fitWidth="224.0" layoutX="595.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/nypizza.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="132.0" fitWidth="161.0" layoutX="53.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/speechbubble_processed.jpg" />
          </image>
       </ImageView>
    </children>

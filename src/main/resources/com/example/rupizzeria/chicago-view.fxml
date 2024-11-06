@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -17,20 +18,23 @@
             <Font name="Kristen ITC" size="30.0" />
          </font>
       </Text>
-      <ChoiceBox layoutX="40.0" layoutY="110.0" prefWidth="150.0" />
-      <RadioButton layoutX="40.0" layoutY="167.0" mnemonicParsing="false" text="Small" />
-      <RadioButton layoutX="106.0" layoutY="167.0" mnemonicParsing="false" text="Medium" />
-      <RadioButton layoutX="190.0" layoutY="167.0" mnemonicParsing="false" text="Large" />
-      <Text layoutX="37.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crust type:" />
-      <TextField layoutX="106.0" layoutY="204.0" />
-      <Text layoutX="39.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available Toppings" />
-      <ListView layoutX="39.0" layoutY="293.0" prefHeight="200.0" prefWidth="200.0" />
-      <Button layoutX="295.0" layoutY="342.0" mnemonicParsing="false" text="&gt;&gt;" />
-      <Button layoutX="295.0" layoutY="407.0" mnemonicParsing="false" text="&lt;&lt;" />
-      <Text layoutX="370.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Toppings" />
-      <ListView layoutX="370.0" layoutY="293.0" prefHeight="200.0" prefWidth="200.0" />
-      <Text layoutX="36.0" layoutY="521.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pizza Price:" />
-      <TextField layoutX="106.0" layoutY="504.0" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="328.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true" />
+      <ChoiceBox layoutX="43.0" layoutY="91.0" prefWidth="150.0" />
+      <RadioButton fx:id="small" layoutX="46.0" layoutY="148.0" mnemonicParsing="false" text="Small">
+         <toggleGroup>
+            <ToggleGroup fx:id="size" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="medium" layoutX="112.0" layoutY="148.0" mnemonicParsing="false" text="Medium" toggleGroup="$size" />
+      <RadioButton fx:id="large" layoutX="195.0" layoutY="148.0" mnemonicParsing="false" text="Large" toggleGroup="$size" />
+      <Text layoutX="43.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crust type:" />
+      <TextField layoutX="112.0" layoutY="201.0" />
+      <Text layoutX="45.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available Toppings" />
+      <ListView layoutX="45.0" layoutY="283.0" prefHeight="200.0" prefWidth="200.0" />
+      <Button layoutX="301.0" layoutY="332.0" mnemonicParsing="false" text="&gt;&gt;" />
+      <Button layoutX="301.0" layoutY="397.0" mnemonicParsing="false" text="&lt;&lt;" />
+      <Text layoutX="376.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Toppings" />
+      <ListView layoutX="376.0" layoutY="283.0" prefHeight="200.0" prefWidth="200.0" />
+      <Text layoutX="42.0" layoutY="511.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pizza Price:" />
+      <TextField layoutX="112.0" layoutY="494.0" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="334.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

@@ -11,12 +11,11 @@ public class PizzeriaMain extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(PizzeriaMain.class.getResource("mainpage-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 863, 374);
+        Scene scene = new Scene(fxmlLoader.load(), 934, 388);
         stage.setTitle("Main Page");
         stage.setScene(scene);
         stage.show();
     }
-
     public static void main(String[] args) {
         launch();
     }

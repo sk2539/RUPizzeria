@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.rupizzeria.NewyorkView"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="565.0" prefWidth="618.0" style="-fx-background-color: ebe7df;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rupizzeria.NewYorkController">
+   <children>
+      <Text layoutX="153.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New York Style Pizza">
+         <font>
+            <Font name="Kristen ITC" size="30.0" />
+         </font>
+      </Text>
+      <ChoiceBox layoutX="45.0" layoutY="84.0" prefWidth="150.0" />
+      <RadioButton fx:id="small" layoutX="46.0" layoutY="142.0" mnemonicParsing="false" text="Small">
+         <toggleGroup>
+            <ToggleGroup fx:id="size" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="medium" layoutX="112.0" layoutY="142.0" mnemonicParsing="false" text="Medium" toggleGroup="$size" />
+      <RadioButton fx:id="large" layoutX="195.0" layoutY="142.0" mnemonicParsing="false" text="Large" toggleGroup="$size" />
+      <Text layoutX="43.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crust type:" />
+      <TextField layoutX="112.0" layoutY="195.0" />
+      <Text layoutX="45.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available Toppings" />
+      <ListView layoutX="45.0" layoutY="277.0" prefHeight="200.0" prefWidth="200.0" />
+      <Button layoutX="301.0" layoutY="326.0" mnemonicParsing="false" text="&gt;&gt;" />
+      <Button layoutX="301.0" layoutY="391.0" mnemonicParsing="false" text="&lt;&lt;" />
+      <Text layoutX="376.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Toppings" />
+      <ListView layoutX="376.0" layoutY="277.0" prefHeight="200.0" prefWidth="200.0" />
+      <Text layoutX="42.0" layoutY="505.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pizza Price:" />
+      <TextField layoutX="112.0" layoutY="488.0" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="334.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
 </AnchorPane>
