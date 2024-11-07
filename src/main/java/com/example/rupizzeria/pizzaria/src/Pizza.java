@@ -27,4 +27,16 @@ public abstract class Pizza {
     public Size getSize(){
         return size;
     }
+
+    public void setToppings(ArrayList<Topping> toppings){
+        this.toppings = toppings;
+    }
+
+    public void setSize(Size size){
+        this.size = size;
+    }
+
+    public void setCrust(Crust crust){
+        this.crust = crust;
+    }
 }
