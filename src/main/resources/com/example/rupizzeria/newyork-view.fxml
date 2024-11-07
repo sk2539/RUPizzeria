@@ -26,7 +26,7 @@
       <RadioButton fx:id="medium" layoutX="112.0" layoutY="142.0" mnemonicParsing="false" text="Medium" toggleGroup="$size" />
       <RadioButton fx:id="large" layoutX="195.0" layoutY="142.0" mnemonicParsing="false" text="Large" toggleGroup="$size" />
       <Text layoutX="43.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crust type:" />
-      <TextField layoutX="112.0" layoutY="195.0" />
+      <TextField fx:id="crustTypeField" layoutX="112.0" layoutY="195.0" />
       <Text layoutX="45.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available Toppings" />
       <ListView layoutX="45.0" layoutY="277.0" prefHeight="200.0" prefWidth="200.0" />
       <Button layoutX="301.0" layoutY="326.0" mnemonicParsing="false" text="&gt;&gt;" />
@@ -36,6 +36,6 @@
       <Text layoutX="42.0" layoutY="505.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pizza Price:" />
       <TextField layoutX="112.0" layoutY="488.0" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="334.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="434.0" layoutY="487.0" mnemonicParsing="false" text="Add to order" />
+      <Button layoutX="434.0" layoutY="487.0" mnemonicParsing="false" text="Add to order" onAction = "#onAddToOrderClick"/>
    </children>
 </AnchorPane>

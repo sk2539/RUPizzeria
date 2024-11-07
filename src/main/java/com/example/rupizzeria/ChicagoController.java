@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ChicagoController implements Initializable {
-
     @FXML
     private RadioButton large;
 
@@ -36,45 +35,86 @@ public class ChicagoController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         chooseType.getItems().addAll(pizzaTypes);
         crustTypeField.setEditable(false);
+        chooseType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            Pizza selectedPizza = makePizza();
+            if (selectedPizza != null) {
+                updateCrustType();
+            }
+        });
     }
 
     @FXML
     public Pizza makePizza() {
         Pizza newPizza = null;
         ChicagoPizza cpizza = new ChicagoPizza();
+        if (chooseType.getValue()!=null) {
+            updateCrustType();
+        }
         if (getSizeFromToggleGroup()!=null) {
             if (chooseType.getValue().equals("Deluxe")) {
                 newPizza = new Deluxe();
                 newPizza.setSize(getSizeFromToggleGroup());
                 newPizza = cpizza.createDeluxe();
-                crustTypeField.setText(newPizza.getCrust().toString());
                 return newPizza;
             }
             if (chooseType.getValue().equals("BBQ Chicken")) {
                 newPizza = new BBQChicken();
                 newPizza.setSize(getSizeFromToggleGroup());
-                crustTypeField.setText(newPizza.getCrust().toString());
-                return cpizza.createBBQChicken();
+                newPizza = cpizza.createBBQChicken();
+                return newPizza;
             }
             if (chooseType.getValue().equals("Meatzza")) {
                 newPizza = new Meatzza();
                 newPizza.setSize(getSizeFromToggleGroup());
-                crustTypeField.setText(newPizza.getCrust().toString());
-                return cpizza.createMeatzza();
+                newPizza = cpizza.createMeatzza();
+                return newPizza;
             }
             if (chooseType.getValue().equals("Build your own")) {
                 newPizza = new BuildYourOwn();
                 newPizza.setSize(getSizeFromToggleGroup());
-                crustTypeField.setText(newPizza.getCrust().toString());
-                return cpizza.createBuildYourOwn();
+                newPizza = cpizza.createBuildYourOwn();
+                return newPizza;
             }
         }
         return newPizza;
     }
 
     @FXML
-    public void onAddToOrderClick() {
+    private void updateCrustType() {
+        Pizza newPizza = null;
+        ChicagoPizza cpizza = new ChicagoPizza();
+        if (chooseType.getValue().equals("Deluxe")) {
+            newPizza = new Deluxe();
+            newPizza = cpizza.createDeluxe();
+            crustTypeField.setText(newPizza.getCrust().toString());
+        }
+        if (chooseType.getValue().equals("BBQ Chicken")) {
+            newPizza = new BBQChicken();
+            newPizza = cpizza.createBBQChicken();
+            crustTypeField.setText(newPizza.getCrust().toString());
+        }
+        if (chooseType.getValue().equals("Meatzza")) {
+            newPizza = new Meatzza();
+            newPizza = cpizza.createMeatzza();
+            crustTypeField.setText(newPizza.getCrust().toString());
+        }
+        if (chooseType.getValue().equals("Build your own")) {
+            newPizza = new BuildYourOwn();
+            newPizza = cpizza.createBuildYourOwn();
+            crustTypeField.setText(newPizza.getCrust().toString());
+        }
+    }
+
+    @FXML
+    private void onAddToOrderClick() {
+        if (getSizeFromToggleGroup()==null) {
+            showAlert("Missing Argument", "Please select a size.");
+        }
         pizzaArrayList.add(makePizza());
+    }
+
+    public ArrayList<Pizza> getChicagoPizzas() {
+        return pizzaArrayList;
     }
 
     @FXML
@@ -91,7 +131,6 @@ public class ChicagoController implements Initializable {
                 return Size.LARGE;
             }
         }
-        showAlert("Missing Argument", "Please select a size.");
         return null;
     }
 
