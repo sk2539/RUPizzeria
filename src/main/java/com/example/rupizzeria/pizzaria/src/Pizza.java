@@ -39,4 +39,22 @@ public abstract class Pizza {
     public void setCrust(Crust crust){
         this.crust = crust;
     }
+
+    @Override
+    public boolean equals(Object obj){
+        if(obj instanceof Pizza){
+            Pizza pizza = (Pizza) obj;
+            boolean isEqual = true;
+            if(this.toppings.size() != pizza.toppings.size()){
+                return false;
+            }
+            for(int i = 0; i<this.toppings.size(); i++){
+                if(this.toppings.get(i).equals(pizza.toppings.get(i))){
+                    isEqual = false;
+                }
+            }
+            return isEqual && this.size.equals(pizza.size) && this.crust.equals(pizza.crust);
+        }
+        return false;
+    }
 }

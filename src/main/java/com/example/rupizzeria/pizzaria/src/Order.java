@@ -15,7 +15,15 @@ public class Order {
         pizzas.add(pizza);
     }
 
-    public void removePizza(int i){
+    public void removeithPizza(int i){
         pizzas.remove(i);
+    }
+
+    public void removePizza(Pizza pizza){
+        for(int i = 0; i<pizzas.size(); i++){
+            if(pizzas.get(i).equals(pizza)){
+                pizzas.remove(i);
+            }
+        }
     }
 }
