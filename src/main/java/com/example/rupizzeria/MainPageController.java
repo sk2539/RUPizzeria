@@ -68,4 +68,18 @@ public class MainPageController {
         }
     }
 
+    @FXML
+    private void handleOpenOrdersPlacedView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ordersplaced-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Your Orders Placed");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
