@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class CurrentOrdersController implements Initializable {
-    // Instances of other controllers
     ChicagoController c = new ChicagoController();
     NewYorkController ny = new NewYorkController();
     int orderNumber;
@@ -22,29 +21,30 @@ public class CurrentOrdersController implements Initializable {
     private TextField orderNumberField;
 
     @FXML
-    private ListView<Pizza> pizzaListView;
+    private ListView<String> pizzaListView;
 
-    private ObservableList<Pizza> pizzaList;
+    private ObservableList<String> pizzaList;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         orderNumberField.setEditable(false);
         pizzaList = FXCollections.observableArrayList();
-        pizzaListView.setItems(pizzaList);
         addAllPizzas();
+        pizzaListView.setItems(pizzaList);
     }
 
-    // Method to add pizzas from Chicago and New York controllers
     private void addAllPizzas() {
-        // Get pizzas from Chicago controller
-        ArrayList<Pizza> chicagoPizzas = c.getChicagoPizzas();
+        ArrayList<Pizza> chicagoPizzas = ChicagoController.getChicagoPizzas();
         for (Pizza pizza : chicagoPizzas) {
-            pizzaList.add(pizza);  // Add each pizza to the ObservableList
+            pizzaList.add("Chicago Pizza "+ pizza.toString());
+            pizzaListView.setItems(pizzaList);
+            System.out.println("Chicago Pizza "+ pizza.toString());
         }
-
-        // Get pizzas from New York controller
-        ArrayList<Pizza> nyPizzas = ny.getNYPizzas();
+        ArrayList<Pizza> nyPizzas = NewYorkController.getNYPizzas();
         for (Pizza pizza : nyPizzas) {
-            pizzaList.add(pizza);  // Add each pizza to the ObservableList
+            pizzaList.add("New York Pizza " + pizza.toString());
+            pizzaListView.setItems(pizzaList);
+            System.out.println(("New York Pizza " + pizza.toString()));
         }
     }
 

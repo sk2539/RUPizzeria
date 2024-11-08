@@ -21,7 +21,7 @@
       <TextField layoutX="81.0" layoutY="419.0" prefHeight="25.0" prefWidth="78.0" />
       <Text layoutX="435.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" text="order total $" />
       <TextField layoutX="507.0" layoutY="418.0" prefHeight="25.0" prefWidth="78.0" />
-      <Button layoutX="468.0" layoutY="473.0" mnemonicParsing="false" text="Place Order" onAction = "#onPlaceOrderClick"/>
+      <Button layoutX="468.0" layoutY="473.0" mnemonicParsing="false" onAction="#onPlaceOrderClick" text="Place Order" />
       <Text layoutX="225.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sales Tax $" />
       <TextField layoutX="292.0" layoutY="419.0" prefHeight="25.0" prefWidth="78.0" />
       <Button layoutX="54.0" layoutY="473.0" mnemonicParsing="false" text="Remove Pizza" />

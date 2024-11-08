@@ -57,4 +57,17 @@ public abstract class Pizza {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        String toppingsString = getToppings().isEmpty()
+                ? "No toppings"
+                : String.join(", ", getToppings().stream()
+                .map(Topping::toString)
+                .toArray(String[]::new));
+        return String.format("[Size=%s, Crust=%s, Toppings=%s]",
+                getSize().toString(),
+                getCrust(),
+                toppingsString);
+    }
 }

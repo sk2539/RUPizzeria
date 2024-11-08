@@ -28,7 +28,7 @@ public class NewYorkController implements Initializable {
     @FXML
     private TextField crustTypeField;
 
-    ArrayList<Pizza> pizzaArrayList = new ArrayList<>();
+    private static ArrayList<Pizza> pizzaArrayList = new ArrayList<>();
 
     private final String[] pizzaTypes = {"Deluxe", "BBQ Chicken", "Meatzza", "Build your own"};
     @Override
@@ -52,27 +52,23 @@ public class NewYorkController implements Initializable {
         }
         if (getSizeFromToggleGroup()!=null) {
             if (chooseType.getValue().equals("Deluxe")) {
-                newPizza = new Deluxe();
-                newPizza.setSize(getSizeFromToggleGroup());
                 newPizza = nypizza.createDeluxe();
+                newPizza.setSize(getSizeFromToggleGroup());
                 return newPizza;
             }
             if (chooseType.getValue().equals("BBQ Chicken")) {
-                newPizza = new BBQChicken();
-                newPizza.setSize(getSizeFromToggleGroup());
                 newPizza = nypizza.createBBQChicken();
+                newPizza.setSize(getSizeFromToggleGroup());
                 return newPizza;
             }
             if (chooseType.getValue().equals("Meatzza")) {
-                newPizza = new Meatzza();
-                newPizza.setSize(getSizeFromToggleGroup());
                 newPizza = nypizza.createMeatzza();
+                newPizza.setSize(getSizeFromToggleGroup());
                 return newPizza;
             }
             if (chooseType.getValue().equals("Build your own")) {
-                newPizza = new BuildYourOwn();
-                newPizza.setSize(getSizeFromToggleGroup());
                 newPizza = nypizza.createBuildYourOwn();
+                newPizza.setSize(getSizeFromToggleGroup());
                 return newPizza;
             }
         }
@@ -84,22 +80,18 @@ public class NewYorkController implements Initializable {
         Pizza newPizza = null;
         NYPizza nypizza = new NYPizza();
         if (chooseType.getValue().equals("Deluxe")) {
-            newPizza = new Deluxe();
             newPizza = nypizza.createDeluxe();
             crustTypeField.setText(newPizza.getCrust().toString());
         }
         if (chooseType.getValue().equals("BBQ Chicken")) {
-            newPizza = new BBQChicken();
             newPizza = nypizza.createBBQChicken();
             crustTypeField.setText(newPizza.getCrust().toString());
         }
         if (chooseType.getValue().equals("Meatzza")) {
-            newPizza = new Meatzza();
             newPizza = nypizza.createMeatzza();
             crustTypeField.setText(newPizza.getCrust().toString());
         }
         if (chooseType.getValue().equals("Build your own")) {
-            newPizza = new BuildYourOwn();
             newPizza = nypizza.createBuildYourOwn();
             crustTypeField.setText(newPizza.getCrust().toString());
         }
@@ -113,7 +105,7 @@ public class NewYorkController implements Initializable {
         pizzaArrayList.add(makePizza());
     }
 
-    public ArrayList<Pizza> getNYPizzas() {
+    public static ArrayList<Pizza> getNYPizzas() {
         return pizzaArrayList;
     }
 

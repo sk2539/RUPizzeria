@@ -28,7 +28,7 @@ public class ChicagoController implements Initializable {
     @FXML
     private TextField crustTypeField;
 
-    ArrayList<Pizza> pizzaArrayList = new ArrayList<>();
+    private static ArrayList<Pizza> pizzaArrayList = new ArrayList<>();
     
     private final String[] pizzaTypes = {"Deluxe", "BBQ Chicken", "Meatzza", "Build your own"};
     @Override
@@ -52,27 +52,23 @@ public class ChicagoController implements Initializable {
         }
         if (getSizeFromToggleGroup()!=null) {
             if (chooseType.getValue().equals("Deluxe")) {
-                newPizza = new Deluxe();
-                newPizza.setSize(getSizeFromToggleGroup());
                 newPizza = cpizza.createDeluxe();
+                newPizza.setSize(getSizeFromToggleGroup());
                 return newPizza;
             }
             if (chooseType.getValue().equals("BBQ Chicken")) {
-                newPizza = new BBQChicken();
-                newPizza.setSize(getSizeFromToggleGroup());
                 newPizza = cpizza.createBBQChicken();
+                newPizza.setSize(getSizeFromToggleGroup());
                 return newPizza;
             }
             if (chooseType.getValue().equals("Meatzza")) {
-                newPizza = new Meatzza();
-                newPizza.setSize(getSizeFromToggleGroup());
                 newPizza = cpizza.createMeatzza();
+                newPizza.setSize(getSizeFromToggleGroup());
                 return newPizza;
             }
             if (chooseType.getValue().equals("Build your own")) {
-                newPizza = new BuildYourOwn();
-                newPizza.setSize(getSizeFromToggleGroup());
                 newPizza = cpizza.createBuildYourOwn();
+                newPizza.setSize(getSizeFromToggleGroup());
                 return newPizza;
             }
         }
@@ -84,22 +80,18 @@ public class ChicagoController implements Initializable {
         Pizza newPizza = null;
         ChicagoPizza cpizza = new ChicagoPizza();
         if (chooseType.getValue().equals("Deluxe")) {
-            newPizza = new Deluxe();
             newPizza = cpizza.createDeluxe();
             crustTypeField.setText(newPizza.getCrust().toString());
         }
         if (chooseType.getValue().equals("BBQ Chicken")) {
-            newPizza = new BBQChicken();
             newPizza = cpizza.createBBQChicken();
             crustTypeField.setText(newPizza.getCrust().toString());
         }
         if (chooseType.getValue().equals("Meatzza")) {
-            newPizza = new Meatzza();
             newPizza = cpizza.createMeatzza();
             crustTypeField.setText(newPizza.getCrust().toString());
         }
         if (chooseType.getValue().equals("Build your own")) {
-            newPizza = new BuildYourOwn();
             newPizza = cpizza.createBuildYourOwn();
             crustTypeField.setText(newPizza.getCrust().toString());
         }
@@ -113,7 +105,7 @@ public class ChicagoController implements Initializable {
         pizzaArrayList.add(makePizza());
     }
 
-    public ArrayList<Pizza> getChicagoPizzas() {
+    public static ArrayList<Pizza> getChicagoPizzas() {
         return pizzaArrayList;
     }
 
