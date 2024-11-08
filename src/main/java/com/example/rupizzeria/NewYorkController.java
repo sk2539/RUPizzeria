@@ -1,6 +1,8 @@
 package com.example.rupizzeria;
 
 import com.example.rupizzeria.pizzaria.src.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -31,74 +33,109 @@ public class NewYorkController implements Initializable {
     private static ArrayList<Pizza> pizzaArrayList = new ArrayList<>();
 
     private final String[] pizzaTypes = {"Deluxe", "BBQ Chicken", "Meatzza", "Build your own"};
+
+    private ObservableList<String> availableToppingsList;
+
+    private ObservableList<String> selectedToppingsList;
+
+    private Pizza selectedPizza;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         chooseType.getItems().addAll(pizzaTypes);
         crustTypeField.setEditable(false);
+        availableToppingsList = FXCollections.observableArrayList();
+        selectedToppingsList = FXCollections.observableArrayList();
+        availableToppings.setItems(availableToppingsList);
+        selectedToppings.setItems(selectedToppingsList);
+        setAvailableToppings();
+        availableToppings.setItems(availableToppingsList);
         chooseType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            Pizza selectedPizza = makePizza();
+            selectedPizza = makePizza();
             if (selectedPizza != null) {
                 updateCrustType();
+                setSelectedToppings();
             }
         });
     }
 
+    private void setAvailableToppings() {
+        for (Topping topping : Topping.values()) {
+            availableToppingsList.add(topping.toString());
+        }
+    }
+
+    private void setSelectedToppings() {
+        selectedToppingsList.clear();
+        if (selectedPizza != null) {
+            for (Topping topping : selectedPizza.getToppings()) {
+                selectedToppingsList.add(topping.toString());
+            }
+        }
+    }
+
     @FXML
-    public Pizza makePizza() {
+    private Pizza makePizza() {
         Pizza newPizza = null;
         NYPizza nypizza = new NYPizza();
         if (chooseType.getValue()!=null) {
             updateCrustType();
         }
-        if (getSizeFromToggleGroup()!=null) {
-            if (chooseType.getValue().equals("Deluxe")) {
-                newPizza = nypizza.createDeluxe();
-                newPizza.setSize(getSizeFromToggleGroup());
-                return newPizza;
-            }
-            if (chooseType.getValue().equals("BBQ Chicken")) {
-                newPizza = nypizza.createBBQChicken();
-                newPizza.setSize(getSizeFromToggleGroup());
-                return newPizza;
-            }
-            if (chooseType.getValue().equals("Meatzza")) {
-                newPizza = nypizza.createMeatzza();
-                newPizza.setSize(getSizeFromToggleGroup());
-                return newPizza;
-            }
-            if (chooseType.getValue().equals("Build your own")) {
-                newPizza = nypizza.createBuildYourOwn();
-                newPizza.setSize(getSizeFromToggleGroup());
-                return newPizza;
-            }
+
+        if (chooseType.getValue().equals("Deluxe")) {
+            newPizza = nypizza.createDeluxe();
+            newPizza.setSize(getSizeFromToggleGroup());
+            return newPizza;
         }
+        if (chooseType.getValue().equals("BBQ Chicken")) {
+            newPizza = nypizza.createBBQChicken();
+            newPizza.setSize(getSizeFromToggleGroup());
+            return newPizza;
+        }
+        if (chooseType.getValue().equals("Meatzza")) {
+            newPizza = nypizza.createMeatzza();
+            newPizza.setSize(getSizeFromToggleGroup());
+            return newPizza;
+        }
+        if (chooseType.getValue().equals("Build your own")) {
+            newPizza = nypizza.createBuildYourOwn();
+            newPizza.setSize(getSizeFromToggleGroup());
+            return newPizza;
+        }
+
         return newPizza;
     }
 
     @FXML
+    private ListView<String> availableToppings;
+
+    @FXML
+    private ListView<String> selectedToppings;
+
+    @FXML
     private void updateCrustType() {
         Pizza newPizza = null;
-        NYPizza nypizza = new NYPizza();
+        ChicagoPizza cpizza = new ChicagoPizza();
         if (chooseType.getValue().equals("Deluxe")) {
-            newPizza = nypizza.createDeluxe();
+            newPizza = cpizza.createDeluxe();
             crustTypeField.setText(newPizza.getCrust().toString());
         }
         if (chooseType.getValue().equals("BBQ Chicken")) {
-            newPizza = nypizza.createBBQChicken();
+            newPizza = cpizza.createBBQChicken();
             crustTypeField.setText(newPizza.getCrust().toString());
         }
         if (chooseType.getValue().equals("Meatzza")) {
-            newPizza = nypizza.createMeatzza();
+            newPizza = cpizza.createMeatzza();
             crustTypeField.setText(newPizza.getCrust().toString());
         }
         if (chooseType.getValue().equals("Build your own")) {
-            newPizza = nypizza.createBuildYourOwn();
+            newPizza = cpizza.createBuildYourOwn();
             crustTypeField.setText(newPizza.getCrust().toString());
         }
     }
 
     @FXML
-    public void onAddToOrderClick() {
+    private void onAddToOrderClick() {
         if (getSizeFromToggleGroup()==null) {
             showAlert("Missing Argument", "Please select a size.");
         }

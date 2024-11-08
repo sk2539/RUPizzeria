@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class CurrentOrdersController implements Initializable {
-    ChicagoController c = new ChicagoController();
-    NewYorkController ny = new NewYorkController();
     int orderNumber;
 
     @FXML
@@ -36,15 +34,17 @@ public class CurrentOrdersController implements Initializable {
     private void addAllPizzas() {
         ArrayList<Pizza> chicagoPizzas = ChicagoController.getChicagoPizzas();
         for (Pizza pizza : chicagoPizzas) {
-            pizzaList.add("Chicago Pizza "+ pizza.toString());
-            pizzaListView.setItems(pizzaList);
-            System.out.println("Chicago Pizza "+ pizza.toString());
+            if (pizza.getSize()!=null) {
+                pizzaList.add("Chicago Pizza "+ pizza.toString());
+                pizzaListView.setItems(pizzaList);
+            }
         }
         ArrayList<Pizza> nyPizzas = NewYorkController.getNYPizzas();
         for (Pizza pizza : nyPizzas) {
-            pizzaList.add("New York Pizza " + pizza.toString());
-            pizzaListView.setItems(pizzaList);
-            System.out.println(("New York Pizza " + pizza.toString()));
+            if (pizza.getSize()!=null) {
+                pizzaList.add("New York Pizza " + pizza.toString());
+                pizzaListView.setItems(pizzaList);
+            }
         }
     }
 

@@ -28,14 +28,14 @@
       <Text layoutX="43.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crust type:" />
       <TextField fx:id="crustTypeField" layoutX="112.0" layoutY="195.0" />
       <Text layoutX="45.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available Toppings" />
-      <ListView layoutX="45.0" layoutY="277.0" prefHeight="200.0" prefWidth="200.0" />
+      <ListView fx:id="availableToppings" layoutX="45.0" layoutY="277.0" prefHeight="200.0" prefWidth="200.0" />
       <Button layoutX="301.0" layoutY="326.0" mnemonicParsing="false" text="&gt;&gt;" />
       <Button layoutX="301.0" layoutY="391.0" mnemonicParsing="false" text="&lt;&lt;" />
       <Text layoutX="376.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Toppings" />
-      <ListView layoutX="376.0" layoutY="277.0" prefHeight="200.0" prefWidth="200.0" />
+      <ListView fx:id="selectedToppings" layoutX="376.0" layoutY="277.0" prefHeight="200.0" prefWidth="200.0" />
       <Text layoutX="42.0" layoutY="505.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pizza Price:" />
       <TextField layoutX="112.0" layoutY="488.0" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="334.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="434.0" layoutY="487.0" mnemonicParsing="false" text="Add to order" onAction = "#onAddToOrderClick"/>
+      <Button layoutX="434.0" layoutY="487.0" mnemonicParsing="false" onAction="#onAddToOrderClick" text="Add to order" />
    </children>
 </AnchorPane>

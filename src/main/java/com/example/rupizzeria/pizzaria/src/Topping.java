@@ -1,5 +1,8 @@
 package com.example.rupizzeria.pizzaria.src;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public enum Topping {
     SAUSAGE,
     PEPPERONI,
@@ -14,4 +17,9 @@ public enum Topping {
     BROCCOLI,
     SPINACH,
     JALAPENO;
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }
