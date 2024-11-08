@@ -42,6 +42,7 @@ public class NewYorkController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        initialize2();
         chooseType.getItems().addAll(pizzaTypes);
         crustTypeField.setEditable(false);
         availableToppingsList = FXCollections.observableArrayList();
@@ -57,6 +58,39 @@ public class NewYorkController implements Initializable {
                 setSelectedToppings();
             }
         });
+    }
+
+    @FXML
+    private Button addToOrderButton;
+
+    @FXML
+    private Button leftArrowButton;
+
+    @FXML
+    private Button rightArrowButton;
+
+    private void initialize2() {
+        addToOrderButton.setStyle("-fx-background-color: #f4f4f4;");
+        addToOrderButton.setOnMouseEntered(event ->
+                addToOrderButton.setStyle("-fx-background-color: #d6b0b0;")
+        );
+        addToOrderButton.setOnMouseExited(event ->
+                addToOrderButton.setStyle("-fx-background-color: #f4f4f4;")
+        );
+        leftArrowButton.setStyle("-fx-background-color: #f4f4f4;");
+        leftArrowButton.setOnMouseEntered(event ->
+                leftArrowButton.setStyle("-fx-background-color: #d6b0b0;")
+        );
+        leftArrowButton.setOnMouseExited(event ->
+                leftArrowButton.setStyle("-fx-background-color: #f4f4f4;")
+        );
+        rightArrowButton.setStyle("-fx-background-color: #f4f4f4;");
+        rightArrowButton.setOnMouseEntered(event ->
+                rightArrowButton.setStyle("-fx-background-color: #d6b0b0;")
+        );
+        rightArrowButton.setOnMouseExited(event ->
+                rightArrowButton.setStyle("-fx-background-color: #f4f4f4;")
+        );
     }
 
     private void setAvailableToppings() {

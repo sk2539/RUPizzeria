@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
@@ -25,10 +26,44 @@ public class CurrentOrdersController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        initialize2();
         orderNumberField.setEditable(false);
         pizzaList = FXCollections.observableArrayList();
         addAllPizzas();
         pizzaListView.setItems(pizzaList);
+    }
+
+    @FXML
+    private Button clearOrderButton;
+
+    @FXML
+    private Button placeOrderButton;
+
+    @FXML
+    private Button removePizzaButton;
+
+    private void initialize2() {
+        clearOrderButton.setStyle("-fx-background-color: #f4f4f4;");
+        clearOrderButton.setOnMouseEntered(event ->
+                clearOrderButton.setStyle("-fx-background-color: #d6b0b0;")
+        );
+        clearOrderButton.setOnMouseExited(event ->
+                clearOrderButton.setStyle("-fx-background-color: #f4f4f4;")
+        );
+        placeOrderButton.setStyle("-fx-background-color: #f4f4f4;");
+        placeOrderButton.setOnMouseEntered(event ->
+                placeOrderButton.setStyle("-fx-background-color: #d6b0b0;")
+        );
+        placeOrderButton.setOnMouseExited(event ->
+                placeOrderButton.setStyle("-fx-background-color: #f4f4f4;")
+        );
+        removePizzaButton.setStyle("-fx-background-color: #f4f4f4;");
+        removePizzaButton.setOnMouseEntered(event ->
+                removePizzaButton.setStyle("-fx-background-color: #d6b0b0;")
+        );
+        removePizzaButton.setOnMouseExited(event ->
+                removePizzaButton.setStyle("-fx-background-color: #f4f4f4;")
+        );
     }
 
     private void addAllPizzas() {
