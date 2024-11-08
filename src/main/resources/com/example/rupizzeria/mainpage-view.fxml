@@ -4,11 +4,13 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="388.0" prefWidth="934.0" style="-fx-background-color: ebe7df;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rupizzeria.MainPageController">
    <children>
+      <Rectangle fx:id="shoppingCartRec" arcHeight="5.0" arcWidth="5.0" fill="#d6b0b0" height="38.0" layoutX="864.0" layoutY="28.0" stroke="BLACK" strokeType="INSIDE" width="38.0" />
       <Text layoutX="251.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to RU Pizzeria!">
          <font>
             <Font name="Kristen ITC" size="30.0" />
@@ -19,23 +21,23 @@
             <Font name="Algerian" size="12.0" />
          </font>
       </Text>
-      <Button layoutX="647.0" layoutY="32.0" mnemonicParsing="false" text="Menu" onAction="#handleOpenMenuView">
+      <Button fx:id="menuButton" layoutX="647.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleOpenMenuView" text="Menu">
          <font>
             <Font name="Algerian" size="15.0" />
          </font>
       </Button>
-      <ImageView fitHeight="41.0" fitWidth="38.0" layoutX="864.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#handleOpenCurrentOrdersView">
+      <ImageView fx:id="shoppingCart" fitHeight="41.0" fitWidth="38.0" layoutX="864.0" layoutY="28.0" onMouseClicked="#handleOpenCurrentOrdersView" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/shoppingcart.jpg" />
          </image>
       </ImageView>
-      <Button layoutX="720.0" layoutY="32.0" mnemonicParsing="false" text="Orders Placed" onAction="#handleOpenOrdersPlacedView">
+      <Button fx:id="ordersPlacedButton" layoutX="720.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleOpenOrdersPlacedView" text="Orders Placed">
          <font>
             <Font name="Algerian" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="364.0" layoutY="336.0" mnemonicParsing="false" onAction="#handleOpenChicagoView" text="Chicago Pizza" />
-      <Button layoutX="657.0" layoutY="336.0" mnemonicParsing="false" text="New York Pizza" onAction="#handleOpenNewYorkView"/>
+      <Button fx:id="chicagoPizzaButton" layoutX="364.0" layoutY="336.0" mnemonicParsing="false" onAction="#handleOpenChicagoView" text="Chicago Pizza" />
+      <Button fx:id="nyPizzaButton" layoutX="657.0" layoutY="336.0" mnemonicParsing="false" onAction="#handleOpenNewYorkView" text="New York Pizza" />
       <ImageView fitHeight="414.0" fitWidth="349.0" layoutX="13.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/papapizzeria_processed.jpg" />

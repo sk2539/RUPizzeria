@@ -2,16 +2,20 @@ package com.example.rupizzeria;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import javax.swing.text.Element;
-import javax.swing.text.html.ImageView;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 import java.awt.*;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class MainPageController {
+public class MainPageController implements Initializable {
     @FXML
     private void handleOpenChicagoView() {
         try {
@@ -82,4 +86,56 @@ public class MainPageController {
         }
     }
 
+    @FXML
+    private Button chicagoPizzaButton;
+
+    @FXML
+    private Button nyPizzaButton;
+
+    @FXML
+    private Button menuButton;
+
+    @FXML
+    private Button ordersPlacedButton;
+
+    @FXML
+    private ImageView shoppingCart;
+
+    @FXML
+    private Rectangle shoppingCartRec;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        chicagoPizzaButton.setStyle("-fx-background-color: #f4f4f4;");
+        chicagoPizzaButton.setOnMouseEntered(event ->
+                chicagoPizzaButton.setStyle("-fx-background-color: #d6b0b0;")
+        );
+        chicagoPizzaButton.setOnMouseExited(event ->
+                chicagoPizzaButton.setStyle("-fx-background-color: #f4f4f4;")
+        );
+        nyPizzaButton.setStyle("-fx-background-color: #f4f4f4;");
+        nyPizzaButton.setOnMouseEntered(event ->
+                nyPizzaButton.setStyle("-fx-background-color: #d6b0b0;")
+        );
+        nyPizzaButton.setOnMouseExited(event ->
+                nyPizzaButton.setStyle("-fx-background-color: #f4f4f4;")
+        );
+        menuButton.setStyle("-fx-background-color: #f4f4f4;");
+        menuButton.setOnMouseEntered(event ->
+                menuButton.setStyle("-fx-background-color: #d6b0b0;")
+        );
+        menuButton.setOnMouseExited(event ->
+                menuButton.setStyle("-fx-background-color: #f4f4f4;")
+        );
+        ordersPlacedButton.setStyle("-fx-background-color: #f4f4f4;");
+        ordersPlacedButton.setOnMouseEntered(event ->
+                ordersPlacedButton.setStyle("-fx-background-color: #d6b0b0;")
+        );
+        ordersPlacedButton.setOnMouseExited(event ->
+                ordersPlacedButton.setStyle("-fx-background-color: #f4f4f4;")
+        );
+        shoppingCartRec.setVisible(false);
+        shoppingCart.setOnMouseEntered(event -> shoppingCartRec.setVisible(true));
+        shoppingCart.setOnMouseExited(event -> shoppingCartRec.setVisible(false));
+    }
 }
