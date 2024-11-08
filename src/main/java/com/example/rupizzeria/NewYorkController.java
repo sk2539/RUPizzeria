@@ -32,6 +32,8 @@ public class NewYorkController implements Initializable {
 
     private static ArrayList<Pizza> pizzaArrayList = new ArrayList<>();
 
+    private static ArrayList<Topping> byoToppings = new ArrayList<>();
+
     private final String[] pizzaTypes = {"Deluxe", "BBQ Chicken", "Meatzza", "Build your own"};
 
     private ObservableList<String> availableToppingsList;
@@ -43,6 +45,8 @@ public class NewYorkController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initialize2();
+        availableToppings.setDisable(true);
+        selectedToppings.setDisable(true);
         chooseType.getItems().addAll(pizzaTypes);
         crustTypeField.setEditable(false);
         availableToppingsList = FXCollections.observableArrayList();
@@ -55,7 +59,12 @@ public class NewYorkController implements Initializable {
             selectedPizza = makePizza();
             if (selectedPizza != null) {
                 updateCrustType();
-                setSelectedToppings();
+                if (!chooseType.getValue().equals("Build your own")) {
+                    setSelectedToppings();
+                }
+                else {
+                    selectedPizza.setToppings(byoToppings);
+                }
             }
         });
     }
@@ -109,36 +118,81 @@ public class NewYorkController implements Initializable {
     }
 
     @FXML
-    private Pizza makePizza() {
+    private Pizza makePizza() { // try to make this method shorter later if time permits
         Pizza newPizza = null;
         NYPizza nypizza = new NYPizza();
         if (chooseType.getValue()!=null) {
             updateCrustType();
         }
-
         if (chooseType.getValue().equals("Deluxe")) {
+            availableToppings.setDisable(true);
+            selectedToppings.setDisable(false);
+            leftArrowButton.setDisable(true);
+            rightArrowButton.setDisable(true);
             newPizza = nypizza.createDeluxe();
             newPizza.setSize(getSizeFromToggleGroup());
             return newPizza;
         }
         if (chooseType.getValue().equals("BBQ Chicken")) {
+            availableToppings.setDisable(true);
+            selectedToppings.setDisable(false);
+            leftArrowButton.setDisable(true);
+            rightArrowButton.setDisable(true);
             newPizza = nypizza.createBBQChicken();
             newPizza.setSize(getSizeFromToggleGroup());
             return newPizza;
         }
         if (chooseType.getValue().equals("Meatzza")) {
+            availableToppings.setDisable(true);
+            selectedToppings.setDisable(false);
+            leftArrowButton.setDisable(true);
+            rightArrowButton.setDisable(true);
             newPizza = nypizza.createMeatzza();
             newPizza.setSize(getSizeFromToggleGroup());
             return newPizza;
         }
         if (chooseType.getValue().equals("Build your own")) {
+            availableToppings.setDisable(false);
+            selectedToppings.setDisable(false);
+            leftArrowButton.setDisable(false);
+            rightArrowButton.setDisable(false);
             newPizza = nypizza.createBuildYourOwn();
             newPizza.setSize(getSizeFromToggleGroup());
+            newPizza.setToppings(byoToppings);
             return newPizza;
         }
-
         return newPizza;
     }
+
+    @FXML
+    private void moveItem() {
+        String selectedItem = availableToppings.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            selectedToppings.getItems().add(selectedItem);
+            if (selectedToppings.getItems().size()>7) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning");
+                alert.setHeaderText("Too Many Toppings");
+                alert.setContentText("You cannot select more than 7 toppings.");
+                alert.showAndWait();
+            }
+            byoToppings.add(Topping.stringToTopping(selectedItem));
+            availableToppings.getItems().remove(selectedItem);
+            availableToppings.getSelectionModel().clearSelection();
+        }
+    }
+
+    @FXML
+    private void moveItemBack() {
+        String selectedItem = selectedToppings.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            availableToppings.getItems().add(selectedItem);
+            byoToppings.remove(Topping.stringToTopping(selectedItem));
+            selectedToppings.getItems().remove(selectedItem);
+            selectedToppings.getSelectionModel().clearSelection();
+        }
+    }
+
 
     @FXML
     private ListView<String> availableToppings;
@@ -149,21 +203,21 @@ public class NewYorkController implements Initializable {
     @FXML
     private void updateCrustType() {
         Pizza newPizza = null;
-        ChicagoPizza cpizza = new ChicagoPizza();
+        NYPizza nypizza = new NYPizza();
         if (chooseType.getValue().equals("Deluxe")) {
-            newPizza = cpizza.createDeluxe();
+            newPizza = nypizza.createDeluxe();
             crustTypeField.setText(newPizza.getCrust().toString());
         }
         if (chooseType.getValue().equals("BBQ Chicken")) {
-            newPizza = cpizza.createBBQChicken();
+            newPizza = nypizza.createBBQChicken();
             crustTypeField.setText(newPizza.getCrust().toString());
         }
         if (chooseType.getValue().equals("Meatzza")) {
-            newPizza = cpizza.createMeatzza();
+            newPizza = nypizza.createMeatzza();
             crustTypeField.setText(newPizza.getCrust().toString());
         }
         if (chooseType.getValue().equals("Build your own")) {
-            newPizza = cpizza.createBuildYourOwn();
+            newPizza = nypizza.createBuildYourOwn();
             crustTypeField.setText(newPizza.getCrust().toString());
         }
     }
