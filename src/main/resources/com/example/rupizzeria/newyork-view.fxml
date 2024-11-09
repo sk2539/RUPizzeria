@@ -35,7 +35,7 @@
       <ListView fx:id="selectedToppings" layoutX="376.0" layoutY="277.0" prefHeight="200.0" prefWidth="200.0" />
       <Text layoutX="42.0" layoutY="505.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pizza Price:" />
       <TextField layoutX="112.0" layoutY="488.0" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="334.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="dynamicImage" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="addToOrderButton" layoutX="434.0" layoutY="487.0" mnemonicParsing="false" onAction="#onAddToOrderClick" text="Add to order" />
    </children>
 </AnchorPane>

@@ -6,6 +6,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -118,48 +123,59 @@ public class ChicagoController implements Initializable {
     }
 
     @FXML
+    private ImageView dynamicImage;
+
+    @FXML
     private Pizza makePizza() { // try to make this method shorter later if time permits
         Pizza newPizza = null;
         ChicagoPizza cpizza = new ChicagoPizza();
         if (chooseType.getValue()!=null) {
             updateCrustType();
-        }
-        if (chooseType.getValue().equals("Deluxe")) {
-            availableToppings.setDisable(true);
-            selectedToppings.setDisable(false);
-            leftArrowButton.setDisable(true);
-            rightArrowButton.setDisable(true);
-            newPizza = cpizza.createDeluxe();
-            newPizza.setSize(getSizeFromToggleGroup());
-            return newPizza;
-        }
-        if (chooseType.getValue().equals("BBQ Chicken")) {
-            availableToppings.setDisable(true);
-            selectedToppings.setDisable(false);
-            leftArrowButton.setDisable(true);
-            rightArrowButton.setDisable(true);
-            newPizza = cpizza.createBBQChicken();
-            newPizza.setSize(getSizeFromToggleGroup());
-            return newPizza;
-        }
-        if (chooseType.getValue().equals("Meatzza")) {
-            availableToppings.setDisable(true);
-            selectedToppings.setDisable(false);
-            leftArrowButton.setDisable(true);
-            rightArrowButton.setDisable(true);
-            newPizza = cpizza.createMeatzza();
-            newPizza.setSize(getSizeFromToggleGroup());
-            return newPizza;
-        }
-        if (chooseType.getValue().equals("Build your own")) {
-            availableToppings.setDisable(false);
-            selectedToppings.setDisable(false);
-            leftArrowButton.setDisable(false);
-            rightArrowButton.setDisable(false);
-            newPizza = cpizza.createBuildYourOwn();
-            newPizza.setSize(getSizeFromToggleGroup());
-            newPizza.setToppings(byoToppings);
-            return newPizza;
+            if (chooseType.getValue().equals("Deluxe")) {
+                Image image = new Image("file:src/main/resources/images/chicagodeluxepizza.jpg");
+                dynamicImage.setImage(image);
+                availableToppings.setDisable(true);
+                selectedToppings.setDisable(false);
+                leftArrowButton.setDisable(true);
+                rightArrowButton.setDisable(true);
+                newPizza = cpizza.createDeluxe();
+                newPizza.setSize(getSizeFromToggleGroup());
+                return newPizza;
+            }
+            if (chooseType.getValue().equals("BBQ Chicken")) {
+                Image image = new Image("file:src/main/resources/images/chicagobbqchicken.jpg");
+                dynamicImage.setImage(image);
+                availableToppings.setDisable(true);
+                selectedToppings.setDisable(false);
+                leftArrowButton.setDisable(true);
+                rightArrowButton.setDisable(true);
+                newPizza = cpizza.createBBQChicken();
+                newPizza.setSize(getSizeFromToggleGroup());
+                return newPizza;
+            }
+            if (chooseType.getValue().equals("Meatzza")) {
+                Image image = new Image("file:src/main/resources/images/chicagomeatzza.jpg");
+                dynamicImage.setImage(image);
+                availableToppings.setDisable(true);
+                selectedToppings.setDisable(false);
+                leftArrowButton.setDisable(true);
+                rightArrowButton.setDisable(true);
+                newPizza = cpizza.createMeatzza();
+                newPizza.setSize(getSizeFromToggleGroup());
+                return newPizza;
+            }
+            if (chooseType.getValue().equals("Build your own")) {
+                Image image = new Image("file:src/main/resources/images/buildyourownpizza.jpg");
+                dynamicImage.setImage(image);
+                availableToppings.setDisable(false);
+                selectedToppings.setDisable(false);
+                leftArrowButton.setDisable(false);
+                rightArrowButton.setDisable(false);
+                newPizza = cpizza.createBuildYourOwn();
+                newPizza.setSize(getSizeFromToggleGroup());
+                newPizza.setToppings(byoToppings);
+                return newPizza;
+            }
         }
         return newPizza;
     }
@@ -193,7 +209,6 @@ public class ChicagoController implements Initializable {
         }
     }
 
-
     @FXML
     private ListView<String> availableToppings;
 
@@ -226,6 +241,9 @@ public class ChicagoController implements Initializable {
     private void onAddToOrderClick() {
         if (getSizeFromToggleGroup()==null) {
             showAlert("Missing Argument", "Please select a size.");
+        }
+        if (chooseType.getValue()==null) {
+            showAlert("Missing Argument", "Please select a type from the dropdown.");
         }
         pizzaArrayList.add(makePizza());
     }

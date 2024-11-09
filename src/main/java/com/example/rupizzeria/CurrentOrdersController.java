@@ -69,14 +69,14 @@ public class CurrentOrdersController implements Initializable {
     private void addAllPizzas() {
         ArrayList<Pizza> chicagoPizzas = ChicagoController.getChicagoPizzas();
         for (Pizza pizza : chicagoPizzas) {
-            if (pizza.getSize()!=null) {
+            if (pizza!=null && pizza.getSize()!=null) {
                 pizzaList.add("Chicago Pizza "+ pizza.toString());
                 pizzaListView.setItems(pizzaList);
             }
         }
         ArrayList<Pizza> nyPizzas = NewYorkController.getNYPizzas();
         for (Pizza pizza : nyPizzas) {
-            if (pizza.getSize()!=null) {
+            if (pizza!=null && pizza.getSize()!=null) {
                 pizzaList.add("New York Pizza " + pizza.toString());
                 pizzaListView.setItems(pizzaList);
             }
