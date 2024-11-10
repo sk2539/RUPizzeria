@@ -237,7 +237,7 @@ public class ChicagoController implements Initializable {
                 alert.setContentText("You cannot select more than 7 toppings.");
                 alert.showAndWait();
                 availableToppings.setDisable(true);
-                leftArrowButton.setDisable(true);
+                rightArrowButton.setDisable(true);
                 return;
             }
             selectedToppings.getItems().add(selectedItem);
@@ -300,67 +300,54 @@ public class ChicagoController implements Initializable {
                 case "SAUSAGE":
                     image = new Image("file:src/main/resources/images/sausageTopping.png");
                     sausageLayer.setImage(image);
-                    image = null;
                     break;
                 case "GREENPEPPER":
                     image = new Image("file:src/main/resources/images/greenpepperTopping.png");
                     greenpepperLayer.setImage(image);
-                    image = null;
                     break;
                 case "ONION":
                     image = new Image("file:src/main/resources/images/onionTopping.png");
                     onionLayer.setImage(image);
-                    image = null;
                     break;
                 case "PEPPERONI":
                     image = new Image("file:src/main/resources/images/pepperoniTopping.png");
                     pepperoniLayer.setImage(image);
-                    image = null;
                     break;
                 case "MUSHROOM":
                     image = new Image("file:src/main/resources/images/mushroomTopping.png");
                     mushroomLayer.setImage(image);
-                    image = null;
                     break;
                 case "BBQCHICKEN":
                     image = new Image("file:src/main/resources/images/chickenTopping.png");
                     bbqchickenLayer.setImage(image);
-                    image = null;
                     break;
                 case "PROVOLONE":
                     image = new Image("file:src/main/resources/images/provoloneTopping.png");
                     provoloneLayer.setImage(image);
-                    image = null;
                     break;
                 case "CHEDDAR":
                     image = new Image("file:src/main/resources/images/cheddarTopping.png");
                     cheddarLayer.setImage(image);
-                    image = null;
                     break;
                 case "BEEF":
                     image = new Image("file:src/main/resources/images/beefTopping.png");
                     beefLayer.setImage(image);
-                    image = null;
                     break;
                 case "HAM":
                     image = new Image("file:src/main/resources/images/hamTopping.png");
                     hamLayer.setImage(image);
-                    image = null;
                     break;
                 case "BROCCOLI":
                     image = new Image("file:src/main/resources/images/broccoliTopping.png");
                     broccoliLayer.setImage(image);
-                    image = null;
                     break;
                 case "SPINACH":
                     image = new Image("file:src/main/resources/images/spinachTopping.png");
                     spinachLayer.setImage(image);
-                    image = null;
                     break;
                 case "JALAPENO":
                     image = new Image("file:src/main/resources/images/jalapenoTopping.png");
                     jalapenoLayer.setImage(image);
-                    image = null;
                     break;
                 default:
                     return;
@@ -379,6 +366,7 @@ public class ChicagoController implements Initializable {
             removeBYOToppingImage(selectedItem);
             if (selectedToppings.getItems().size() < 7) {
                 availableToppings.setDisable(false);
+                rightArrowButton.setDisable(false);
             }
             if (selectedPizza != null) {
                 selectedPizza.setSize(getSizeFromToggleGroup());
