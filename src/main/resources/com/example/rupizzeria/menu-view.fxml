@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="778.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rupizzeria.MenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="778.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="778.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -13,7 +13,7 @@
          </image>
       </ImageView>
       <Rectangle fx:id="homeButtonRec" arcHeight="5.0" arcWidth="5.0" fill="#d6b0b0" height="41.0" layoutX="14.0" layoutY="28.0" stroke="BLACK" strokeType="INSIDE" width="41.0" />
-      <ImageView fx:id="homeButton" fitHeight="41.0" fitWidth="41.0" layoutX="14.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" onMousePressed="#handleHomeButtonClick">
+      <ImageView fx:id="homeButton" fitHeight="41.0" fitWidth="41.0" layoutX="14.0" layoutY="28.0" onMousePressed="#handleHomeButtonPressed" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/homeButton_processed.jpg" />
          </image>

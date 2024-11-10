@@ -38,12 +38,13 @@
       <ListView fx:id="selectedToppings" layoutX="376.0" layoutY="283.0" prefHeight="200.0" prefWidth="200.0" />
       <Text layoutX="42.0" layoutY="511.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pizza Price:" />
       <TextField fx:id="price" layoutX="112.0" layoutY="494.0" />
-      <ImageView fx:id="dynamicImage" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="onionLayer" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="addToOrderButton" layoutX="431.0" layoutY="494.0" mnemonicParsing="false" onAction="#onAddToOrderClick" text="Add to order" />
       <ImageView fx:id="homeButton" fitHeight="54.0" fitWidth="51.0" layoutX="548.0" layoutY="17.0" onMouseClicked="#handleHomeButtonClick" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/homeButton_processed.jpg" />
          </image>
       </ImageView>
+      <ImageView fx:id="dynamicImage1" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
