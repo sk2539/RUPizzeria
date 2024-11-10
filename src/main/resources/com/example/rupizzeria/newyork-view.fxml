@@ -37,13 +37,26 @@
       <ListView fx:id="selectedToppings" layoutX="376.0" layoutY="277.0" prefHeight="200.0" prefWidth="200.0" />
       <Text layoutX="42.0" layoutY="505.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pizza Price:" />
       <TextField fx:id="price" layoutX="112.0" layoutY="488.0" />
-      <ImageView fx:id="dynamicImage" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="addToOrderButton" layoutX="434.0" layoutY="487.0" mnemonicParsing="false" onAction="#onAddToOrderClick" text="Add to order" />
       <Rectangle fx:id="homeButtonRec" arcHeight="5.0" arcWidth="5.0" fill="#d6b0b0" height="41.0" layoutX="548.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="41.0" />
-      <ImageView fx:id="homeButton" fitHeight="49.0" fitWidth="51.0" layoutX="544.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" onMousePressed="#handleHomeButtonClick">
+      <ImageView fx:id="homeButton" fitHeight="49.0" fitWidth="51.0" layoutX="544.0" layoutY="10.0" onMousePressed="#handleHomeButtonClick" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/homeButton_processed.jpg" />
          </image>
       </ImageView>
+      <ImageView fx:id="dynamicImage" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="sausageLayer" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="greenpepperLayer" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="onionLayer" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="pepperoniLayer" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="mushroomLayer" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="bbqchickenLayer" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="provoloneLayer" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="cheddarLayer" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="beefLayer" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="hamLayer" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="broccoliLayer" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="spinachLayer" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="jalapenoLayer" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

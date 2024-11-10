@@ -44,7 +44,7 @@ public class ChicagoController implements Initializable {
     private static ArrayList<Pizza> pizzaArrayList = new ArrayList<>();
 
     private static ArrayList<Topping> byoToppings = new ArrayList<>();
-    
+
     private final String[] pizzaTypes = {"Deluxe", "BBQ Chicken", "Meatzza", "Build your own"};
 
     private ObservableList<String> availableToppingsList;
@@ -75,8 +75,7 @@ public class ChicagoController implements Initializable {
                 updateCrustType();
                 if (!chooseType.getValue().equals("Build your own")) {
                     setSelectedToppings();
-                }
-                else {
+                } else {
                     selectedPizza.setToppings(byoToppings);
                     selectedToppingsList.clear();
                     byoToppings.clear();
@@ -177,7 +176,7 @@ public class ChicagoController implements Initializable {
     private Pizza makePizza() {
         Pizza newPizza = null;
         ChicagoPizza cpizza = new ChicagoPizza();
-        if (chooseType.getValue()!=null) {
+        if (chooseType.getValue() != null) {
             updateCrustType();
             if (chooseType.getValue().equals("Deluxe")) {
                 return makePizzaHelper(newPizza, cpizza);
@@ -189,7 +188,7 @@ public class ChicagoController implements Initializable {
                 return makePizzaHelper(newPizza, cpizza);
             }
             if (chooseType.getValue().equals("Build your own")) {
-                Image image = new Image("file:src/main/resources/images/buildyourownpizza.jpg");
+                Image image = new Image("file:src/main/resources/images/buildyourownpizza.png");
                 dynamicImage.setImage(image);
                 availableToppings.setDisable(false);
                 selectedToppings.setDisable(false);
@@ -197,7 +196,7 @@ public class ChicagoController implements Initializable {
                 rightArrowButton.setDisable(false);
                 newPizza = cpizza.createBuildYourOwn();
                 newPizza.setSize(getSizeFromToggleGroup());
-                if (newPizza.getSize()!=null) {
+                if (newPizza.getSize() != null) {
                     price.setText(String.valueOf(newPizza.price()));
                 }
                 newPizza.setToppings(byoToppings);
@@ -217,7 +216,7 @@ public class ChicagoController implements Initializable {
         rightArrowButton.setDisable(true);
         newPizza = cpizza.createDeluxe();
         newPizza.setSize(getSizeFromToggleGroup());
-        if (newPizza.getSize()!=null) {
+        if (newPizza.getSize() != null) {
             price.setText(String.valueOf(newPizza.price()));
         }
         return newPizza;
@@ -227,24 +226,140 @@ public class ChicagoController implements Initializable {
     private void moveItem() {
         String selectedItem = availableToppings.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
-            selectedToppings.getItems().add(selectedItem);
-            if (selectedToppings.getItems().size()>7) {
+            if (selectedToppings.getItems().size() == 7) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Warning");
                 alert.setHeaderText("Too Many Toppings");
                 alert.setContentText("You cannot select more than 7 toppings.");
                 alert.showAndWait();
+                availableToppings.setDisable(true);
+                leftArrowButton.setDisable(true);
+                return;
             }
-            else {
-                byoToppings.add(Topping.stringToTopping(selectedItem));
-                availableToppings.getItems().remove(selectedItem);
-                availableToppings.getSelectionModel().clearSelection();
-                if (selectedPizza != null) {
-                    selectedPizza.setSize(getSizeFromToggleGroup());
-                    if (selectedPizza.getSize() != null) {
-                        price.setText(String.valueOf(selectedPizza.price()));
-                    }
+            selectedToppings.getItems().add(selectedItem);
+            byoToppings.add(Topping.stringToTopping(selectedItem));
+            availableToppings.getItems().remove(selectedItem);
+            availableToppings.getSelectionModel().clearSelection();
+            addBYOToppingImages();
+            if (selectedPizza != null) {
+                selectedPizza.setSize(getSizeFromToggleGroup());
+                if (selectedPizza.getSize() != null) {
+                    price.setText(String.valueOf(selectedPizza.price()));
                 }
+            }
+        }
+    }
+
+    @FXML
+    private ImageView onionLayer;
+
+    @FXML
+    private ImageView mushroomLayer;
+
+    @FXML
+    private ImageView pepperoniLayer;
+
+    @FXML
+    private ImageView cheddarLayer;
+
+    @FXML
+    private ImageView provoloneLayer;
+
+    @FXML
+    private ImageView beefLayer;
+
+    @FXML
+    private ImageView hamLayer;
+
+    @FXML
+    private ImageView broccoliLayer;
+
+    @FXML
+    private ImageView spinachLayer;
+
+    @FXML
+    private ImageView jalapenoLayer;
+
+    @FXML
+    private ImageView greenpepperLayer;
+
+    @FXML
+    private ImageView sausageLayer;
+
+    @FXML
+    private ImageView bbqchickenLayer;
+
+    private void addBYOToppingImages() {
+        Image image = null;
+        for (Topping topping: byoToppings) {
+            switch (topping.toString().toUpperCase()) {
+                case "SAUSAGE":
+                    image = new Image("file:src/main/resources/images/sausageTopping.png");
+                    sausageLayer.setImage(image);
+                    image = null;
+                    break;
+                case "GREENPEPPER":
+                    image = new Image("file:src/main/resources/images/greenpepperTopping.png");
+                    greenpepperLayer.setImage(image);
+                    image = null;
+                    break;
+                case "ONION":
+                    image = new Image("file:src/main/resources/images/onionTopping.png");
+                    onionLayer.setImage(image);
+                    image = null;
+                    break;
+                case "PEPPERONI":
+                    image = new Image("file:src/main/resources/images/pepperoniTopping.png");
+                    pepperoniLayer.setImage(image);
+                    image = null;
+                    break;
+                case "MUSHROOM":
+                    image = new Image("file:src/main/resources/images/mushroomTopping.png");
+                    mushroomLayer.setImage(image);
+                    image = null;
+                    break;
+                case "BBQCHICKEN":
+                    image = new Image("file:src/main/resources/images/chickenTopping.png");
+                    bbqchickenLayer.setImage(image);
+                    image = null;
+                    break;
+                case "PROVOLONE":
+                    image = new Image("file:src/main/resources/images/provoloneTopping.png");
+                    provoloneLayer.setImage(image);
+                    image = null;
+                    break;
+                case "CHEDDAR":
+                    image = new Image("file:src/main/resources/images/cheddarTopping.png");
+                    cheddarLayer.setImage(image);
+                    image = null;
+                    break;
+                case "BEEF":
+                    image = new Image("file:src/main/resources/images/beefTopping.png");
+                    beefLayer.setImage(image);
+                    image = null;
+                    break;
+                case "HAM":
+                    image = new Image("file:src/main/resources/images/hamTopping.png");
+                    hamLayer.setImage(image);
+                    image = null;
+                    break;
+                case "BROCCOLI":
+                    image = new Image("file:src/main/resources/images/broccoliTopping.png");
+                    broccoliLayer.setImage(image);
+                    image = null;
+                    break;
+                case "SPINACH":
+                    image = new Image("file:src/main/resources/images/spinachTopping.png");
+                    spinachLayer.setImage(image);
+                    image = null;
+                    break;
+                case "JALAPENO":
+                    image = new Image("file:src/main/resources/images/jalapenoTopping.png");
+                    jalapenoLayer.setImage(image);
+                    image = null;
+                    break;
+                default:
+                    return;
             }
         }
     }
@@ -257,12 +372,62 @@ public class ChicagoController implements Initializable {
             byoToppings.remove(Topping.stringToTopping(selectedItem));
             selectedToppings.getItems().remove(selectedItem);
             selectedToppings.getSelectionModel().clearSelection();
+            removeBYOToppingImage(selectedItem);
+            if (selectedToppings.getItems().size() < 7) {
+                availableToppings.setDisable(false);
+            }
             if (selectedPizza != null) {
                 selectedPizza.setSize(getSizeFromToggleGroup());
                 if (selectedPizza.getSize() != null) {
                     price.setText(String.valueOf(selectedPizza.price()));
                 }
             }
+        }
+    }
+
+    private void removeBYOToppingImage(String selecteditem) {
+        switch (selecteditem.toUpperCase()) {
+            case "SAUSAGE":
+                sausageLayer.setImage(null);
+                break;
+            case "GREENPEPPER":
+                greenpepperLayer.setImage(null);
+                break;
+            case "ONION":
+                onionLayer.setImage(null);
+                break;
+            case "PEPPERONI":
+                pepperoniLayer.setImage(null);
+                break;
+            case "MUSHROOM":
+                mushroomLayer.setImage(null);
+                break;
+            case "BBQCHICKEN":
+                bbqchickenLayer.setImage(null);
+                break;
+            case "PROVOLONE":
+                provoloneLayer.setImage(null);
+                break;
+            case "CHEDDAR":
+                cheddarLayer.setImage(null);
+                break;
+            case "BEEF":
+                beefLayer.setImage(null);
+                break;
+            case "HAM":
+                hamLayer.setImage(null);
+                break;
+            case "BROCCOLI":
+                broccoliLayer.setImage(null);
+                break;
+            case "SPINACH":
+                spinachLayer.setImage(null);
+                break;
+            case "JALAPENO":
+                jalapenoLayer.setImage(null);
+                break;
+            default:
+                return;
         }
     }
 
@@ -329,7 +494,7 @@ public class ChicagoController implements Initializable {
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
-        alert.setHeaderText(null); // optional, can remove if you want a header
+        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
