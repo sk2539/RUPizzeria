@@ -194,7 +194,7 @@ public class NewYorkController implements Initializable {
                 return makePizzaHelper(newPizza, cpizza);
             }
             if (chooseType.getValue().equals("Build your own")) {
-                Image image = new Image("file:src/main/resources/images/nybuildyourown.png");
+                Image image = new Image("file:src/main/resources/images/buildyourownpizza.png");
                 dynamicImage.setImage(image);
                 availableToppings.setDisable(false);
                 selectedToppings.setDisable(false);

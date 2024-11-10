@@ -31,8 +31,8 @@
       <TextField fx:id="crustTypeField" layoutX="112.0" layoutY="195.0" />
       <Text layoutX="45.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available Toppings" />
       <ListView fx:id="availableToppings" layoutX="45.0" layoutY="277.0" prefHeight="200.0" prefWidth="200.0" />
-      <Button fx:id="rightArrowButton" layoutX="301.0" layoutY="326.0" mnemonicParsing="false" onAction="#moveItemBack" text="&gt;&gt;" />
-      <Button fx:id="leftArrowButton" layoutX="301.0" layoutY="391.0" mnemonicParsing="false" onAction="#moveItem" text="&lt;&lt;" />
+      <Button fx:id="rightArrowButton" layoutX="301.0" layoutY="326.0" mnemonicParsing="false" onAction="#moveItem" text="&gt;&gt;" />
+      <Button fx:id="leftArrowButton" layoutX="301.0" layoutY="391.0" mnemonicParsing="false" onAction="#moveItemBack" text="&lt;&lt;" />
       <Text layoutX="376.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Toppings" />
       <ListView fx:id="selectedToppings" layoutX="376.0" layoutY="277.0" prefHeight="200.0" prefWidth="200.0" />
       <Text layoutX="42.0" layoutY="505.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pizza Price:" />
