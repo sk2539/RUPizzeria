@@ -6,8 +6,10 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -29,13 +31,19 @@
       <TextField fx:id="crustTypeField" layoutX="112.0" layoutY="195.0" />
       <Text layoutX="45.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available Toppings" />
       <ListView fx:id="availableToppings" layoutX="45.0" layoutY="277.0" prefHeight="200.0" prefWidth="200.0" />
-      <Button fx:id="rightArrowButton" layoutX="301.0" layoutY="326.0" mnemonicParsing="false" text="&gt;&gt;" />
-      <Button fx:id="leftArrowButton" layoutX="301.0" layoutY="391.0" mnemonicParsing="false" text="&lt;&lt;" />
+      <Button fx:id="rightArrowButton" layoutX="301.0" layoutY="326.0" mnemonicParsing="false" onAction="#moveItemBack" text="&gt;&gt;" />
+      <Button fx:id="leftArrowButton" layoutX="301.0" layoutY="391.0" mnemonicParsing="false" onAction="#moveItem" text="&lt;&lt;" />
       <Text layoutX="376.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Toppings" />
       <ListView fx:id="selectedToppings" layoutX="376.0" layoutY="277.0" prefHeight="200.0" prefWidth="200.0" />
       <Text layoutX="42.0" layoutY="505.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pizza Price:" />
-      <TextField layoutX="112.0" layoutY="488.0" />
+      <TextField fx:id="price" layoutX="112.0" layoutY="488.0" />
       <ImageView fx:id="dynamicImage" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="addToOrderButton" layoutX="434.0" layoutY="487.0" mnemonicParsing="false" onAction="#onAddToOrderClick" text="Add to order" />
+      <Rectangle fx:id="homeButtonRec" arcHeight="5.0" arcWidth="5.0" fill="#d6b0b0" height="41.0" layoutX="548.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="41.0" />
+      <ImageView fx:id="homeButton" fitHeight="49.0" fitWidth="51.0" layoutX="544.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" onMousePressed="#handleHomeButtonClick">
+         <image>
+            <Image url="@../../../images/homeButton_processed.jpg" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

@@ -4,11 +4,18 @@ import com.example.rupizzeria.pizzaria.src.Pizza;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -42,6 +49,12 @@ public class CurrentOrdersController implements Initializable {
     @FXML
     private Button removePizzaButton;
 
+    @FXML
+    private ImageView homeButton;
+
+    @FXML
+    private Rectangle homeButtonRec;
+
     private void initialize2() {
         clearOrderButton.setStyle("-fx-background-color: #f4f4f4;");
         clearOrderButton.setOnMouseEntered(event ->
@@ -64,6 +77,23 @@ public class CurrentOrdersController implements Initializable {
         removePizzaButton.setOnMouseExited(event ->
                 removePizzaButton.setStyle("-fx-background-color: #f4f4f4;")
         );
+        homeButtonRec.setVisible(false);
+        homeButton.setOnMouseEntered(event -> homeButtonRec.setVisible(true));
+        homeButton.setOnMouseExited(event -> homeButtonRec.setVisible(false));
+    }
+
+    @FXML
+    private void handleHomeButtonClick() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("mainpage-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Main Page");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void addAllPizzas() {
