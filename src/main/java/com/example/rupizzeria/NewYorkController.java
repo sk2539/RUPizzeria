@@ -175,26 +175,26 @@ public class NewYorkController implements Initializable {
     @FXML
     private Pizza makePizza() {
         Pizza newPizza = null;
-        ChicagoPizza cpizza = new ChicagoPizza();
+        NYPizza cpizza = new NYPizza();
         if (chooseType.getValue() != null) {
             updateCrustType();
             if (chooseType.getValue().equals("Deluxe")) {
-                Image image = new Image("file:src/main/resources/images/chicagodeluxepizza.jpg");
+                Image image = new Image("file:src/main/resources/images/nydeluxe.jpg");
                 dynamicImage.setImage(image);
                 return makePizzaHelper(newPizza, cpizza);
             }
             if (chooseType.getValue().equals("BBQ Chicken")) {
-                Image image = new Image("file:src/main/resources/images/chicagobbqchicken.jpg");
+                Image image = new Image("file:src/main/resources/images/nybbqchicken.jpg");
                 dynamicImage.setImage(image);
                 return makePizzaHelper(newPizza, cpizza);
             }
             if (chooseType.getValue().equals("Meatzza")) {
-                Image image = new Image("file:src/main/resources/images/chicagomeatzza.jpg");
+                Image image = new Image("file:src/main/resources/images/nymeattza.jpg");
                 dynamicImage.setImage(image);
                 return makePizzaHelper(newPizza, cpizza);
             }
             if (chooseType.getValue().equals("Build your own")) {
-                Image image = new Image("file:src/main/resources/images/buildyourownpizza.png");
+                Image image = new Image("file:src/main/resources/images/nybuildyourown.png");
                 dynamicImage.setImage(image);
                 availableToppings.setDisable(false);
                 selectedToppings.setDisable(false);
@@ -213,7 +213,7 @@ public class NewYorkController implements Initializable {
     }
 
     @FXML
-    private Pizza makePizzaHelper(Pizza newPizza, ChicagoPizza cpizza) {
+    private Pizza makePizzaHelper(Pizza newPizza, NYPizza cpizza) {
         availableToppings.setDisable(true);
         selectedToppings.setDisable(false);
         leftArrowButton.setDisable(true);
@@ -432,7 +432,7 @@ public class NewYorkController implements Initializable {
     @FXML
     private void updateCrustType() {
         Pizza newPizza = null;
-        ChicagoPizza cpizza = new ChicagoPizza();
+        NYPizza cpizza = new NYPizza();
         if (chooseType.getValue().equals("Deluxe")) {
             newPizza = cpizza.createDeluxe();
             crustTypeField.setText(newPizza.getCrust().toString());
