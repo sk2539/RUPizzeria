@@ -179,12 +179,18 @@ public class ChicagoController implements Initializable {
         if (chooseType.getValue() != null) {
             updateCrustType();
             if (chooseType.getValue().equals("Deluxe")) {
+                Image image = new Image("file:src/main/resources/images/chicagodeluxepizza.jpg");
+                dynamicImage.setImage(image);
                 return makePizzaHelper(newPizza, cpizza);
             }
             if (chooseType.getValue().equals("BBQ Chicken")) {
+                Image image = new Image("file:src/main/resources/images/chicagobbqchicken.jpg");
+                dynamicImage.setImage(image);
                 return makePizzaHelper(newPizza, cpizza);
             }
             if (chooseType.getValue().equals("Meatzza")) {
+                Image image = new Image("file:src/main/resources/images/chicagomeatzza.jpg");
+                dynamicImage.setImage(image);
                 return makePizzaHelper(newPizza, cpizza);
             }
             if (chooseType.getValue().equals("Build your own")) {
@@ -208,8 +214,6 @@ public class ChicagoController implements Initializable {
 
     @FXML
     private Pizza makePizzaHelper(Pizza newPizza, ChicagoPizza cpizza) {
-        Image image = new Image("file:src/main/resources/images/chicagodeluxepizza.jpg");
-        dynamicImage.setImage(image);
         availableToppings.setDisable(true);
         selectedToppings.setDisable(false);
         leftArrowButton.setDisable(true);
