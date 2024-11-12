@@ -119,4 +119,21 @@ public class CurrentOrdersController implements Initializable {
         String orderNumberStr = Integer.toString(orderNumber);
         orderNumberField.setText(orderNumberStr);
     }
+
+    @FXML
+    private void onRemovePizzaClick(){
+        String selectedPizza = pizzaListView.getSelectionModel().getSelectedItem();
+
+        if (selectedPizza != null) {
+            pizzaList.remove(selectedPizza);
+
+            if (selectedPizza.startsWith("Chicago Pizza")) {
+                ArrayList<Pizza> chicagoPizzas = ChicagoController.getChicagoPizzas();
+                chicagoPizzas.removeIf(pizza -> selectedPizza.equals("Chicago Pizza " + pizza.toString()));
+            } else if (selectedPizza.startsWith("New York Pizza")) {
+                ArrayList<Pizza> nyPizzas = NewYorkController.getNYPizzas();
+                nyPizzas.removeIf(pizza -> selectedPizza.equals("New York Pizza " + pizza.toString()));
+            }
+        }
+    }
 }
