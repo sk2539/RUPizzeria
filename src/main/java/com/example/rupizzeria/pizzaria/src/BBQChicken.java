@@ -20,6 +20,6 @@ public class BBQChicken extends Pizza{
         else if(this.getSize().equals(Size.LARGE)){
             return 19.99;
         }
-        return 0.0;
+        return 0.00;
     }
 }

@@ -20,6 +20,6 @@ public class Deluxe extends Pizza{
         else if(this.getSize().equals(Size.LARGE)){
             return 20.99;
         }
-        return 0.0;
+        return 0.00;
     }
 }
