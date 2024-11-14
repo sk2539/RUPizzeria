@@ -3,6 +3,7 @@ package com.example.rupizzeria;
 import com.example.rupizzeria.pizzaria.src.Order;
 import com.example.rupizzeria.pizzaria.src.Pizza;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,7 +35,7 @@ public class CurrentOrdersController implements Initializable {
 
     private Order currentOrder = new Order(0, null);
 
-    private static ArrayList<Pizza> chicagoPizzas = ChicagoController.getChicagoPizzas();
+    private static ObservableList<Pizza> chicagoPizzas = ChicagoController.getChicagoPizzasList();
 
     private static ArrayList<Pizza> nyPizzas = NewYorkController.getNYPizzas();
 
@@ -46,7 +47,44 @@ public class CurrentOrdersController implements Initializable {
         addAllPizzas();
         pizzaListView.setItems(pizzaList);
         orderNumberField.setText("0");
-        currentOrder = new Order(currentOrder.getOrderNum(), null);
+
+        // Listen for changes in the ObservableList and refresh the UI
+        chicagoPizzas.addListener((ListChangeListener<Pizza>) change -> refreshOrderList());
+        //nyPizzas.addListener((ListChangeListener<Pizza>) change -> refreshOrderList());
+    }
+
+    private void refreshOrderList() {
+        pizzaList.clear();
+        for (Pizza pizza : chicagoPizzas) {
+            String pizzaDescription = pizza.price() + " - Chicago Pizza " + pizza.toString();
+            pizzaList.add(pizzaDescription);
+        }
+        for (Pizza pizza : nyPizzas) {
+            String pizzaDescription = pizza.price() + " - New York Pizza " + pizza.toString();
+            pizzaList.add(pizzaDescription);
+        }
+        pizzaListView.setItems(pizzaList);
+        updatePricing(); // Update subtotal, sales tax, and total
+    }
+
+    private void updatePricing() {
+        currentPrice = chicagoPizzas.stream().mapToDouble(Pizza::price).sum() + nyPizzas.stream().mapToDouble(Pizza::price).sum();
+        subtotal.setText(String.format("%.2f", currentPrice));
+        double salesTaxAmount = Math.ceil(currentPrice * SALES_TAX_RATE * 100) / 100;
+        salesTax.setText(String.format("%.2f", salesTaxAmount));
+        double totalWithTax = Math.ceil((currentPrice + salesTaxAmount) * 100) / 100;
+        total.setText(String.format("%.2f", totalWithTax));
+    }
+
+
+    void loadOrderData() {
+        pizzaList.clear();
+        currentPrice = 0.0;  // Reset the price to recalculate
+
+        // Refresh the list with pizzas from chicagoPizzas and nyPizzas
+        addAllPizzas();  // This will add pizzas to the view and current order
+
+        pizzaListView.setItems(pizzaList);
     }
 
     @FXML
@@ -119,6 +157,8 @@ public class CurrentOrdersController implements Initializable {
     private TextField total;
 
     private void addAllPizzas() {
+        pizzaList.clear();  // Clear the list to prevent duplicates
+        currentOrder.getOrder().clear();
 
         double price=0;
         for (Pizza pizza : chicagoPizzas) {

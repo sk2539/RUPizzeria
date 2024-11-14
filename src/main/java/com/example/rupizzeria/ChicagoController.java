@@ -41,7 +41,7 @@ public class ChicagoController implements Initializable {
     @FXML
     private TextField crustTypeField;
 
-    private static ArrayList<Pizza> pizzaArrayList = new ArrayList<>();
+    //private static ArrayList<Pizza> pizzaArrayList = new ArrayList<>();
 
     private static ArrayList<Topping> byoToppings = new ArrayList<>();
 
@@ -55,6 +55,9 @@ public class ChicagoController implements Initializable {
 
     @FXML
     private TextField price;
+
+    // In ChicagoController
+    private static ObservableList<Pizza> pizzaArrayList = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -463,29 +466,36 @@ public class ChicagoController implements Initializable {
         }
     }
 
+    public static ObservableList<Pizza> getChicagoPizzasList() {
+        return pizzaArrayList;
+    }
+
     @FXML
     private void onAddToOrderClick() {
         boolean isValidOrder = true;
-        if (getSizeFromToggleGroup()==null) {
+        if (getSizeFromToggleGroup() == null) {
             showAlert("Missing Argument", "Please select a size.");
             isValidOrder = false;
         }
-        if (chooseType.getValue()==null) {
+        if (chooseType.getValue() == null) {
             showAlert("Missing Argument", "Please select a type from the dropdown.");
             isValidOrder = false;
         }
-        if(isValidOrder){
-            pizzaArrayList.add(makePizza());
+        if (isValidOrder) {
+            Pizza pizza = makePizza();
+            if (pizza != null) {
+                pizzaArrayList.add(pizza); // Add to ObservableList
 
-            Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
-            confirmationAlert.setTitle("Order Confirmation");
-            confirmationAlert.setHeaderText(null);
-            confirmationAlert.setContentText("Your " + getSizeFromToggleGroup().toString() + " " + chooseType.getValue() + " New York pizza has been successfully added to your order!");
-            confirmationAlert.showAndWait();
+                Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
+                confirmationAlert.setTitle("Order Confirmation");
+                confirmationAlert.setHeaderText(null);
+                confirmationAlert.setContentText("Your " + getSizeFromToggleGroup().toString() + " " + chooseType.getValue() + " Chicago pizza has been successfully added to your order!");
+                confirmationAlert.showAndWait();
+            }
         }
     }
 
-    public static ArrayList<Pizza> getChicagoPizzas() {
+    public static ObservableList<Pizza> getChicagoPizzas() {
         return pizzaArrayList;
     }
 

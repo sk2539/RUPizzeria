@@ -13,7 +13,7 @@ public class PizzeriaMain extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("currentorders-view.fxml"));
         loader.load();
         CurrentOrdersController currentOrdersController = loader.getController();
-
+        currentOrdersController.loadOrderData();
         FXMLLoader fxmlLoader = new FXMLLoader(PizzeriaMain.class.getResource("mainpage-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 934, 388);
         stage.setTitle("Main Page");
