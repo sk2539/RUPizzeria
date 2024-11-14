@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class CurrentOrdersController implements Initializable {
     int orderNumber;
@@ -31,6 +32,10 @@ public class CurrentOrdersController implements Initializable {
 
     private ObservableList<String> pizzaList;
 
+    private static ArrayList<Pizza> chicagoPizzas = ChicagoController.getChicagoPizzas();
+
+    private static ArrayList<Pizza> nyPizzas = NewYorkController.getNYPizzas();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initialize2();
@@ -38,6 +43,10 @@ public class CurrentOrdersController implements Initializable {
         pizzaList = FXCollections.observableArrayList();
         addAllPizzas();
         pizzaListView.setItems(pizzaList);
+        if (!pizzaList.isEmpty()) {
+            orderNumber = 0;
+            orderNumberField.setText("0");
+        }
     }
 
     @FXML
@@ -96,25 +105,99 @@ public class CurrentOrdersController implements Initializable {
         }
     }
 
+    private double currentPrice;
+
+    @FXML
+    private TextField subtotal;
+
+    private static final double SALES_TAX_RATE = 0.06625;
+
+    @FXML
+    private TextField salesTax;
+
+    @FXML
+    private TextField total;
+
     private void addAllPizzas() {
-        ArrayList<Pizza> chicagoPizzas = ChicagoController.getChicagoPizzas();
+        if (pizzaList.isEmpty()) {
+            orderNumber+=1;
+            orderNumberField.setText(Integer.toString(orderNumber));
+        }
+        double price=0;
         for (Pizza pizza : chicagoPizzas) {
             if (pizza!=null && pizza.getSize()!=null) {
-                pizzaList.add("Chicago Pizza "+ pizza.toString());
+                price = pizza.price();
+                pizzaList.add(price + " - Chicago Pizza "+ pizza.toString());
                 pizzaListView.setItems(pizzaList);
             }
+            assert pizza != null;
+            currentPrice+=pizza.price();
         }
-        ArrayList<Pizza> nyPizzas = NewYorkController.getNYPizzas();
         for (Pizza pizza : nyPizzas) {
             if (pizza!=null && pizza.getSize()!=null) {
-                pizzaList.add("New York Pizza " + pizza.toString());
+                price = pizza.price();
+                pizzaList.add(price + " - New York Pizza " + pizza.toString());
                 pizzaListView.setItems(pizzaList);
             }
+            assert pizza != null;
+            currentPrice+=Math.ceil(price * 100) / 100;
         }
+        subtotal.setText(String.format("%.2f", currentPrice));
+        double salesTaxAmount = Math.ceil(currentPrice * SALES_TAX_RATE * 100) / 100;
+        salesTax.setText(String.format("%.2f", salesTaxAmount));
+        double totalWithTax = Math.ceil((currentPrice + salesTaxAmount) * 100) / 100;
+        total.setText(String.format("%.2f", totalWithTax));
     }
 
     @FXML
+    private void onClearOrderClick() {
+        pizzaList.clear();
+        pizzaListView.setItems(pizzaList);
+        currentPrice = 0.0;
+        subtotal.setText("");
+        salesTax.setText("");
+        total.setText("");
+        orderNumberField.setText("");
+    }
+
+    @FXML
+    private double setSubtotalForSelectedPizza() {
+        AtomicReference<Double> subtotalValue = new AtomicReference<>(0.0);
+        pizzaListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            double price = 0.0;
+            boolean found = false;
+            if (newValue != null) {
+                // Check for Chicago Pizza
+                for (Pizza pizza : chicagoPizzas) {
+                    price = Math.ceil(pizza.price() * 100) / 100;
+                    if ((price + " - Chicago Pizza " + pizza.toString()).equals(newValue)) {
+                        found = true;
+                        subtotal.setText(String.format("%.2f", price));
+                        subtotalValue.set(price);
+                        break;
+                    }
+                }
+                if (!found) {
+                    for (Pizza pizza : nyPizzas) {
+                        price = Math.ceil(pizza.price() * 100) / 100;
+                        if ((price + " - New York Pizza " + pizza.toString()).equals(newValue)) {
+                            found = true;
+                            subtotal.setText(String.format("%.2f", price));
+                            subtotalValue.set(price);
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+        return subtotalValue.get();
+    }
+
+
+
+    @FXML
     private void onPlaceOrderClick() {
+        onClearOrderClick();
         orderNumber+=1;
         String orderNumberStr = Integer.toString(orderNumber);
         orderNumberField.setText(orderNumberStr);
@@ -123,17 +206,30 @@ public class CurrentOrdersController implements Initializable {
     @FXML
     private void onRemovePizzaClick(){
         String selectedPizza = pizzaListView.getSelectionModel().getSelectedItem();
-
         if (selectedPizza != null) {
             pizzaList.remove(selectedPizza);
-
-            if (selectedPizza.startsWith("Chicago Pizza")) {
-                ArrayList<Pizza> chicagoPizzas = ChicagoController.getChicagoPizzas();
-                chicagoPizzas.removeIf(pizza -> selectedPizza.equals("Chicago Pizza " + pizza.toString()));
-            } else if (selectedPizza.startsWith("New York Pizza")) {
-                ArrayList<Pizza> nyPizzas = NewYorkController.getNYPizzas();
-                nyPizzas.removeIf(pizza -> selectedPizza.equals("New York Pizza " + pizza.toString()));
+            double priceToRemove = setSubtotalForSelectedPizza();
+            if (selectedPizza.contains("Chicago Pizza")) {
+                for (Pizza pizza : chicagoPizzas) {
+                    if (selectedPizza.equals("Chicago Pizza " + pizza.toString())) {
+                        chicagoPizzas.remove(pizza);
+                        break;
+                    }
+                }
+            } else if (selectedPizza.contains("New York Pizza")) {
+                for (Pizza pizza : nyPizzas) {
+                    if (selectedPizza.equals("New York Pizza " + pizza.toString())) {
+                        nyPizzas.remove(pizza);
+                        break;
+                    }
+                }
             }
+            currentPrice -= priceToRemove;
+            subtotal.setText(String.format("%.2f", currentPrice));
+            double salesTaxAmount = Math.ceil(currentPrice * SALES_TAX_RATE * 100) / 100;
+            salesTax.setText(String.format("%.2f", salesTaxAmount));
+            double totalWithTax = Math.ceil((currentPrice + salesTaxAmount) * 100) / 100;
+            total.setText(String.format("%.2f", totalWithTax));
         }
     }
 }

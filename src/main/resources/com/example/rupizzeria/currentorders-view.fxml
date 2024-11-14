@@ -21,14 +21,14 @@
       <TextField fx:id="orderNumberField" layoutX="113.0" layoutY="102.0" />
       <ListView fx:id="pizzaListView" layoutX="26.0" layoutY="135.0" prefHeight="268.0" prefWidth="566.0" />
       <Text layoutX="28.0" layoutY="435.0" strokeType="OUTSIDE" strokeWidth="0.0" text="subtotal $" />
-      <TextField layoutX="81.0" layoutY="419.0" prefHeight="25.0" prefWidth="78.0" />
+      <TextField fx:id="subtotal" layoutX="81.0" layoutY="419.0" prefHeight="25.0" prefWidth="78.0" />
       <Text layoutX="435.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" text="order total $" />
-      <TextField layoutX="507.0" layoutY="418.0" prefHeight="25.0" prefWidth="78.0" />
+      <TextField fx:id="total" layoutX="507.0" layoutY="418.0" prefHeight="25.0" prefWidth="78.0" />
       <Button fx:id="placeOrderButton" layoutX="468.0" layoutY="473.0" mnemonicParsing="false" onAction="#onPlaceOrderClick" text="Place Order" />
       <Text layoutX="225.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sales Tax $" />
-      <TextField layoutX="292.0" layoutY="419.0" prefHeight="25.0" prefWidth="78.0" />
+      <TextField fx:id="salesTax" layoutX="292.0" layoutY="419.0" prefHeight="25.0" prefWidth="78.0" />
       <Button fx:id="removePizzaButton" layoutX="54.0" layoutY="473.0" mnemonicParsing="false" onAction="#onRemovePizzaClick" text="Remove Pizza" />
-      <Button fx:id="clearOrderButton" layoutX="254.0" layoutY="473.0" mnemonicParsing="false" text="Clear Order" />
+      <Button fx:id="clearOrderButton" layoutX="254.0" layoutY="473.0" mnemonicParsing="false" text="Clear Order" onAction="#onClearOrderClick"/>
       <Rectangle fx:id="homeButtonRec" arcHeight="5.0" arcWidth="5.0" fill="#d6b0b0" height="41.0" layoutX="565.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="41.0" />
       <ImageView fx:id="homeButton" fitHeight="52.0" fitWidth="53.0" layoutX="559.0" layoutY="9.0" onMousePressed="#handleHomeButtonClick" pickOnBounds="true" preserveRatio="true">
          <image>
