@@ -175,23 +175,23 @@ public class ChicagoController implements Initializable {
     @FXML
     private Pizza makePizza() {
         Pizza newPizza = null;
-        ChicagoPizza cpizza = new ChicagoPizza();
+        ChicagoPizza chicagoPizza = new ChicagoPizza();
         if (chooseType.getValue() != null) {
             updateCrustType();
             if (chooseType.getValue().equals("Deluxe")) {
                 Image image = new Image("file:src/main/resources/images/chicagodeluxepizza.jpg");
                 dynamicImage.setImage(image);
-                return makePizzaHelper(newPizza, cpizza);
+                return makePizzaHelper(newPizza, chicagoPizza);
             }
             if (chooseType.getValue().equals("BBQ Chicken")) {
                 Image image = new Image("file:src/main/resources/images/chicagobbqchicken.jpg");
                 dynamicImage.setImage(image);
-                return makePizzaHelper(newPizza, cpizza);
+                return makePizzaHelper(newPizza, chicagoPizza);
             }
             if (chooseType.getValue().equals("Meatzza")) {
                 Image image = new Image("file:src/main/resources/images/chicagomeatzza.jpg");
                 dynamicImage.setImage(image);
-                return makePizzaHelper(newPizza, cpizza);
+                return makePizzaHelper(newPizza, chicagoPizza);
             }
             if (chooseType.getValue().equals("Build your own")) {
                 Image image = new Image("file:src/main/resources/images/buildyourownpizza.png");
@@ -200,7 +200,7 @@ public class ChicagoController implements Initializable {
                 selectedToppings.setDisable(false);
                 leftArrowButton.setDisable(false);
                 rightArrowButton.setDisable(false);
-                newPizza = cpizza.createBuildYourOwn();
+                newPizza = chicagoPizza.createBuildYourOwn();
                 newPizza.setSize(getSizeFromToggleGroup());
                 if (newPizza.getSize() != null) {
                     price.setText(String.valueOf(newPizza.price()));
@@ -226,6 +226,10 @@ public class ChicagoController implements Initializable {
         }
         if (chooseType.getValue().equals("Meatzza")) {
             newPizza = cpizza.createMeatzza();
+        }
+        newPizza.setSize(getSizeFromToggleGroup());
+        if (newPizza.getSize() != null) {
+            price.setText(String.valueOf(newPizza.price()));
         }
         newPizza.setSize(getSizeFromToggleGroup());
         if (newPizza.getSize() != null) {
@@ -461,37 +465,30 @@ public class ChicagoController implements Initializable {
 
     @FXML
     private void onAddToOrderClick() {
-        Pizza newPizza = makePizza();
-        boolean isValid = true;
-        // Ensure size is set
-        if (chooseType.getValue() == null) {
-            showAlert("Select Pizza Type", "Please select a pizza type from the dropdown.");
-            isValid = false;
-
-        }
-        // Check if size is still null
+        boolean isValidOrder = true;
         if (getSizeFromToggleGroup()==null) {
-            showAlert("Missing Size", "Please select a size before adding to the order.");
-            isValid = false;
+            showAlert("Missing Argument", "Please select a size.");
+            isValidOrder = false;
         }
-
-        // Proceed with adding to order if size is set
-        if (newPizza != null && CurrentOrdersController.getInstance() != null && isValid) {
-            CurrentOrdersController.getInstance().addPizzaToCurrentOrder(newPizza, "Chicago");
+        if (chooseType.getValue()==null) {
+            showAlert("Missing Argument", "Please select a type from the dropdown.");
+            isValidOrder = false;
+        }
+        if(isValidOrder){
+            pizzaArrayList.add(makePizza());
 
             Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
             confirmationAlert.setTitle("Order Confirmation");
             confirmationAlert.setHeaderText(null);
-            confirmationAlert.setContentText("Your " + newPizza.getSize().toString() + " " + chooseType.getValue() + " Chicago pizza has been successfully added to your order!");
+            confirmationAlert.setContentText("Your " + getSizeFromToggleGroup().toString() + " " + chooseType.getValue() + " New York pizza has been successfully added to your order!");
             confirmationAlert.showAndWait();
-        } else if (CurrentOrdersController.getInstance() == null) {
-            System.out.println("Error: CurrentOrdersController instance is not initialized.");
         }
     }
 
     public static ArrayList<Pizza> getChicagoPizzas() {
         return pizzaArrayList;
     }
+
     @FXML
     private Size getSizeFromToggleGroup() {
         if (size.getSelectedToggle() != null) {

@@ -474,8 +474,9 @@ public class NewYorkController implements Initializable {
             showAlert("Missing Argument", "Please select a type from the dropdown.");
             isValidOrder = false;
         }
-        pizzaArrayList.add(makePizza());
         if(isValidOrder){
+            pizzaArrayList.add(makePizza());
+
             Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
             confirmationAlert.setTitle("Order Confirmation");
             confirmationAlert.setHeaderText(null);

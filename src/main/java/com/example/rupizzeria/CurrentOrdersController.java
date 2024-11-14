@@ -38,33 +38,15 @@ public class CurrentOrdersController implements Initializable {
 
     private static ArrayList<Pizza> nyPizzas = NewYorkController.getNYPizzas();
 
-    private static CurrentOrdersController instance;
-
-    public static CurrentOrdersController getInstance() {
-        if (instance == null) {
-            try {
-                FXMLLoader loader = new FXMLLoader(CurrentOrdersController.class.getResource("currentorders-view.fxml"));
-                loader.load();
-                instance = loader.getController();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return instance;
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        instance = this;  // Ensure instance is set on initialize
         initialize2();
         orderNumberField.setEditable(false);
         pizzaList = FXCollections.observableArrayList();
         addAllPizzas();
         pizzaListView.setItems(pizzaList);
-        if (!pizzaList.isEmpty()) {
-            currentOrder.setOrderNum(0);
-            orderNumberField.setText("0");
-        }
+        orderNumberField.setText("0");
+        currentOrder = new Order(currentOrder.getOrderNum(), null);
     }
 
     @FXML
@@ -136,49 +118,15 @@ public class CurrentOrdersController implements Initializable {
     @FXML
     private TextField total;
 
-    public void addPizzaToCurrentOrder(Pizza pizza, String style) {
-        if (currentOrder == null) {
-            currentOrder = new Order(currentOrder.getOrderNum(), pizza);  // Initialize if needed
-        } else {
-            currentOrder.addPizza(pizza);  // Add pizza to existing order
-        }
-
-        String pizzaDescription = pizza.price() + " - " + style + " Pizza " + pizza.toString();
-        pizzaList.add(pizzaDescription);  // Update pizza list
-        pizzaListView.setItems(pizzaList);
-
-        // Calculate and update pricing
-        currentPrice += pizza.price();
-        subtotal.setText(String.format("%.2f", currentPrice));
-        double salesTaxAmount = Math.ceil(currentPrice * SALES_TAX_RATE * 100) / 100;
-        salesTax.setText(String.format("%.2f", salesTaxAmount));
-        double totalWithTax = Math.ceil((currentPrice + salesTaxAmount) * 100) / 100;
-        total.setText(String.format("%.2f", totalWithTax));
-    }
-
-    public void refreshOrderList() {
-        pizzaList.clear();
-        for (Pizza pizza : currentOrder.getOrder()) {
-            String style = chicagoPizzas.contains(pizza) ? "Chicago" : nyPizzas.contains(pizza) ? "New York" : "Unknown";
-            String pizzaDescription = pizza.price() + " - " + style + " Pizza " + pizza.toString();
-            pizzaList.add(pizzaDescription);
-        }
-        pizzaListView.setItems(pizzaList);
-    }
-
-
     private void addAllPizzas() {
-        if (pizzaList.isEmpty()) {
-            currentOrder.setOrderNum(currentOrder.getOrderNum() + 1);
-            orderNumberField.setText(Integer.toString(currentOrder.getOrderNum()));
-            currentOrder = new Order(currentOrder.getOrderNum(), null); // Create a new Order
-        }
+
         double price=0;
         for (Pizza pizza : chicagoPizzas) {
             if (pizza!=null && pizza.getSize()!=null) {
                 price = pizza.price();
                 pizzaList.add(price + " - Chicago Pizza "+ pizza.toString());
                 pizzaListView.setItems(pizzaList);
+                currentOrder.addPizza(pizza);
             }
             assert pizza != null;
             currentPrice+=pizza.price();
@@ -188,6 +136,7 @@ public class CurrentOrdersController implements Initializable {
                 price = pizza.price();
                 pizzaList.add(price + " - New York Pizza " + pizza.toString());
                 pizzaListView.setItems(pizzaList);
+                currentOrder.addPizza(pizza);
             }
             assert pizza != null;
             currentPrice+=Math.ceil(price * 100) / 100;
@@ -203,13 +152,14 @@ public class CurrentOrdersController implements Initializable {
     private void onClearOrderClick() {
         chicagoPizzas.clear();
         nyPizzas.clear();
+        currentOrder.getOrder().clear();
         pizzaList.clear();
         pizzaListView.setItems(pizzaList);
         currentPrice = 0.0;
         subtotal.setText("");
         salesTax.setText("");
         total.setText("");
-        orderNumberField.setText("");
+        //orderNumberField.setText("");
     }
 
     @FXML
@@ -245,15 +195,12 @@ public class CurrentOrdersController implements Initializable {
         return subtotalValue.get();
     }
 
-
-
     @FXML
     private void onPlaceOrderClick() {
         onClearOrderClick();  // Clear the UI
         currentOrder = new Order(currentOrder.getOrderNum() + 1, null);  // Reset current order
         orderNumberField.setText(Integer.toString(currentOrder.getOrderNum()));
     }
-
 
     @FXML
     private void onRemovePizzaClick(){
@@ -283,5 +230,9 @@ public class CurrentOrdersController implements Initializable {
             double totalWithTax = Math.ceil((currentPrice + salesTaxAmount) * 100) / 100;
             total.setText(String.format("%.2f", totalWithTax));
         }
+    }
+
+    private ArrayList<Pizza> getCurrOrder(){
+        return currentOrder.getOrder();
     }
 }

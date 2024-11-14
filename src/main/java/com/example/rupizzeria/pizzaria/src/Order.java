@@ -21,7 +21,7 @@ public class Order {
         return number;
     }
 
-    public ArrayList<Pizza> getOrder (){
+    public ArrayList<Pizza> getOrder(){
         return pizzas;
     }
 
