@@ -37,7 +37,7 @@ public class CurrentOrdersController implements Initializable {
 
     private static ObservableList<Pizza> chicagoPizzas = ChicagoController.getChicagoPizzasList();
 
-    private static ArrayList<Pizza> nyPizzas = NewYorkController.getNYPizzas();
+    private static ObservableList<Pizza> nyPizzas = NewYorkController.getNYPizzas();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -50,7 +50,7 @@ public class CurrentOrdersController implements Initializable {
 
         // Listen for changes in the ObservableList and refresh the UI
         chicagoPizzas.addListener((ListChangeListener<Pizza>) change -> refreshOrderList());
-        //nyPizzas.addListener((ListChangeListener<Pizza>) change -> refreshOrderList());
+        nyPizzas.addListener((ListChangeListener<Pizza>) change -> refreshOrderList());
     }
 
     private void refreshOrderList() {

@@ -41,7 +41,7 @@ public class NewYorkController implements Initializable {
     @FXML
     private TextField crustTypeField;
 
-    private static ArrayList<Pizza> pizzaArrayList = new ArrayList<>();
+    private static ObservableList<Pizza> pizzaArrayList = FXCollections.observableArrayList();
 
     private static ArrayList<Topping> byoToppings = new ArrayList<>();
 
@@ -485,7 +485,7 @@ public class NewYorkController implements Initializable {
         }
     }
 
-    public static ArrayList<Pizza> getNYPizzas() {
+    public static ObservableList<Pizza> getNYPizzas() {
         return pizzaArrayList;
     }
 
