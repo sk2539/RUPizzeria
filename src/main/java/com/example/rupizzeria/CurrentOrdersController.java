@@ -156,6 +156,16 @@ public class CurrentOrdersController implements Initializable {
         total.setText(String.format("%.2f", totalWithTax));
     }
 
+    public void refreshOrderList() {
+        pizzaList.clear();
+        for (Pizza pizza : currentOrder.getOrder()) {
+            String style = chicagoPizzas.contains(pizza) ? "Chicago" : nyPizzas.contains(pizza) ? "New York" : "Unknown";
+            String pizzaDescription = pizza.price() + " - " + style + " Pizza " + pizza.toString();
+            pizzaList.add(pizzaDescription);
+        }
+        pizzaListView.setItems(pizzaList);
+    }
+
 
     private void addAllPizzas() {
         if (pizzaList.isEmpty()) {
@@ -191,6 +201,8 @@ public class CurrentOrdersController implements Initializable {
 
     @FXML
     private void onClearOrderClick() {
+        chicagoPizzas.clear();
+        nyPizzas.clear();
         pizzaList.clear();
         pizzaListView.setItems(pizzaList);
         currentPrice = 0.0;

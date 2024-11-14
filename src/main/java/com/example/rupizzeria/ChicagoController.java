@@ -462,12 +462,27 @@ public class ChicagoController implements Initializable {
     @FXML
     private void onAddToOrderClick() {
         Pizza newPizza = makePizza();
-        if (newPizza != null && CurrentOrdersController.getInstance() != null) {
-            CurrentOrdersController.getInstance().addPizzaToCurrentOrder(newPizza, "Chicago");  // Specify Chicago style
+        boolean isValid = true;
+        // Ensure size is set
+        if (chooseType.getValue() == null) {
+            showAlert("Select Pizza Type", "Please select a pizza type from the dropdown.");
+            isValid = false;
+
+        }
+        // Check if size is still null
+        if (getSizeFromToggleGroup()==null) {
+            showAlert("Missing Size", "Please select a size before adding to the order.");
+            isValid = false;
+        }
+
+        // Proceed with adding to order if size is set
+        if (newPizza != null && CurrentOrdersController.getInstance() != null && isValid) {
+            CurrentOrdersController.getInstance().addPizzaToCurrentOrder(newPizza, "Chicago");
+
             Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
             confirmationAlert.setTitle("Order Confirmation");
             confirmationAlert.setHeaderText(null);
-            confirmationAlert.setContentText("Your " + getSizeFromToggleGroup().toString() + " " + chooseType.getValue() + " Chicago pizza has been successfully added to your order!");
+            confirmationAlert.setContentText("Your " + newPizza.getSize().toString() + " " + chooseType.getValue() + " Chicago pizza has been successfully added to your order!");
             confirmationAlert.showAndWait();
         } else if (CurrentOrdersController.getInstance() == null) {
             System.out.println("Error: CurrentOrdersController instance is not initialized.");
@@ -477,7 +492,6 @@ public class ChicagoController implements Initializable {
     public static ArrayList<Pizza> getChicagoPizzas() {
         return pizzaArrayList;
     }
-
     @FXML
     private Size getSizeFromToggleGroup() {
         if (size.getSelectedToggle() != null) {

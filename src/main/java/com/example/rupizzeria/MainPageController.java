@@ -49,6 +49,8 @@ public class MainPageController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("currentorders-view.fxml"));
             Parent root = loader.load();
+            CurrentOrdersController currentOrdersController = loader.getController();
+            currentOrdersController.refreshOrderList();
             Stage stage = new Stage();
             stage.setTitle("My Shopping Cart");
             stage.setScene(new Scene(root));
