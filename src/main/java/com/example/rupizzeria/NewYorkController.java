@@ -175,23 +175,23 @@ public class NewYorkController implements Initializable {
     @FXML
     private Pizza makePizza() {
         Pizza newPizza = null;
-        NYPizza cpizza = new NYPizza();
+        NYPizza nypizza = new NYPizza();
         if (chooseType.getValue() != null) {
             updateCrustType();
             if (chooseType.getValue().equals("Deluxe")) {
                 Image image = new Image("file:src/main/resources/images/nydeluxe.jpg");
                 dynamicImage.setImage(image);
-                return makePizzaHelper(newPizza, cpizza);
+                return makePizzaHelper(newPizza, nypizza);
             }
             if (chooseType.getValue().equals("BBQ Chicken")) {
                 Image image = new Image("file:src/main/resources/images/nybbqchicken.jpg");
                 dynamicImage.setImage(image);
-                return makePizzaHelper(newPizza, cpizza);
+                return makePizzaHelper(newPizza, nypizza);
             }
             if (chooseType.getValue().equals("Meatzza")) {
                 Image image = new Image("file:src/main/resources/images/nymeattza.jpg");
                 dynamicImage.setImage(image);
-                return makePizzaHelper(newPizza, cpizza);
+                return makePizzaHelper(newPizza, nypizza);
             }
             if (chooseType.getValue().equals("Build your own")) {
                 Image image = new Image("file:src/main/resources/images/buildyourownpizza.png");
@@ -200,7 +200,7 @@ public class NewYorkController implements Initializable {
                 selectedToppings.setDisable(false);
                 leftArrowButton.setDisable(false);
                 rightArrowButton.setDisable(false);
-                newPizza = cpizza.createBuildYourOwn();
+                newPizza = nypizza.createBuildYourOwn();
                 newPizza.setSize(getSizeFromToggleGroup());
                 if (newPizza.getSize() != null) {
                     price.setText(String.valueOf(newPizza.price()));
@@ -218,7 +218,19 @@ public class NewYorkController implements Initializable {
         selectedToppings.setDisable(false);
         leftArrowButton.setDisable(true);
         rightArrowButton.setDisable(true);
-        newPizza = cpizza.createDeluxe();
+        if (chooseType.getValue().equals("Deluxe")) {
+            newPizza = cpizza.createDeluxe();
+        }
+        if (chooseType.getValue().equals("BBQ Chicken")) {
+            newPizza = cpizza.createBBQChicken();
+        }
+        if (chooseType.getValue().equals("Meatzza")) {
+            newPizza = cpizza.createMeatzza();
+        }
+        newPizza.setSize(getSizeFromToggleGroup());
+        if (newPizza.getSize() != null) {
+            price.setText(String.valueOf(newPizza.price()));
+        }
         newPizza.setSize(getSizeFromToggleGroup());
         if (newPizza.getSize() != null) {
             price.setText(String.valueOf(newPizza.price()));
