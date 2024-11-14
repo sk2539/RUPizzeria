@@ -1,5 +1,6 @@
 package com.example.rupizzeria;
 
+import com.example.rupizzeria.pizzaria.src.Order;
 import com.example.rupizzeria.pizzaria.src.Pizza;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,7 +23,6 @@ import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class CurrentOrdersController implements Initializable {
-    int orderNumber;
 
     @FXML
     private TextField orderNumberField;
@@ -32,19 +32,37 @@ public class CurrentOrdersController implements Initializable {
 
     private ObservableList<String> pizzaList;
 
+    private Order currentOrder = new Order(0, null);
+
     private static ArrayList<Pizza> chicagoPizzas = ChicagoController.getChicagoPizzas();
 
     private static ArrayList<Pizza> nyPizzas = NewYorkController.getNYPizzas();
 
+    private static CurrentOrdersController instance;
+
+    public static CurrentOrdersController getInstance() {
+        if (instance == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(CurrentOrdersController.class.getResource("currentorders-view.fxml"));
+                loader.load();
+                instance = loader.getController();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return instance;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        instance = this;  // Ensure instance is set on initialize
         initialize2();
         orderNumberField.setEditable(false);
         pizzaList = FXCollections.observableArrayList();
         addAllPizzas();
         pizzaListView.setItems(pizzaList);
         if (!pizzaList.isEmpty()) {
-            orderNumber = 0;
+            currentOrder.setOrderNum(0);
             orderNumberField.setText("0");
         }
     }
@@ -118,10 +136,32 @@ public class CurrentOrdersController implements Initializable {
     @FXML
     private TextField total;
 
+    public void addPizzaToCurrentOrder(Pizza pizza, String style) {
+        if (currentOrder == null) {
+            currentOrder = new Order(currentOrder.getOrderNum(), pizza);  // Initialize if needed
+        } else {
+            currentOrder.addPizza(pizza);  // Add pizza to existing order
+        }
+
+        String pizzaDescription = pizza.price() + " - " + style + " Pizza " + pizza.toString();
+        pizzaList.add(pizzaDescription);  // Update pizza list
+        pizzaListView.setItems(pizzaList);
+
+        // Calculate and update pricing
+        currentPrice += pizza.price();
+        subtotal.setText(String.format("%.2f", currentPrice));
+        double salesTaxAmount = Math.ceil(currentPrice * SALES_TAX_RATE * 100) / 100;
+        salesTax.setText(String.format("%.2f", salesTaxAmount));
+        double totalWithTax = Math.ceil((currentPrice + salesTaxAmount) * 100) / 100;
+        total.setText(String.format("%.2f", totalWithTax));
+    }
+
+
     private void addAllPizzas() {
         if (pizzaList.isEmpty()) {
-            orderNumber+=1;
-            orderNumberField.setText(Integer.toString(orderNumber));
+            currentOrder.setOrderNum(currentOrder.getOrderNum() + 1);
+            orderNumberField.setText(Integer.toString(currentOrder.getOrderNum()));
+            currentOrder = new Order(currentOrder.getOrderNum(), null); // Create a new Order
         }
         double price=0;
         for (Pizza pizza : chicagoPizzas) {
@@ -197,11 +237,11 @@ public class CurrentOrdersController implements Initializable {
 
     @FXML
     private void onPlaceOrderClick() {
-        onClearOrderClick();
-        orderNumber+=1;
-        String orderNumberStr = Integer.toString(orderNumber);
-        orderNumberField.setText(orderNumberStr);
+        onClearOrderClick();  // Clear the UI
+        currentOrder = new Order(currentOrder.getOrderNum() + 1, null);  // Reset current order
+        orderNumberField.setText(Integer.toString(currentOrder.getOrderNum()));
     }
+
 
     @FXML
     private void onRemovePizzaClick(){

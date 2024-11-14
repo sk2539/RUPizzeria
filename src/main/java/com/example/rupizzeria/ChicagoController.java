@@ -453,23 +453,16 @@ public class ChicagoController implements Initializable {
 
     @FXML
     private void onAddToOrderClick() {
-        boolean isValidOrder = true;
-        if (getSizeFromToggleGroup()==null) {
-            showAlert("Missing Argument", "Please select a size.");
-            isValidOrder = false;
-        }
-        if (chooseType.getValue()==null) {
-            showAlert("Missing Argument", "Please select a type from the dropdown.");
-            isValidOrder = false;
-        }
-        pizzaArrayList.add(makePizza());
-
-        if(isValidOrder) {
+        Pizza newPizza = makePizza();
+        if (newPizza != null && CurrentOrdersController.getInstance() != null) {
+            CurrentOrdersController.getInstance().addPizzaToCurrentOrder(newPizza, "Chicago");  // Specify Chicago style
             Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
             confirmationAlert.setTitle("Order Confirmation");
             confirmationAlert.setHeaderText(null);
             confirmationAlert.setContentText("Your " + getSizeFromToggleGroup().toString() + " " + chooseType.getValue() + " Chicago pizza has been successfully added to your order!");
             confirmationAlert.showAndWait();
+        } else if (CurrentOrdersController.getInstance() == null) {
+            System.out.println("Error: CurrentOrdersController instance is not initialized.");
         }
     }
 
