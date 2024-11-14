@@ -1,11 +1,13 @@
 package com.example.rupizzeria;
 
+import com.example.rupizzeria.pizzaria.src.Order;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -30,8 +32,16 @@ public class OrdersPlacedController implements Initializable {
     @FXML
     private Rectangle homeButtonRec;
 
+    @FXML
+    private TableView<Order> ordersTable;
+
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle){
+        initialize2();
+
+    }
+
+    public void initialize2() {
         browseButton.setStyle("-fx-background-color: #f4f4f4;");
         browseButton.setOnMouseEntered(event ->
                 browseButton.setStyle("-fx-background-color: #d6b0b0;")
@@ -71,4 +81,20 @@ public class OrdersPlacedController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void handleBrowseButtonClick(){
+
+    }
+
+    @FXML
+    private void handleCancelClick(){
+
+    }
+
+    @FXML
+    private void handleExportClick(){
+
+    }
+
 }
