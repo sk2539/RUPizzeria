@@ -47,8 +47,6 @@ public class CurrentOrdersController implements Initializable {
         addAllPizzas();
         pizzaListView.setItems(pizzaList);
         orderNumberField.setText("0");
-
-        // Listen for changes in the ObservableList and refresh the UI
         chicagoPizzas.addListener((ListChangeListener<Pizza>) change -> refreshOrderList());
         nyPizzas.addListener((ListChangeListener<Pizza>) change -> refreshOrderList());
     }
@@ -64,7 +62,7 @@ public class CurrentOrdersController implements Initializable {
             pizzaList.add(pizzaDescription);
         }
         pizzaListView.setItems(pizzaList);
-        updatePricing(); // Update subtotal, sales tax, and total
+        updatePricing();
     }
 
     private void updatePricing() {
@@ -79,11 +77,7 @@ public class CurrentOrdersController implements Initializable {
 
     void loadOrderData() {
         pizzaList.clear();
-        currentPrice = 0.0;  // Reset the price to recalculate
-
-        // Refresh the list with pizzas from chicagoPizzas and nyPizzas
-        addAllPizzas();  // This will add pizzas to the view and current order
-
+        currentPrice = 0.0;
         pizzaListView.setItems(pizzaList);
     }
 
@@ -157,9 +151,9 @@ public class CurrentOrdersController implements Initializable {
     private TextField total;
 
     private void addAllPizzas() {
-        pizzaList.clear();  // Clear the list to prevent duplicates
+        pizzaList.clear();
         currentOrder.getOrder().clear();
-
+        currentPrice = 0.0;
         double price=0;
         for (Pizza pizza : chicagoPizzas) {
             if (pizza!=null && pizza.getSize()!=null) {
@@ -199,7 +193,6 @@ public class CurrentOrdersController implements Initializable {
         subtotal.setText("");
         salesTax.setText("");
         total.setText("");
-        //orderNumberField.setText("");
     }
 
     @FXML
@@ -209,7 +202,6 @@ public class CurrentOrdersController implements Initializable {
             double price = 0.0;
             boolean found = false;
             if (newValue != null) {
-                // Check for Chicago Pizza
                 for (Pizza pizza : chicagoPizzas) {
                     price = Math.ceil(pizza.price() * 100) / 100;
                     if ((price + " - Chicago Pizza " + pizza.toString()).equals(newValue)) {
@@ -237,8 +229,8 @@ public class CurrentOrdersController implements Initializable {
 
     @FXML
     private void onPlaceOrderClick() {
-        onClearOrderClick();  // Clear the UI
-        currentOrder = new Order(currentOrder.getOrderNum() + 1, null);  // Reset current order
+        onClearOrderClick();
+        currentOrder = new Order(currentOrder.getOrderNum() + 1, null);
         orderNumberField.setText(Integer.toString(currentOrder.getOrderNum()));
     }
 
@@ -247,23 +239,26 @@ public class CurrentOrdersController implements Initializable {
         String selectedPizza = pizzaListView.getSelectionModel().getSelectedItem();
         if (selectedPizza != null) {
             pizzaList.remove(selectedPizza);
-            double priceToRemove = setSubtotalForSelectedPizza();
+            double price = 0.0;
             if (selectedPizza.contains("Chicago Pizza")) {
                 for (Pizza pizza : chicagoPizzas) {
-                    if (selectedPizza.equals("Chicago Pizza " + pizza.toString())) {
+                    price = Math.ceil(pizza.price() * 100) / 100;
+                    if (selectedPizza.equals((price + " - Chicago Pizza " + pizza.toString()))) {
                         chicagoPizzas.remove(pizza);
+                        refreshOrderList();
                         break;
                     }
                 }
             } else if (selectedPizza.contains("New York Pizza")) {
                 for (Pizza pizza : nyPizzas) {
-                    if (selectedPizza.equals("New York Pizza " + pizza.toString())) {
+                    price = Math.ceil(pizza.price() * 100) / 100;
+                    if (selectedPizza.equals((price + " - New York Pizza " + pizza.toString()))) {
                         nyPizzas.remove(pizza);
+                        refreshOrderList();
                         break;
                     }
                 }
             }
-            currentPrice -= priceToRemove;
             subtotal.setText(String.format("%.2f", currentPrice));
             double salesTaxAmount = Math.ceil(currentPrice * SALES_TAX_RATE * 100) / 100;
             salesTax.setText(String.format("%.2f", salesTaxAmount));

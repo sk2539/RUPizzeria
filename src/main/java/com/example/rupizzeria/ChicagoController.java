@@ -41,8 +41,6 @@ public class ChicagoController implements Initializable {
     @FXML
     private TextField crustTypeField;
 
-    //private static ArrayList<Pizza> pizzaArrayList = new ArrayList<>();
-
     private static ArrayList<Topping> byoToppings = new ArrayList<>();
 
     private final String[] pizzaTypes = {"Deluxe", "BBQ Chicken", "Meatzza", "Build your own"};
@@ -56,7 +54,6 @@ public class ChicagoController implements Initializable {
     @FXML
     private TextField price;
 
-    // In ChicagoController
     private static ObservableList<Pizza> pizzaArrayList = FXCollections.observableArrayList();
 
     @Override
@@ -484,8 +481,7 @@ public class ChicagoController implements Initializable {
         if (isValidOrder) {
             Pizza pizza = makePizza();
             if (pizza != null) {
-                pizzaArrayList.add(pizza); // Add to ObservableList
-
+                pizzaArrayList.add(pizza);
                 Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
                 confirmationAlert.setTitle("Order Confirmation");
                 confirmationAlert.setHeaderText(null);
