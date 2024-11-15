@@ -6,6 +6,10 @@ public class Order {
     private int number; //order number
     private ArrayList<Pizza> pizzas; //can use List<E> instead of ArrayList<E>
 
+    public Order(int number, ArrayList<Pizza> pizzas){
+        this.number = number;
+        this.pizzas = pizzas;
+    }
     public Order(int number, Pizza pizza) {
         this.number = number;
         this.pizzas = new ArrayList<>();  // Initialize pizzas as a new ArrayList

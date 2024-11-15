@@ -33,7 +33,7 @@ public class CurrentOrdersController implements Initializable {
 
     private ObservableList<String> pizzaList;
 
-    private Order currentOrder = new Order(0, null);
+    private Order currentOrder = new Order(0, (Pizza) null);
 
     private static ObservableList<Pizza> chicagoPizzas = ChicagoController.getChicagoPizzasList();
 
@@ -229,8 +229,22 @@ public class CurrentOrdersController implements Initializable {
 
     @FXML
     private void onPlaceOrderClick() {
+        // Create a new ArrayList<Pizza> and add all pizzas to it
+        ArrayList<Pizza> pizzaList = new ArrayList<>();
+        pizzaList.addAll(chicagoPizzas);
+        pizzaList.addAll(nyPizzas);
+
+        // Create the new order with the combined pizza list
+        Order newOrder = new Order(currentOrder.getOrderNum() + 1, pizzaList);
+
+        // Add the order to the placed orders list
+        OrdersPlacedController.addOrder(newOrder);
+
+        // Clear the current order
         onClearOrderClick();
-        currentOrder = new Order(currentOrder.getOrderNum() + 1, null);
+
+        // Update the order number
+        currentOrder = new Order(currentOrder.getOrderNum() + 1, new ArrayList<>());
         orderNumberField.setText(Integer.toString(currentOrder.getOrderNum()));
     }
 
