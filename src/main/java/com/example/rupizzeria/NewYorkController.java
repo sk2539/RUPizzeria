@@ -36,7 +36,7 @@ public class NewYorkController implements Initializable {
     private RadioButton small;
 
     @FXML
-    private ChoiceBox<String> chooseType;
+    private ComboBox<String> chooseType;
 
     @FXML
     private TextField crustTypeField;

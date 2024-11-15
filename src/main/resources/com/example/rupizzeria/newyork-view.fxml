@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
@@ -20,7 +20,6 @@
             <Font name="Kristen ITC" size="30.0" />
          </font>
       </Text>
-      <ChoiceBox fx:id="chooseType" layoutX="45.0" layoutY="84.0" prefWidth="150.0" />
       <RadioButton fx:id="small" layoutX="46.0" layoutY="142.0" mnemonicParsing="false" text="Small">
          <toggleGroup>
             <ToggleGroup fx:id="size" />
@@ -58,5 +57,6 @@
       <ImageView fx:id="broccoliLayer" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="spinachLayer" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="jalapenoLayer" fitHeight="150.0" fitWidth="200.0" layoutX="373.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
+      <ComboBox fx:id="chooseType" layoutX="46.0" layoutY="82.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
