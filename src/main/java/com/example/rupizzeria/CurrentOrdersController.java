@@ -39,6 +39,8 @@ public class CurrentOrdersController implements Initializable {
 
     private static ObservableList<Pizza> nyPizzas = NewYorkController.getNYPizzas();
 
+    private static int orderNumber = 0;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initialize2();
@@ -46,9 +48,9 @@ public class CurrentOrdersController implements Initializable {
         pizzaList = FXCollections.observableArrayList();
         addAllPizzas();
         pizzaListView.setItems(pizzaList);
-        orderNumberField.setText("0");
         chicagoPizzas.addListener((ListChangeListener<Pizza>) change -> refreshOrderList());
         nyPizzas.addListener((ListChangeListener<Pizza>) change -> refreshOrderList());
+        orderNumberField.setText(String.valueOf(orderNumber));
     }
 
     private void refreshOrderList() {
@@ -196,56 +198,16 @@ public class CurrentOrdersController implements Initializable {
     }
 
     @FXML
-    private double setSubtotalForSelectedPizza() {
-        AtomicReference<Double> subtotalValue = new AtomicReference<>(0.0);
-        pizzaListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            double price = 0.0;
-            boolean found = false;
-            if (newValue != null) {
-                for (Pizza pizza : chicagoPizzas) {
-                    price = Math.ceil(pizza.price() * 100) / 100;
-                    if ((price + " - Chicago Pizza " + pizza.toString()).equals(newValue)) {
-                        found = true;
-                        subtotal.setText(String.format("%.2f", price));
-                        subtotalValue.set(price);
-                        break;
-                    }
-                }
-                if (!found) {
-                    for (Pizza pizza : nyPizzas) {
-                        price = Math.ceil(pizza.price() * 100) / 100;
-                        if ((price + " - New York Pizza " + pizza.toString()).equals(newValue)) {
-                            found = true;
-                            subtotal.setText(String.format("%.2f", price));
-                            subtotalValue.set(price);
-                            break;
-                        }
-                    }
-                }
-            }
-        });
-        return subtotalValue.get();
-    }
-
-    @FXML
     private void onPlaceOrderClick() {
-        // Create a new ArrayList<Pizza> and add all pizzas to it
         ArrayList<Pizza> pizzaList = new ArrayList<>();
         pizzaList.addAll(chicagoPizzas);
         pizzaList.addAll(nyPizzas);
-
-        // Create the new order with the combined pizza list
-        Order newOrder = new Order(currentOrder.getOrderNum() + 1, pizzaList);
-
-        // Add the order to the placed orders list
+        orderNumber+=1;
+        Order newOrder = new Order(orderNumber, pizzaList);
         OrdersPlacedController.addOrder(newOrder);
-
-        // Clear the current order
         onClearOrderClick();
-
-        // Update the order number
-        currentOrder = new Order(currentOrder.getOrderNum() + 1, new ArrayList<>());
-        orderNumberField.setText(Integer.toString(currentOrder.getOrderNum()));
+        currentOrder = new Order(orderNumber, new ArrayList<>());
+        orderNumberField.setText(Integer.toString(orderNumber));
     }
 
     @FXML

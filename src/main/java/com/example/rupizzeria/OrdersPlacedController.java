@@ -70,7 +70,7 @@ public class OrdersPlacedController implements Initializable {
         orderNumColumn.setStyle("-fx-alignment: CENTER;");
 
         // Order Total Column
-        TableColumn<Order, Double> totalColumn = new TableColumn<>("Total");
+        TableColumn<Order, Double> totalColumn = new TableColumn<>("Total ($)");
         totalColumn.setCellValueFactory(data -> {
             Order order = data.getValue();
             double total = order.getOrder().stream().mapToDouble(Pizza::price).sum();
