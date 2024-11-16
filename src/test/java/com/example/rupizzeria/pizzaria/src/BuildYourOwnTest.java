@@ -8,12 +8,24 @@ import static org.junit.Assert.*;
 
 public class BuildYourOwnTest {
 
+    private double roundUpToTwoDecimalPlaces(double value) {
+        double scaledValue = value * 100;
+        if (scaledValue % 1 == 0.5) {
+            return Math.ceil(value * 100) / 100.0;
+        }
+        else {
+            return Math.round(value * 100) / 100.0;
+        }
+    }
+
     @Test
     public void testSmallPizza() {
         ChicagoPizza chicagoPizza = new ChicagoPizza();
         Pizza pizza = chicagoPizza.createBuildYourOwn();
         pizza.setSize(Size.SMALL);
-        assertEquals(8.99, pizza.price(), 0.01);
+        String expectedPrice = String.format("%.2f", roundUpToTwoDecimalPlaces(8.99));
+        String actualPrice = String.format("%.2f", pizza.price());
+        assertEquals(expectedPrice, actualPrice);
     }
 
     @Test
@@ -26,7 +38,9 @@ public class BuildYourOwnTest {
         toppings.add(Topping.MUSHROOM);
         toppings.add(Topping.CHEDDAR);
         pizza.setToppings(toppings);
-        assertEquals(10.99 + (3 * 1.69), pizza.price(), 0.01);
+        String expectedPrice = String.format("%.2f", roundUpToTwoDecimalPlaces(10.99 + (3 * 1.69)));
+        String actualPrice = String.format("%.2f", pizza.price());
+        assertEquals(expectedPrice, actualPrice);
     }
 
     @Test
@@ -41,7 +55,9 @@ public class BuildYourOwnTest {
         toppings.add(Topping.SAUSAGE);
         toppings.add(Topping.GREENPEPPER);
         pizza.setToppings(toppings);
-        assertEquals(12.99 + (5 * 1.69), pizza.price(), 0.01);
+        String expectedPrice = String.format("%.2f", roundUpToTwoDecimalPlaces(12.99 + (5 * 1.69)));
+        String actualPrice = String.format("%.2f", pizza.price());
+        assertEquals(expectedPrice, actualPrice);
     }
 
     @Test
@@ -65,7 +81,9 @@ public class BuildYourOwnTest {
         toppings.add(Topping.BROCCOLI);
         toppings.add(Topping.JALAPENO);
         pizza.setToppings(toppings);
-        assertEquals(8.99 + (7 * 1.69), pizza.price(), 0.01);
+        String expectedPrice = String.format("%.2f", roundUpToTwoDecimalPlaces(8.99 + (7 * 1.69)));
+        String actualPrice = String.format("%.2f", pizza.price());
+        assertEquals(expectedPrice, actualPrice);
     }
     @Test
     public void testPriceMediumPizzaWithOneTopping() {
@@ -75,7 +93,9 @@ public class BuildYourOwnTest {
         ArrayList<Topping> toppings = new ArrayList<>();
         toppings.add(Topping.ONION);
         pizza.setToppings(toppings);
-        assertEquals(10.99 + 1.69, pizza.price(), 0.01);
+        String expectedPrice = String.format("%.2f", roundUpToTwoDecimalPlaces(10.99 + 1.69));
+        String actualPrice = String.format("%.2f", pizza.price());
+        assertEquals(expectedPrice, actualPrice);
     }
 
 }

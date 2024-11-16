@@ -24,7 +24,13 @@ public class BuildYourOwn extends Pizza{
         if(this.getToppings()!=null && this.getToppings().size() <= 7){
             price += (1.69 * this.getToppings().size());
         }
-        price = (int)(price * 100) / 100.0;
+        double scaledValue = price * 100;
+        if (scaledValue % 1 == 0.5) {
+            price = Math.ceil(price * 100) / 100.0;
+        }
+        else {
+            price = Math.round(price * 100) / 100.0;
+        }
         return price;
     }
 }
