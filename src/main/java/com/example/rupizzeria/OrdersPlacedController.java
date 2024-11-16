@@ -161,7 +161,7 @@ public class OrdersPlacedController implements Initializable {
 
     @FXML
     private void handleBrowseButtonClick() {
-        // Implement file browsing functionality if needed
+
     }
 
     @FXML

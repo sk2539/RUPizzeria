@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -200,8 +201,18 @@ public class CurrentOrdersController implements Initializable {
     @FXML
     private void onPlaceOrderClick() {
         ArrayList<Pizza> pizzaList = new ArrayList<>();
-        pizzaList.addAll(chicagoPizzas);
-        pizzaList.addAll(nyPizzas);
+        if (chicagoPizzas.size()!=0 || nyPizzas.size()!=0) {
+            pizzaList.addAll(chicagoPizzas);
+            pizzaList.addAll(nyPizzas);
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Orders");
+            alert.setHeaderText("No pizzas to place an order.");
+            alert.setContentText("Please add pizzas to your order before placing it.");
+            alert.showAndWait();
+            return;
+        }
         orderNumber+=1;
         Order newOrder = new Order(orderNumber, pizzaList);
         OrdersPlacedController.addOrder(newOrder);

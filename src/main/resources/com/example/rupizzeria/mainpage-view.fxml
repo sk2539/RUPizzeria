@@ -11,7 +11,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="388.0" prefWidth="934.0" style="-fx-background-color: ebe7df;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rupizzeria.MainPageController">
    <children>
       <Rectangle fx:id="shoppingCartRec" arcHeight="5.0" arcWidth="5.0" fill="#d6b0b0" height="38.0" layoutX="864.0" layoutY="28.0" stroke="BLACK" strokeType="INSIDE" width="38.0" />
-      <Text layoutX="251.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to RU Pizzeria!">
+      <Text layoutX="246.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to RUPizzeria!">
          <font>
             <Font name="Kristen ITC" size="30.0" />
          </font>
@@ -43,12 +43,12 @@
             <Image url="@../../../images/papapizzeria_processed.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="221.0" fitWidth="233.0" layoutX="294.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="chicagoPizzaImage" fitHeight="221.0" fitWidth="233.0" layoutX="294.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" onMousePressed="#handleChicagoClick">
          <image>
             <Image url="@../../../images/chicagopizza.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="221.0" fitWidth="224.0" layoutX="595.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="nyPizzaImage" fitHeight="221.0" fitWidth="224.0" layoutX="595.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" onMousePressed="#handleNYClick">
          <image>
             <Image url="@../../../images/nypizza.jpg" />
          </image>

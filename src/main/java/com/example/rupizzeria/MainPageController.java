@@ -138,4 +138,32 @@ public class MainPageController implements Initializable {
         shoppingCart.setOnMouseEntered(event -> shoppingCartRec.setVisible(true));
         shoppingCart.setOnMouseExited(event -> shoppingCartRec.setVisible(false));
     }
+
+    @FXML
+    private void handleChicagoClick() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("chicago-view.fxml"));
+            Scene newScene = new Scene(loader.load());
+            Stage newStage = new Stage();
+            newStage.setScene(newScene);
+            newStage.setTitle("Select a Chicago Style Pizza");
+            newStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleNYClick() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("newyork-view.fxml"));
+            Scene newScene = new Scene(loader.load());
+            Stage newStage = new Stage();
+            newStage.setScene(newScene);
+            newStage.setTitle("Select a Chicago Style Pizza");
+            newStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
