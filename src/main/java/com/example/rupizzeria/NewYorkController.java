@@ -555,7 +555,7 @@ public class NewYorkController implements Initializable {
         if (isValidOrder) {
             Pizza pizza = makePizza();
             if (pizza != null) {
-                pizzaArrayList.add(pizza);
+                CurrentOrdersController.getUnifiedPizzaList().add(pizza);
                 price.setText(String.valueOf(pizza.price()));
                 Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
                 confirmationAlert.setTitle("Order Confirmation");

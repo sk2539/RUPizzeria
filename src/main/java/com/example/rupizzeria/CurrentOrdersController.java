@@ -47,6 +47,8 @@ public class CurrentOrdersController implements Initializable {
 
     private static int orderNumber = 0;
 
+    private static ObservableList<Pizza> unifiedPizzaList = FXCollections.observableArrayList();
+
     /**
      * Initializes the controller when the corresponding FXML is loaded.
      * Sets up event listeners, initializes UI components, and populates the pizza list.
@@ -61,8 +63,7 @@ public class CurrentOrdersController implements Initializable {
         pizzaList = FXCollections.observableArrayList();
         addAllPizzas();
         pizzaListView.setItems(pizzaList);
-        chicagoPizzas.addListener((ListChangeListener<Pizza>) change -> refreshOrderList());
-        nyPizzas.addListener((ListChangeListener<Pizza>) change -> refreshOrderList());
+        unifiedPizzaList.addListener((ListChangeListener<Pizza>) change -> refreshOrderList());
         orderNumberField.setText(String.valueOf(orderNumber));
     }
 
@@ -72,12 +73,8 @@ public class CurrentOrdersController implements Initializable {
      */
     private void refreshOrderList() {
         pizzaList.clear();
-        for (Pizza pizza : chicagoPizzas) {
-            String pizzaDescription = pizza.price() + " " + pizza.getClass().getSimpleName() + " - "+ pizza.toString();
-            pizzaList.add(pizzaDescription);
-        }
-        for (Pizza pizza : nyPizzas) {
-            String pizzaDescription = pizza.price() + " " + pizza.getClass().getSimpleName() + " - " + pizza.toString();
+        for (Pizza pizza : unifiedPizzaList) {
+            String pizzaDescription = String.format("%.2f %s - %s", pizza.price(), pizza.getClass().getSimpleName(), pizza.toString());
             pizzaList.add(pizzaDescription);
         }
         pizzaListView.setItems(pizzaList);
@@ -187,29 +184,20 @@ public class CurrentOrdersController implements Initializable {
      * Updates the pizza list and pricing details accordingly.
      */
     private void addAllPizzas() {
-        pizzaList.clear();
-        currentOrder.getOrder().clear();
+        pizzaList.clear(); // Clear the UI list
+        currentOrder.getOrder().clear(); // Clear the current order
         currentPrice = 0.0;
-        double price=0;
-        for (Pizza pizza : chicagoPizzas) {
-            if (pizza!=null && pizza.getSize()!=null) {
-                price = pizza.price();
-                pizzaList.add(price + " " + pizza.getClass().getSimpleName() + " - "+ pizza.toString());
-                pizzaListView.setItems(pizzaList);
-                currentOrder.addPizza(pizza);
+
+        // Iterate through the unified pizza list
+        for (Pizza pizza : CurrentOrdersController.getUnifiedPizzaList()) {
+            if (pizza != null && pizza.getSize() != null) {
+                double price = pizza.price();
+                // Add pizza details to the UI list
+                pizzaList.add(String.format("%.2f %s - %s", price, pizza.getClass().getSimpleName(), pizza.toString()));
+                pizzaListView.setItems(pizzaList); // Update the ListView
+                currentOrder.addPizza(pizza); // Add to the current order
+                currentPrice += price; // Update the total price
             }
-            assert pizza != null;
-            currentPrice+=pizza.price();
-        }
-        for (Pizza pizza : nyPizzas) {
-            if (pizza!=null && pizza.getSize()!=null) {
-                price = pizza.price();
-                pizzaList.add(price + " " + pizza.getClass().getSimpleName() + " - " + pizza.toString());
-                pizzaListView.setItems(pizzaList);
-                currentOrder.addPizza(pizza);
-            }
-            assert pizza != null;
-            currentPrice+=Math.ceil(price * 100) / 100;
         }
         subtotal.setText(String.format("%.2f", currentPrice));
         double salesTaxAmount = Math.ceil(currentPrice * SALES_TAX_RATE * 100) / 100;
@@ -223,11 +211,17 @@ public class CurrentOrdersController implements Initializable {
      */
     @FXML
     private void onClearOrderClick() {
-        chicagoPizzas.clear();
-        nyPizzas.clear();
+        // Clear the unified pizza list
+        CurrentOrdersController.getUnifiedPizzaList().clear();
+
+        // Clear the current order in the application
         currentOrder.getOrder().clear();
+
+        // Clear the UI pizza list
         pizzaList.clear();
         pizzaListView.setItems(pizzaList);
+
+        // Reset current price and UI fields
         currentPrice = 0.0;
         subtotal.setText("");
         salesTax.setText("");
@@ -240,12 +234,11 @@ public class CurrentOrdersController implements Initializable {
      */
     @FXML
     private void onPlaceOrderClick() {
-        ArrayList<Pizza> pizzaList = new ArrayList<>();
-        if (chicagoPizzas.size()!=0 || nyPizzas.size()!=0) {
-            pizzaList.addAll(chicagoPizzas);
-            pizzaList.addAll(nyPizzas);
-        }
-        else {
+        // Retrieve the unified pizza list
+        ObservableList<Pizza> unifiedPizzaList = CurrentOrdersController.getUnifiedPizzaList();
+
+        // Check if the list is empty
+        if (unifiedPizzaList.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No Orders");
             alert.setHeaderText("No pizzas to place an order.");
@@ -253,11 +246,23 @@ public class CurrentOrdersController implements Initializable {
             alert.showAndWait();
             return;
         }
-        orderNumber+=1;
-        Order newOrder = new Order(orderNumber, pizzaList);
+
+        // Increment the order number
+        orderNumber += 1;
+
+        // Create a new order with the unified pizza list
+        Order newOrder = new Order(orderNumber, new ArrayList<>(unifiedPizzaList));
+
+        // Add the order to the OrdersPlacedController
         OrdersPlacedController.addOrder(newOrder);
+
+        // Clear the current order
         onClearOrderClick();
+
+        // Reset the current order with the updated order number
         currentOrder = new Order(orderNumber, new ArrayList<>());
+
+        // Update the order number field
         orderNumberField.setText(Integer.toString(orderNumber));
     }
 
@@ -265,35 +270,14 @@ public class CurrentOrdersController implements Initializable {
      * Removes the selected pizza from the current order and updates the pricing fields.
      */
     @FXML
-    private void onRemovePizzaClick(){
+    private void onRemovePizzaClick() {
         String selectedPizza = pizzaListView.getSelectionModel().getSelectedItem();
         if (selectedPizza != null) {
-            pizzaList.remove(selectedPizza);
-            double price = 0.0;
-            if (selectedPizza.contains("Chicago Pizza")) {
-                for (Pizza pizza : chicagoPizzas) {
-                    price = Math.ceil(pizza.price() * 100) / 100;
-                    if (selectedPizza.equals((price + " " + pizza.getClass().getSimpleName() + " - "+ pizza.toString()))) {
-                        chicagoPizzas.remove(pizza);
-                        refreshOrderList();
-                        break;
-                    }
-                }
-            } else if (selectedPizza.contains("New York Pizza")) {
-                for (Pizza pizza : nyPizzas) {
-                    price = Math.ceil(pizza.price() * 100) / 100;
-                    if (selectedPizza.equals((price + " " + pizza.getClass().getSimpleName() + " - " + pizza.toString()))) {
-                        nyPizzas.remove(pizza);
-                        refreshOrderList();
-                        break;
-                    }
-                }
-            }
-            subtotal.setText(String.format("%.2f", currentPrice));
-            double salesTaxAmount = Math.ceil(currentPrice * SALES_TAX_RATE * 100) / 100;
-            salesTax.setText(String.format("%.2f", salesTaxAmount));
-            double totalWithTax = Math.ceil((currentPrice + salesTaxAmount) * 100) / 100;
-            total.setText(String.format("%.2f", totalWithTax));
+            unifiedPizzaList.removeIf(pizza -> {
+                String pizzaDescription = String.format("%.2f %s - %s", pizza.price(), pizza.getClass().getSimpleName(), pizza.toString());
+                return pizzaDescription.equals(selectedPizza);
+            });
+            refreshOrderList();
         }
     }
 
@@ -304,5 +288,9 @@ public class CurrentOrdersController implements Initializable {
      */
     private ArrayList<Pizza> getCurrOrder(){
         return currentOrder.getOrder();
+    }
+
+    public static ObservableList<Pizza> getUnifiedPizzaList() {
+        return unifiedPizzaList;
     }
 }
