@@ -17,8 +17,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -180,6 +184,39 @@ public class OrdersPlacedController implements Initializable {
 
     @FXML
     private void handleExportClick() {
-        // Implement export functionality if needed
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Orders to File");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+        Stage stage = (Stage) exportButton.getScene().getWindow();
+        File file = fileChooser.showSaveDialog(stage);
+
+        if (file != null) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer.write("Order Number\tTotal Price\tPizzas\n");
+                writer.write("-------------------------------------------------\n");
+
+                for (Order order : placedOrders) {
+                    writer.write("Order #" + order.getOrderNum() + "\t");
+                    double total = order.getOrder().stream().mapToDouble(Pizza::price).sum();
+                    writer.write(String.format("$%.2f\t", total));
+                    String pizzas = order.getOrder().stream().map(Pizza::toString).reduce((a, b) -> a + ", " + b).orElse("No pizzas");
+                    writer.write(pizzas + "\n");
+                }
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Export Successful");
+                alert.setHeaderText(null);
+                alert.setContentText("Orders have been exported to:\n" + file.getAbsolutePath());
+                alert.showAndWait();
+
+            } catch (IOException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Export Failed");
+                alert.setHeaderText(null);
+                alert.setContentText("An error occurred while exporting orders:\n" + e.getMessage());
+                alert.showAndWait();
+            }
+        }
     }
+
 }

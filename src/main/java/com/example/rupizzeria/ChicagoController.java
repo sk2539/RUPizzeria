@@ -480,8 +480,10 @@ public class ChicagoController implements Initializable {
         }
         if (isValidOrder) {
             Pizza pizza = makePizza();
+            System.out.println(pizza.getToppings().toString());
             if (pizza != null) {
                 pizzaArrayList.add(pizza);
+                price.setText(String.valueOf(pizza.price()));
                 Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
                 confirmationAlert.setTitle("Order Confirmation");
                 confirmationAlert.setHeaderText(null);
@@ -489,6 +491,7 @@ public class ChicagoController implements Initializable {
                 confirmationAlert.showAndWait();
             }
         }
+
     }
 
     public static ObservableList<Pizza> getChicagoPizzas() {
