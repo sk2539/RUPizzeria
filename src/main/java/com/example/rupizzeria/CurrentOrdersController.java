@@ -40,6 +40,7 @@ public class CurrentOrdersController implements Initializable {
 
     private Order currentOrder = new Order(0, (Pizza) null);
 
+
     private static ObservableList<Pizza> chicagoPizzas = ChicagoController.getChicagoPizzasList();
 
     private static ObservableList<Pizza> nyPizzas = NewYorkController.getNYPizzas();
@@ -72,11 +73,11 @@ public class CurrentOrdersController implements Initializable {
     private void refreshOrderList() {
         pizzaList.clear();
         for (Pizza pizza : chicagoPizzas) {
-            String pizzaDescription = pizza.price() + " " + pizza.getClass().getSimpleName() + " - Chicago Pizza "+ pizza.toString();
+            String pizzaDescription = pizza.price() + " " + pizza.getClass().getSimpleName() + " - "+ pizza.toString();
             pizzaList.add(pizzaDescription);
         }
         for (Pizza pizza : nyPizzas) {
-            String pizzaDescription = pizza.price() + " " + pizza.getClass().getSimpleName() + " - New York Pizza " + pizza.toString();
+            String pizzaDescription = pizza.price() + " " + pizza.getClass().getSimpleName() + " - " + pizza.toString();
             pizzaList.add(pizzaDescription);
         }
         pizzaListView.setItems(pizzaList);
@@ -193,7 +194,7 @@ public class CurrentOrdersController implements Initializable {
         for (Pizza pizza : chicagoPizzas) {
             if (pizza!=null && pizza.getSize()!=null) {
                 price = pizza.price();
-                pizzaList.add(price + " " + pizza.getClass().getSimpleName() + " - Chicago Pizza "+ pizza.toString());
+                pizzaList.add(price + " " + pizza.getClass().getSimpleName() + " - "+ pizza.toString());
                 pizzaListView.setItems(pizzaList);
                 currentOrder.addPizza(pizza);
             }
@@ -203,7 +204,7 @@ public class CurrentOrdersController implements Initializable {
         for (Pizza pizza : nyPizzas) {
             if (pizza!=null && pizza.getSize()!=null) {
                 price = pizza.price();
-                pizzaList.add(price + " " + pizza.getClass().getSimpleName() + " - New York Pizza " + pizza.toString());
+                pizzaList.add(price + " " + pizza.getClass().getSimpleName() + " - " + pizza.toString());
                 pizzaListView.setItems(pizzaList);
                 currentOrder.addPizza(pizza);
             }
@@ -272,7 +273,7 @@ public class CurrentOrdersController implements Initializable {
             if (selectedPizza.contains("Chicago Pizza")) {
                 for (Pizza pizza : chicagoPizzas) {
                     price = Math.ceil(pizza.price() * 100) / 100;
-                    if (selectedPizza.equals((price + " " + pizza.getClass().getSimpleName() + " - Chicago Pizza "+ pizza.toString()))) {
+                    if (selectedPizza.equals((price + " " + pizza.getClass().getSimpleName() + " - "+ pizza.toString()))) {
                         chicagoPizzas.remove(pizza);
                         refreshOrderList();
                         break;
@@ -281,7 +282,7 @@ public class CurrentOrdersController implements Initializable {
             } else if (selectedPizza.contains("New York Pizza")) {
                 for (Pizza pizza : nyPizzas) {
                     price = Math.ceil(pizza.price() * 100) / 100;
-                    if (selectedPizza.equals((price + " " + pizza.getClass().getSimpleName() + " - New York Pizza " + pizza.toString()))) {
+                    if (selectedPizza.equals((price + " " + pizza.getClass().getSimpleName() + " - " + pizza.toString()))) {
                         nyPizzas.remove(pizza);
                         refreshOrderList();
                         break;
