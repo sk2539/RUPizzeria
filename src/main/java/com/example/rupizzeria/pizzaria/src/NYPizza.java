@@ -2,7 +2,16 @@ package com.example.rupizzeria.pizzaria.src;
 
 import java.util.ArrayList;
 
+/**
+ * The NYPizza class implements the PizzaFactory interface and provides
+ * methods for creating various types of pizzas specific to the New York style.
+ * @author Nithya Konduru, Dhyanashri Raman
+ */
 public class NYPizza implements PizzaFactory {
+    /**
+     * Creates a Deluxe pizza with a predefined set of toppings and a Brooklyn-style crust.
+     * @return a Pizza object representing the Deluxe pizza.
+     */
     @Override
     public Pizza createDeluxe() {
         ArrayList<Topping> toppings = new ArrayList<>();
@@ -15,6 +24,10 @@ public class NYPizza implements PizzaFactory {
         return deluxe;
     }
 
+    /**
+     * Creates a Deluxe pizza with a predefined set of toppings and a Brooklyn-style crust.
+     * @return a Pizza object representing the Deluxe pizza.
+     */
     @Override
     public Pizza createMeatzza() {
         ArrayList<Topping> toppings = new ArrayList<>();
@@ -26,6 +39,10 @@ public class NYPizza implements PizzaFactory {
         return meatzza;
     }
 
+    /**
+     * Creates a BBQ Chicken pizza with a predefined set of toppings and a thin crust.
+     * @return a Pizza object representing the BBQ Chicken pizza.
+     */
     @Override
     public Pizza createBBQChicken() {
         ArrayList<Topping> toppings = new ArrayList<>();
@@ -37,6 +54,10 @@ public class NYPizza implements PizzaFactory {
         return bbqChicken;
     }
 
+    /**
+     * Creates a Build Your Own pizza with an empty list of toppings and a hand-tossed crust.
+     * @return a Pizza object representing the Build Your Own pizza.
+     */
     @Override
     public Pizza createBuildYourOwn() {
         Pizza buildYourOwn = new BuildYourOwn(null, Crust.HANDTOSSED, null);

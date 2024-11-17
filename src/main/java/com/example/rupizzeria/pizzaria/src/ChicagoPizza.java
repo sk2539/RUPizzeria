@@ -2,7 +2,16 @@ package com.example.rupizzeria.pizzaria.src;
 
 import java.util.ArrayList;
 
+/**
+ * The ChicagoPizza class implements the PizzaFactory interface and provides
+ * methods for creating various types of pizzas specific to the Chicago style.
+ * @author Nithya Konduru, Dhyanashri Raman
+ */
 public class ChicagoPizza implements PizzaFactory{
+    /**
+     * Creates a Deluxe pizza with a predefined set of toppings and a deep-dish crust.
+     * @return a Pizza object representing the Deluxe pizza.
+     */
     @Override
     public Pizza createDeluxe() {
         ArrayList<Topping> toppings = new ArrayList<>();
@@ -15,6 +24,10 @@ public class ChicagoPizza implements PizzaFactory{
         return deluxe;
     }
 
+    /**
+     * Creates a Meatzza pizza with a predefined set of meat toppings and a stuffed crust.
+     * @return a Pizza object representing the Meatzza pizza.
+     */
     @Override
     public Pizza createMeatzza() {
         ArrayList<Topping> toppings = new ArrayList<>();
@@ -26,6 +39,10 @@ public class ChicagoPizza implements PizzaFactory{
         return meatzza;
     }
 
+    /**
+     * Creates a BBQ Chicken pizza with a predefined set of toppings and a pan crust.
+     * @return a Pizza object representing the BBQ Chicken pizza.
+     */
     @Override
     public Pizza createBBQChicken() {
         ArrayList<Topping> toppings = new ArrayList<>();
@@ -37,6 +54,10 @@ public class ChicagoPizza implements PizzaFactory{
         return bbqChicken;
     }
 
+    /**
+     * Creates a Build Your Own pizza with an empty list of toppings and a pan crust.
+     * @return a Pizza object representing the Build Your Own pizza.
+     */
     @Override
     public Pizza createBuildYourOwn() {
         Pizza buildYourOwn = new BuildYourOwn(null, Crust.PAN, null);

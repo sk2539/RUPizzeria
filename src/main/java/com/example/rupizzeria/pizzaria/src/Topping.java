@@ -1,8 +1,10 @@
 package com.example.rupizzeria.pizzaria.src;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
+/**
+ * The Topping enum represents various toppings that can be added to a pizza.
+ * It includes both meat and vegetable options.
+ *  @author Nithya Konduru, Dhyanashri Raman
+ */
 public enum Topping {
     SAUSAGE,
     PEPPERONI,
@@ -18,11 +20,23 @@ public enum Topping {
     SPINACH,
     JALAPENO;
 
+    /**
+     * Returns the string representation of the topping.
+     * This method overrides the default `toString` implementation.
+     * @return the name of the topping.
+     */
     @Override
     public String toString() {
         return super.toString();
     }
 
+    /**
+     * Converts a string to the corresponding Topping enum value.
+     * The input string is case-insensitive.
+     * @param toppingName the name of the topping.
+     * @return the Topping enum value, or null if the input does not match any topping.
+     * @throws IllegalArgumentException if the input is null.
+     */
     public static Topping stringToTopping(String toppingName) {
         if (toppingName == null) {
             throw new IllegalArgumentException("Topping name cannot be null");
