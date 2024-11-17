@@ -64,7 +64,7 @@ public class OrdersPlacedController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initialize2();
-        setupTableColumns();
+        setColumns();
         ordersTable.setItems(placedOrders);
         ordersTable.setVisible(true);
         ordersTable.setStyle("-fx-border-color: #d6b0b0; -fx-border-width: 1px;");
@@ -75,7 +75,7 @@ public class OrdersPlacedController implements Initializable {
      * Configures the columns of the orders table.
      * Sets up the order number, total price, pizza count, and order details columns with appropriate formatting and styles.
      */
-    private void setupTableColumns() {
+    private void setColumns() {
         TableColumn<Order, Integer> orderNumColumn = new TableColumn<>("Order #");
         orderNumColumn.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getOrderNum()).asObject());
         orderNumColumn.setStyle("-fx-alignment: CENTER;");
@@ -89,7 +89,11 @@ public class OrdersPlacedController implements Initializable {
             @Override
             protected void updateItem(Double price, boolean empty) {
                 super.updateItem(price, empty);
-                setText(empty ? null : String.format("$%.2f", price));
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(String.format("$%.2f", price));
+                }
             }
         });
         totalColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
@@ -99,7 +103,7 @@ public class OrdersPlacedController implements Initializable {
         TableColumn<Order, String> detailsColumn = new TableColumn<>("Order Details");
         detailsColumn.setCellValueFactory(data -> {
             String details = data.getValue().getOrder().stream()
-                    .map(Pizza::toString)
+                    .map(pizza -> pizza.getClass().getSimpleName() + " - " + pizza.toString())
                     .reduce((a, b) -> a + ", " + b)
                     .orElse("No pizzas");
             return new SimpleStringProperty(details);
@@ -193,7 +197,7 @@ public class OrdersPlacedController implements Initializable {
             orderDetails.append("  No pizzas in this order.\n");
         } else {
             for (Pizza pizza : selectedOrder.getOrder()) {
-                orderDetails.append("  - ").append(pizza.toString()).append("\n");
+                orderDetails.append("  - ").append(pizza.getClass().getSimpleName()).append(" - ").append(pizza.toString()).append("\n");
             }
         }
         orderDetailsTextArea.setText(orderDetails.toString());
@@ -228,7 +232,6 @@ public class OrdersPlacedController implements Initializable {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
         Stage stage = (Stage) exportButton.getScene().getWindow();
         File file = fileChooser.showSaveDialog(stage);
-
         if (file != null) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                 writer.write("Order Number\tTotal Price\tPizzas\n");
@@ -237,21 +240,22 @@ public class OrdersPlacedController implements Initializable {
                     writer.write("Order #" + order.getOrderNum() + "\t");
                     double total = order.getOrder().stream().mapToDouble(Pizza::price).sum();
                     writer.write(String.format("$%.2f\t", total));
-                    String pizzas = order.getOrder().stream().map(Pizza::toString).reduce((a, b) -> a + ", " + b).orElse("No pizzas");
-                    writer.write(pizzas + "\n");
+                    String pizzas = order.getOrder().stream()
+                            .map(pizza -> pizza.getClass().getSimpleName() + " - " + pizza.toString())
+                            .reduce((a, b) -> a + ", " + b)
+                            .orElse("No pizzas");
+                    writer.write(pizzas + "\n\n");
                 }
-
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Export Successful");
+                alert.setTitle("Export Successful!");
                 alert.setHeaderText(null);
-                alert.setContentText("Orders have been exported to:\n" + file.getAbsolutePath());
+                alert.setContentText("Exported orders can be found here:\n" + file.getAbsolutePath());
                 alert.showAndWait();
-
             } catch (IOException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Export Failed");
                 alert.setHeaderText(null);
-                alert.setContentText("An error occurred while exporting orders:\n" + e.getMessage());
+                alert.setContentText("Error exporting orders:\n" + e.getMessage());
                 alert.showAndWait();
             }
         }
