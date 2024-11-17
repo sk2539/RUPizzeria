@@ -59,7 +59,6 @@ public class OrdersPlacedController implements Initializable {
         ordersTable.setVisible(true);
         ordersTable.setStyle("-fx-border-color: #d6b0b0; -fx-border-width: 1px;");
         ordersTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        System.out.println("Number of orders in table: " + placedOrders.size());
     }
 
     private void setupTableColumns() {

@@ -481,7 +481,6 @@ public class ChicagoController implements Initializable {
         }
         if (isValidOrder) {
             Pizza pizza = makePizza();
-            System.out.println(pizza.getToppings().toString());
             if (pizza != null) {
                 pizzaArrayList.add(pizza);
                 price.setText(String.valueOf(pizza.price()));

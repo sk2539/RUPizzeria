@@ -57,12 +57,10 @@ public class CurrentOrdersController implements Initializable {
     private void refreshOrderList() {
         pizzaList.clear();
         for (Pizza pizza : chicagoPizzas) {
-            System.out.println(pizza.toString());
             String pizzaDescription = pizza.price() + " - Chicago Pizza " + pizza.toString();
             pizzaList.add(pizzaDescription);
         }
         for (Pizza pizza : nyPizzas) {
-            System.out.println(pizza.toString());
             String pizzaDescription = pizza.price() + " - New York Pizza " + pizza.toString();
             pizzaList.add(pizzaDescription);
         }
