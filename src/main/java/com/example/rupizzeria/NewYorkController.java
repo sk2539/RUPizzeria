@@ -205,8 +205,7 @@ public class NewYorkController implements Initializable {
                 if (newPizza.getSize() != null) {
                     price.setText(String.valueOf(newPizza.price()));
                 }
-                newPizza.setToppings(byoToppings);
-                return newPizza;
+                newPizza.setToppings(new ArrayList<>(byoToppings));
             }
         }
         return newPizza;
@@ -475,8 +474,9 @@ public class NewYorkController implements Initializable {
             isValidOrder = false;
         }
         if(isValidOrder){
-            pizzaArrayList.add(makePizza());
-
+            Pizza pizza = makePizza();
+            pizzaArrayList.add(pizza);
+            price.setText(String.valueOf(pizza.price()));
             Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
             confirmationAlert.setTitle("Order Confirmation");
             confirmationAlert.setHeaderText(null);

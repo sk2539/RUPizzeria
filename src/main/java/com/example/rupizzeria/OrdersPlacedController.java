@@ -46,34 +46,26 @@ public class OrdersPlacedController implements Initializable {
     @FXML
     private TableView<Order> ordersTable;
 
+    @FXML
+    private TextArea orderDetailsTextArea;
+
     private static final ObservableList<Order> placedOrders = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initialize2();
         setupTableColumns();
-
-        // Make sure table is visible and has data
         ordersTable.setItems(placedOrders);
         ordersTable.setVisible(true);
-
-        // Add some basic styling
         ordersTable.setStyle("-fx-border-color: #d6b0b0; -fx-border-width: 1px;");
-
-        // Enable row selection
         ordersTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
-        // Debug print to check if orders are being added
         System.out.println("Number of orders in table: " + placedOrders.size());
     }
 
     private void setupTableColumns() {
-        // Order Number Column
         TableColumn<Order, Integer> orderNumColumn = new TableColumn<>("Order #");
         orderNumColumn.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getOrderNum()).asObject());
         orderNumColumn.setStyle("-fx-alignment: CENTER;");
-
-        // Order Total Column
         TableColumn<Order, Double> totalColumn = new TableColumn<>("Total ($)");
         totalColumn.setCellValueFactory(data -> {
             Order order = data.getValue();
@@ -88,13 +80,9 @@ public class OrdersPlacedController implements Initializable {
             }
         });
         totalColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
-
-        // Pizza Count Column
         TableColumn<Order, Integer> pizzaCountColumn = new TableColumn<>("# of Pizzas");
         pizzaCountColumn.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getOrder().size()).asObject());
         pizzaCountColumn.setStyle("-fx-alignment: CENTER;");
-
-        // Order Details Column
         TableColumn<Order, String> detailsColumn = new TableColumn<>("Order Details");
         detailsColumn.setCellValueFactory(data -> {
             String details = data.getValue().getOrder().stream()
@@ -103,21 +91,14 @@ public class OrdersPlacedController implements Initializable {
                     .orElse("No pizzas");
             return new SimpleStringProperty(details);
         });
-
-        // Set column widths
         double tableWidth = ordersTable.getPrefWidth();
         orderNumColumn.setPrefWidth(tableWidth * 0.15);
         totalColumn.setPrefWidth(tableWidth * 0.15);
         pizzaCountColumn.setPrefWidth(tableWidth * 0.15);
         detailsColumn.setPrefWidth(tableWidth * 0.55);
-
-        // Add columns to table
         ordersTable.getColumns().setAll(orderNumColumn, totalColumn, pizzaCountColumn, detailsColumn);
     }
 
-
-
-    // Static method to add a new order
     public static void addOrder(Order order) {
         placedOrders.add(order);
     }
@@ -165,8 +146,30 @@ public class OrdersPlacedController implements Initializable {
 
     @FXML
     private void handleBrowseButtonClick() {
-
+        Order selectedOrder = ordersTable.getSelectionModel().getSelectedItem();
+        if (selectedOrder == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Order Selected");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select an order to browse.");
+            alert.showAndWait();
+            return;
+        }
+        StringBuilder orderDetails = new StringBuilder();
+        orderDetails.append("Order Number: ").append(selectedOrder.getOrderNum()).append("\n");
+        double totalPrice = selectedOrder.getOrder().stream().mapToDouble(Pizza::price).sum();
+        orderDetails.append("Total Price: $").append(String.format("%.2f", totalPrice)).append("\n");
+        orderDetails.append("Pizzas Ordered:\n");
+        if (selectedOrder.getOrder().isEmpty()) {
+            orderDetails.append("  No pizzas in this order.\n");
+        } else {
+            for (Pizza pizza : selectedOrder.getOrder()) {
+                orderDetails.append("  - ").append(pizza.toString()).append("\n");
+            }
+        }
+        orderDetailsTextArea.setText(orderDetails.toString());
     }
+
 
     @FXML
     private void handleCancelClick() {

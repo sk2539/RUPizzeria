@@ -28,7 +28,7 @@
       <Button fx:id="browseButton" layoutX="113.0" layoutY="520.0" mnemonicParsing="false" onAction="#handleBrowseButtonClick" text="Browse" />
       <Button fx:id="exportButton" layoutX="266.0" layoutY="520.0" mnemonicParsing="false" onAction="#handleExportClick" prefWidth="67.0" text="Export" />
       <Button fx:id="cancelButton" layoutX="436.0" layoutY="520.0" mnemonicParsing="false" onAction="#handleCancelClick" text="Cancel" />
-      <TextArea layoutX="16.0" layoutY="378.0" prefHeight="135.0" prefWidth="569.0" />
+      <TextArea fx:id="orderDetailsTextArea" layoutX="16.0" layoutY="378.0" prefHeight="135.0" prefWidth="569.0" />
       <Rectangle fx:id="homeButtonRec" arcHeight="5.0" arcWidth="5.0" fill="#d6b0b0" height="41.0" layoutX="545.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="41.0" />
       <ImageView fx:id="homeButton" fitHeight="41.0" fitWidth="41.0" layoutX="545.0" layoutY="14.0" onMousePressed="#handleHomeButtonClick" pickOnBounds="true" preserveRatio="true">
          <image>

@@ -200,12 +200,13 @@ public class ChicagoController implements Initializable {
                 selectedToppings.setDisable(false);
                 leftArrowButton.setDisable(false);
                 rightArrowButton.setDisable(false);
+
                 newPizza = chicagoPizza.createBuildYourOwn();
                 newPizza.setSize(getSizeFromToggleGroup());
                 if (newPizza.getSize() != null) {
                     price.setText(String.valueOf(newPizza.price()));
                 }
-                newPizza.setToppings(byoToppings);
+                newPizza.setToppings(new ArrayList<>(byoToppings));
                 return newPizza;
             }
         }
