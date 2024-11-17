@@ -3,7 +3,6 @@ package com.example.rupizzeria;
 import com.example.rupizzeria.pizzaria.src.Order;
 import com.example.rupizzeria.pizzaria.src.Pizza;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -14,7 +13,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
@@ -27,6 +25,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * The OrdersPlacedController class manages the "Orders Placed" view in the RU Pizzeria application.
+ * It provides functionality to browse, cancel, and export orders, as well as navigation back to the main page.
+ * This class interacts with the TableView to display orders and handle user actions.
+ * @author Nithya Konduru, Dhyanashri Raman
+ */
 public class OrdersPlacedController implements Initializable {
     @FXML
     private Button browseButton;
@@ -51,6 +55,12 @@ public class OrdersPlacedController implements Initializable {
 
     private static final ObservableList<Order> placedOrders = FXCollections.observableArrayList();
 
+    /**
+     * Initializes the "Orders Placed" view, sets up the table columns, and styles the buttons.
+     *
+     * @param url            The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initialize2();
@@ -61,6 +71,10 @@ public class OrdersPlacedController implements Initializable {
         ordersTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
+    /**
+     * Configures the columns of the orders table.
+     * Sets up the order number, total price, pizza count, and order details columns with appropriate formatting and styles.
+     */
     private void setupTableColumns() {
         TableColumn<Order, Integer> orderNumColumn = new TableColumn<>("Order #");
         orderNumColumn.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getOrderNum()).asObject());
@@ -98,10 +112,19 @@ public class OrdersPlacedController implements Initializable {
         ordersTable.getColumns().setAll(orderNumColumn, totalColumn, pizzaCountColumn, detailsColumn);
     }
 
+    /**
+     * Adds an order to the list of placed orders.
+     *
+     * @param order The order to be added.
+     */
     public static void addOrder(Order order) {
         placedOrders.add(order);
     }
 
+    /**
+     * Sets up hover effects for the buttons in the UI.
+     * Changes the background color of buttons on mouse hover.
+     */
     public void initialize2() {
         browseButton.setStyle("-fx-background-color: #f4f4f4;");
         browseButton.setOnMouseEntered(event ->
@@ -129,6 +152,9 @@ public class OrdersPlacedController implements Initializable {
         homeButton.setOnMouseExited(event -> homeButtonRec.setVisible(false));
     }
 
+    /**
+     * Navigates to the main page when the home button is clicked.
+     */
     @FXML
     private void handleHomeButtonClick() {
         try {
@@ -143,6 +169,10 @@ public class OrdersPlacedController implements Initializable {
         }
     }
 
+    /**
+     * Displays the details of the selected order in the text area.
+     * If no order is selected, shows a warning dialog.
+     */
     @FXML
     private void handleBrowseButtonClick() {
         Order selectedOrder = ordersTable.getSelectionModel().getSelectedItem();
@@ -169,7 +199,10 @@ public class OrdersPlacedController implements Initializable {
         orderDetailsTextArea.setText(orderDetails.toString());
     }
 
-
+    /**
+     * Removes the selected order from the list of placed orders.
+     * If no order is selected, shows a warning dialog.
+     */
     @FXML
     private void handleCancelClick() {
         Order selectedOrder = ordersTable.getSelectionModel().getSelectedItem();
@@ -184,6 +217,10 @@ public class OrdersPlacedController implements Initializable {
         }
     }
 
+    /**
+     * Exports the list of placed orders to a text file.
+     * Displays an alert if the export is successful or if an error occurs.
+     */
     @FXML
     private void handleExportClick() {
         FileChooser fileChooser = new FileChooser();
@@ -196,7 +233,6 @@ public class OrdersPlacedController implements Initializable {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                 writer.write("Order Number\tTotal Price\tPizzas\n");
                 writer.write("-------------------------------------------------\n");
-
                 for (Order order : placedOrders) {
                     writer.write("Order #" + order.getOrderNum() + "\t");
                     double total = order.getOrder().stream().mapToDouble(Pizza::price).sum();

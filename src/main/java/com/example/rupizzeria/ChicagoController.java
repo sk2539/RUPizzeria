@@ -22,6 +22,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * This class handles the Chicago pizza-related functionality in the RU Pizzeria application.
+ * It manages the user interactions for selecting pizza types, sizes, and toppings, as well as
+ * the dynamic visual updates for the pizza interface.
+ * @author Nithya Konduru, Dhyanashri Raman
+ */
 public class ChicagoController implements Initializable {
     @FXML
     private RadioButton large;
@@ -56,6 +62,13 @@ public class ChicagoController implements Initializable {
 
     private static ObservableList<Pizza> pizzaArrayList = FXCollections.observableArrayList();
 
+    /**
+     * Initializes the controller for the Chicago pizza interface.
+     * Sets up the UI elements, toppings lists, and event listeners.
+     *
+     * @param url            The location used to resolve relative paths for the root object.
+     * @param resourceBundle The resources used to localize the root object.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initialize2();
@@ -101,6 +114,10 @@ public class ChicagoController implements Initializable {
     @FXML
     private Rectangle homeButtonRec;
 
+    /**
+     * Additional initialization for button styling and hover effects.
+     * Configures the button appearance and dynamic interactions for the UI.
+     */
     private void initialize2() {
         addToOrderButton.setStyle("-fx-background-color: #f4f4f4;");
         addToOrderButton.setOnMouseEntered(event ->
@@ -129,6 +146,10 @@ public class ChicagoController implements Initializable {
         setPrice();
     }
 
+    /**
+     * Updates the pizza price dynamically based on the selected size.
+     * Listens for changes in the size toggle group and updates the displayed price.
+     */
     private void setPrice() {
         size.selectedToggleProperty().addListener((observable, oldToggle, newToggle) -> {
             if (selectedPizza != null) {
@@ -140,12 +161,20 @@ public class ChicagoController implements Initializable {
         });
     }
 
+    /**
+     * Populates the available toppings list with all possible toppings.
+     * Adds toppings to the observable list for display in the ListView.
+     */
     private void setAvailableToppings() {
         for (Topping topping : Topping.values()) {
             availableToppingsList.add(topping.toString());
         }
     }
 
+    /**
+     * Sets the selected toppings list based on the current pizza selection.
+     * Updates the observable list for display in the ListView.
+     */
     private void setSelectedToppings() {
         selectedToppingsList.clear();
         if (selectedPizza != null) {
@@ -155,6 +184,10 @@ public class ChicagoController implements Initializable {
         }
     }
 
+    /**
+     * Handles the event for clicking the home button.
+     * Navigates the user back to the main page of the application.
+     */
     @FXML
     private void handleHomeButtonClick() {
         try {
@@ -172,6 +205,12 @@ public class ChicagoController implements Initializable {
     @FXML
     private ImageView dynamicImage;
 
+    /**
+     * Creates and returns a Pizza object based on the user's selections.
+     * Handles different pizza types and updates the UI accordingly.
+     *
+     * @return The newly created Pizza object, or null if no type is selected.
+     */
     @FXML
     private Pizza makePizza() {
         Pizza newPizza = null;
@@ -213,6 +252,14 @@ public class ChicagoController implements Initializable {
         return newPizza;
     }
 
+    /**
+     * Creates and returns a pizza based on the selected type, size, and available Chicago-style options.
+     * Adjusts UI elements such as toppings and arrow buttons based on the chosen pizza type.
+     *
+     * @param newPizza An existing Pizza object to be updated.
+     * @param cpizza   A ChicagoPizza object used to create specific pizza types.
+     * @return The updated Pizza object reflecting the user's choices.
+     */
     @FXML
     private Pizza makePizzaHelper(Pizza newPizza, ChicagoPizza cpizza) {
         availableToppings.setDisable(true);
@@ -239,6 +286,10 @@ public class ChicagoController implements Initializable {
         return newPizza;
     }
 
+    /**
+     * Moves a topping from the available list to the selected list.
+     * Disables additional selection if the maximum number of toppings is reached.
+     */
     @FXML
     private void moveItem() {
         String selectedItem = availableToppings.getSelectionModel().getSelectedItem();
@@ -306,6 +357,10 @@ public class ChicagoController implements Initializable {
     @FXML
     private ImageView bbqchickenLayer;
 
+    /**
+     * Adds images of selected toppings to the pizza visualization.
+     * Updates the display with the appropriate images based on the current Build-Your-Own toppings.
+     */
     private void addBYOToppingImages() {
         Image image = null;
         for (Topping topping: byoToppings) {
@@ -368,6 +423,10 @@ public class ChicagoController implements Initializable {
         }
     }
 
+    /**
+     * Removes a topping from the selected list and moves it back to the available list.
+     * Re-enables selection if the maximum number of toppings is no longer reached.
+     */
     @FXML
     private void moveItemBack() {
         String selectedItem = selectedToppings.getSelectionModel().getSelectedItem();
@@ -390,8 +449,15 @@ public class ChicagoController implements Initializable {
         }
     }
 
-    private void removeBYOToppingImage(String selecteditem) {
-        switch (selecteditem.toUpperCase()) {
+    /**
+     * Removes a topping image from the pizza visualization.
+     * Clears the image associated with the specified topping.
+     *
+     * @param selectedItem The name of the topping to remove.
+     */
+    @FXML
+    private void removeBYOToppingImage(String selectedItem) {
+        switch (selectedItem.toUpperCase()) {
             case "SAUSAGE":
                 sausageLayer.setImage(null);
                 break;
@@ -442,6 +508,10 @@ public class ChicagoController implements Initializable {
     @FXML
     private ListView<String> selectedToppings;
 
+    /**
+     * Updates the crust type displayed on the interface based on the selected pizza type.
+     * Fetches the appropriate Chicago pizza object and adjusts the crust type field accordingly.
+     */
     @FXML
     private void updateCrustType() {
         Pizza newPizza = null;
@@ -464,10 +534,17 @@ public class ChicagoController implements Initializable {
         }
     }
 
+    /**
+     * Returns Observable list of Chicago Pizzas with Pizza type
+     */
     public static ObservableList<Pizza> getChicagoPizzasList() {
         return pizzaArrayList;
     }
 
+    /**
+     * Adds the currently selected pizza to the Chicago pizzas order list.
+     * Validates the pizza size and type before adding and displays a confirmation message.
+     */
     @FXML
     private void onAddToOrderClick() {
         boolean isValidOrder = true;
@@ -494,10 +571,11 @@ public class ChicagoController implements Initializable {
 
     }
 
-    public static ObservableList<Pizza> getChicagoPizzas() {
-        return pizzaArrayList;
-    }
-
+    /**
+     * Retrieves the pizza size selected by the user from the toggle group.
+     *
+     * @return The selected size, or null if no size is selected.
+     */
     @FXML
     private Size getSizeFromToggleGroup() {
         if (size.getSelectedToggle() != null) {
@@ -515,6 +593,12 @@ public class ChicagoController implements Initializable {
         return null;
     }
 
+    /**
+     * Displays an alert dialog with the specified title and message.
+     *
+     * @param title   The title of the alert dialog.
+     * @param message The message to display in the alert dialog.
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);

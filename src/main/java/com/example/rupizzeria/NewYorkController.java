@@ -22,6 +22,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for managing New York style pizza creation and ordering.
+ * Provides functionality for selecting pizza type, size, toppings, and crust.
+ * Handles interactions with the UI components such as buttons, text fields, and combo boxes.
+ * @author Nithya Konduru, Dhyanashri Raman
+ */
 public class NewYorkController implements Initializable {
     @FXML
     private RadioButton large;
@@ -41,8 +47,6 @@ public class NewYorkController implements Initializable {
     @FXML
     private TextField crustTypeField;
 
-    private static ObservableList<Pizza> pizzaArrayList = FXCollections.observableArrayList();
-
     private static ArrayList<Topping> byoToppings = new ArrayList<>();
 
     private final String[] pizzaTypes = {"Deluxe", "BBQ Chicken", "Meatzza", "Build your own"};
@@ -56,6 +60,15 @@ public class NewYorkController implements Initializable {
     @FXML
     private TextField price;
 
+    private static ObservableList<Pizza> pizzaArrayList = FXCollections.observableArrayList();
+
+    /**
+     * Initializes the controller. Sets up event listeners and configures UI components.
+     * This method is automatically called after the FXML file has been loaded.
+     *
+     * @param url            The location used to resolve relative paths for the root object.
+     * @param resourceBundle The resources used to localize the root object.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initialize2();
@@ -101,6 +114,10 @@ public class NewYorkController implements Initializable {
     @FXML
     private Rectangle homeButtonRec;
 
+    /**
+     * Handles the initialization of UI components with custom styles and animations.
+     * Configures mouse hover effects for buttons and other interactive elements.
+     */
     private void initialize2() {
         addToOrderButton.setStyle("-fx-background-color: #f4f4f4;");
         addToOrderButton.setOnMouseEntered(event ->
@@ -129,6 +146,10 @@ public class NewYorkController implements Initializable {
         setPrice();
     }
 
+    /**
+     * Updates the price of the pizza based on the selected size.
+     * Listens for changes in the size toggle group and recalculates the price accordingly.
+     */
     private void setPrice() {
         size.selectedToggleProperty().addListener((observable, oldToggle, newToggle) -> {
             if (selectedPizza != null) {
@@ -140,12 +161,18 @@ public class NewYorkController implements Initializable {
         });
     }
 
+    /**
+     * Populates the list of available toppings from the Topping enumeration.
+     */
     private void setAvailableToppings() {
         for (Topping topping : Topping.values()) {
             availableToppingsList.add(topping.toString());
         }
     }
 
+    /**
+     * Updates the list of selected toppings based on the currently selected pizza.
+     */
     private void setSelectedToppings() {
         selectedToppingsList.clear();
         if (selectedPizza != null) {
@@ -155,6 +182,10 @@ public class NewYorkController implements Initializable {
         }
     }
 
+    /**
+     * Handles the transition to the main page when the home button is clicked.
+     * Loads the main page FXML and displays it in a new stage.
+     */
     @FXML
     private void handleHomeButtonClick() {
         try {
@@ -172,26 +203,32 @@ public class NewYorkController implements Initializable {
     @FXML
     private ImageView dynamicImage;
 
+    /**
+     * Creates and returns a Pizza object based on the user's selections.
+     * Handles different pizza types and updates the UI accordingly.
+     *
+     * @return The newly created Pizza object, or null if no type is selected.
+     */
     @FXML
     private Pizza makePizza() {
         Pizza newPizza = null;
-        NYPizza nypizza = new NYPizza();
+        NYPizza nyPizza = new NYPizza();
         if (chooseType.getValue() != null) {
             updateCrustType();
             if (chooseType.getValue().equals("Deluxe")) {
-                Image image = new Image("file:src/main/resources/images/nydeluxe.jpg");
+                Image image = new Image("file:src/main/resources/images/chicagodeluxepizza.jpg");
                 dynamicImage.setImage(image);
-                return makePizzaHelper(newPizza, nypizza);
+                return makePizzaHelper(newPizza, nyPizza);
             }
             if (chooseType.getValue().equals("BBQ Chicken")) {
-                Image image = new Image("file:src/main/resources/images/nybbqchicken.jpg");
+                Image image = new Image("file:src/main/resources/images/chicagobbqchicken.jpg");
                 dynamicImage.setImage(image);
-                return makePizzaHelper(newPizza, nypizza);
+                return makePizzaHelper(newPizza, nyPizza);
             }
             if (chooseType.getValue().equals("Meatzza")) {
-                Image image = new Image("file:src/main/resources/images/nymeattza.jpg");
+                Image image = new Image("file:src/main/resources/images/chicagomeatzza.jpg");
                 dynamicImage.setImage(image);
-                return makePizzaHelper(newPizza, nypizza);
+                return makePizzaHelper(newPizza, nyPizza);
             }
             if (chooseType.getValue().equals("Build your own")) {
                 Image image = new Image("file:src/main/resources/images/buildyourownpizza.png");
@@ -200,31 +237,40 @@ public class NewYorkController implements Initializable {
                 selectedToppings.setDisable(false);
                 leftArrowButton.setDisable(false);
                 rightArrowButton.setDisable(false);
-                newPizza = nypizza.createBuildYourOwn();
+                newPizza = nyPizza.createBuildYourOwn();
                 newPizza.setSize(getSizeFromToggleGroup());
                 if (newPizza.getSize() != null) {
                     price.setText(String.valueOf(newPizza.price()));
                 }
                 newPizza.setToppings(new ArrayList<>(byoToppings));
+                return newPizza;
             }
         }
         return newPizza;
     }
 
+    /**
+     * Creates and returns a pizza based on the selected type, size, and available Chicago-style options.
+     * Adjusts UI elements such as toppings and arrow buttons based on the chosen pizza type.
+     *
+     * @param newPizza An existing Pizza object to be updated.
+     * @param nypizza   A ChicagoPizza object used to create specific pizza types.
+     * @return The updated Pizza object reflecting the user's choices.
+     */
     @FXML
-    private Pizza makePizzaHelper(Pizza newPizza, NYPizza cpizza) {
+    private Pizza makePizzaHelper(Pizza newPizza, NYPizza nypizza) {
         availableToppings.setDisable(true);
         selectedToppings.setDisable(false);
         leftArrowButton.setDisable(true);
         rightArrowButton.setDisable(true);
         if (chooseType.getValue().equals("Deluxe")) {
-            newPizza = cpizza.createDeluxe();
+            newPizza = nypizza.createDeluxe();
         }
         if (chooseType.getValue().equals("BBQ Chicken")) {
-            newPizza = cpizza.createBBQChicken();
+            newPizza = nypizza.createBBQChicken();
         }
         if (chooseType.getValue().equals("Meatzza")) {
-            newPizza = cpizza.createMeatzza();
+            newPizza = nypizza.createMeatzza();
         }
         newPizza.setSize(getSizeFromToggleGroup());
         if (newPizza.getSize() != null) {
@@ -237,6 +283,10 @@ public class NewYorkController implements Initializable {
         return newPizza;
     }
 
+    /**
+     * Moves a topping from the available list to the selected list.
+     * Disables additional selection if the maximum number of toppings is reached.
+     */
     @FXML
     private void moveItem() {
         String selectedItem = availableToppings.getSelectionModel().getSelectedItem();
@@ -304,6 +354,10 @@ public class NewYorkController implements Initializable {
     @FXML
     private ImageView bbqchickenLayer;
 
+    /**
+     * Adds images of selected toppings to the pizza visualization.
+     * Updates the display with the appropriate images based on the current Build-Your-Own toppings.
+     */
     private void addBYOToppingImages() {
         Image image = null;
         for (Topping topping: byoToppings) {
@@ -366,6 +420,10 @@ public class NewYorkController implements Initializable {
         }
     }
 
+    /**
+     * Removes a topping from the selected list and moves it back to the available list.
+     * Re-enables selection if the maximum number of toppings is no longer reached.
+     */
     @FXML
     private void moveItemBack() {
         String selectedItem = selectedToppings.getSelectionModel().getSelectedItem();
@@ -388,6 +446,12 @@ public class NewYorkController implements Initializable {
         }
     }
 
+    /**
+     * Removes a topping image from the pizza visualization.
+     * Clears the image associated with the specified topping.
+     *
+     * @param selecteditem The name of the topping to remove.
+     */
     private void removeBYOToppingImage(String selecteditem) {
         switch (selecteditem.toUpperCase()) {
             case "SAUSAGE":
@@ -440,10 +504,14 @@ public class NewYorkController implements Initializable {
     @FXML
     private ListView<String> selectedToppings;
 
+    /**
+     * Updates the crust type displayed on the interface based on the selected pizza type.
+     * Fetches the appropriate Chicago pizza object and adjusts the crust type field accordingly.
+     */
     @FXML
     private void updateCrustType() {
         Pizza newPizza = null;
-        NYPizza cpizza = new NYPizza();
+        ChicagoPizza cpizza = new ChicagoPizza();
         if (chooseType.getValue().equals("Deluxe")) {
             newPizza = cpizza.createDeluxe();
             crustTypeField.setText(newPizza.getCrust().toString());
@@ -462,33 +530,48 @@ public class NewYorkController implements Initializable {
         }
     }
 
-    @FXML
-    private void onAddToOrderClick() {
-        boolean isValidOrder = true;
-        if (getSizeFromToggleGroup()==null) {
-            showAlert("Missing Argument", "Please select a size.");
-            isValidOrder = false;
-        }
-        if (chooseType.getValue()==null) {
-            showAlert("Missing Argument", "Please select a type from the dropdown.");
-            isValidOrder = false;
-        }
-        if(isValidOrder){
-            Pizza pizza = makePizza();
-            pizzaArrayList.add(pizza);
-            price.setText(String.valueOf(pizza.price()));
-            Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
-            confirmationAlert.setTitle("Order Confirmation");
-            confirmationAlert.setHeaderText(null);
-            confirmationAlert.setContentText("Your " + getSizeFromToggleGroup().toString() + " " + chooseType.getValue() + " New York pizza has been successfully added to your order!");
-            confirmationAlert.showAndWait();
-        }
-    }
-
+    /**
+     * Returns Observable list of New York Pizzas with Pizza type
+     */
     public static ObservableList<Pizza> getNYPizzas() {
         return pizzaArrayList;
     }
 
+    /**
+     * Adds the currently selected pizza to the Chicago pizzas order list.
+     * Validates the pizza size and type before adding and displays a confirmation message.
+     */
+    @FXML
+    private void onAddToOrderClick() {
+        boolean isValidOrder = true;
+        if (getSizeFromToggleGroup() == null) {
+            showAlert("Missing Argument", "Please select a size.");
+            isValidOrder = false;
+        }
+        if (chooseType.getValue() == null) {
+            showAlert("Missing Argument", "Please select a type from the dropdown.");
+            isValidOrder = false;
+        }
+        if (isValidOrder) {
+            Pizza pizza = makePizza();
+            if (pizza != null) {
+                pizzaArrayList.add(pizza);
+                price.setText(String.valueOf(pizza.price()));
+                Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
+                confirmationAlert.setTitle("Order Confirmation");
+                confirmationAlert.setHeaderText(null);
+                confirmationAlert.setContentText("Your " + getSizeFromToggleGroup().toString() + " " + chooseType.getValue() + " Chicago pizza has been successfully added to your order!");
+                confirmationAlert.showAndWait();
+            }
+        }
+
+    }
+
+    /**
+     * Retrieves the pizza size selected by the user from the toggle group.
+     *
+     * @return The selected size, or null if no size is selected.
+     */
     @FXML
     private Size getSizeFromToggleGroup() {
         if (size.getSelectedToggle() != null) {
@@ -506,6 +589,12 @@ public class NewYorkController implements Initializable {
         return null;
     }
 
+    /**
+     * Displays an alert dialog with the specified title and message.
+     *
+     * @param title   The title of the alert dialog.
+     * @param message The message to display in the alert dialog.
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);

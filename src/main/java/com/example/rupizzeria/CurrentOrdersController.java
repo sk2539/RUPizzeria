@@ -22,8 +22,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Controller class for managing the current pizza orders.
+ * Handles the addition, removal, and placement of orders, along with updating UI elements such as price breakdowns.
+ * @author Nithya Konduru, Dhyanashri Raman
+ */
 public class CurrentOrdersController implements Initializable {
 
     @FXML
@@ -42,6 +46,13 @@ public class CurrentOrdersController implements Initializable {
 
     private static int orderNumber = 0;
 
+    /**
+     * Initializes the controller when the corresponding FXML is loaded.
+     * Sets up event listeners, initializes UI components, and populates the pizza list.
+     *
+     * @param url The location used to resolve relative paths for the root object.
+     * @param resourceBundle The resources used to localize the root object.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initialize2();
@@ -54,20 +65,28 @@ public class CurrentOrdersController implements Initializable {
         orderNumberField.setText(String.valueOf(orderNumber));
     }
 
+    /**
+     * Refreshes the pizza list view by consolidating pizzas from both Chicago and New York lists.
+     * Also updates the pricing details.
+     */
     private void refreshOrderList() {
         pizzaList.clear();
         for (Pizza pizza : chicagoPizzas) {
-            String pizzaDescription = pizza.price() + " - Chicago Pizza " + pizza.toString();
+            String pizzaDescription = pizza.price() + " " + pizza.getClass().getSimpleName() + " - Chicago Pizza "+ pizza.toString();
             pizzaList.add(pizzaDescription);
         }
         for (Pizza pizza : nyPizzas) {
-            String pizzaDescription = pizza.price() + " - New York Pizza " + pizza.toString();
+            String pizzaDescription = pizza.price() + " " + pizza.getClass().getSimpleName() + " - New York Pizza " + pizza.toString();
             pizzaList.add(pizzaDescription);
         }
         pizzaListView.setItems(pizzaList);
         updatePricing();
     }
 
+    /**
+     * Updates the price breakdown for the current order.
+     * Calculates the subtotal, sales tax, and total price including tax.
+     */
     private void updatePricing() {
         currentPrice = chicagoPizzas.stream().mapToDouble(Pizza::price).sum() + nyPizzas.stream().mapToDouble(Pizza::price).sum();
         subtotal.setText(String.format("%.2f", currentPrice));
@@ -77,7 +96,9 @@ public class CurrentOrdersController implements Initializable {
         total.setText(String.format("%.2f", totalWithTax));
     }
 
-
+    /**
+     * Resets the pizza list and clears the pricing details for the current order.
+     */
     void loadOrderData() {
         pizzaList.clear();
         currentPrice = 0.0;
@@ -99,6 +120,9 @@ public class CurrentOrdersController implements Initializable {
     @FXML
     private Rectangle homeButtonRec;
 
+    /**
+     * Initializes button styles and hover effects for interactive UI elements.
+     */
     private void initialize2() {
         clearOrderButton.setStyle("-fx-background-color: #f4f4f4;");
         clearOrderButton.setOnMouseEntered(event ->
@@ -126,6 +150,10 @@ public class CurrentOrdersController implements Initializable {
         homeButton.setOnMouseExited(event -> homeButtonRec.setVisible(false));
     }
 
+    /**
+     * Handles the click event for the home button.
+     * Loads the main page FXML and opens a new window.
+     */
     @FXML
     private void handleHomeButtonClick() {
         try {
@@ -153,6 +181,10 @@ public class CurrentOrdersController implements Initializable {
     @FXML
     private TextField total;
 
+    /**
+     * Adds all pizzas from Chicago and New York lists to the current order.
+     * Updates the pizza list and pricing details accordingly.
+     */
     private void addAllPizzas() {
         pizzaList.clear();
         currentOrder.getOrder().clear();
@@ -161,7 +193,7 @@ public class CurrentOrdersController implements Initializable {
         for (Pizza pizza : chicagoPizzas) {
             if (pizza!=null && pizza.getSize()!=null) {
                 price = pizza.price();
-                pizzaList.add(price + " - Chicago Pizza "+ pizza.toString());
+                pizzaList.add(price + " " + pizza.getClass().getSimpleName() + " - Chicago Pizza "+ pizza.toString());
                 pizzaListView.setItems(pizzaList);
                 currentOrder.addPizza(pizza);
             }
@@ -171,7 +203,7 @@ public class CurrentOrdersController implements Initializable {
         for (Pizza pizza : nyPizzas) {
             if (pizza!=null && pizza.getSize()!=null) {
                 price = pizza.price();
-                pizzaList.add(price + " - New York Pizza " + pizza.toString());
+                pizzaList.add(price + " " + pizza.getClass().getSimpleName() + " - New York Pizza " + pizza.toString());
                 pizzaListView.setItems(pizzaList);
                 currentOrder.addPizza(pizza);
             }
@@ -185,6 +217,9 @@ public class CurrentOrdersController implements Initializable {
         total.setText(String.format("%.2f", totalWithTax));
     }
 
+    /**
+     * Clears the current order, resets the pizza list, and updates pricing fields to empty.
+     */
     @FXML
     private void onClearOrderClick() {
         chicagoPizzas.clear();
@@ -198,6 +233,10 @@ public class CurrentOrdersController implements Initializable {
         total.setText("");
     }
 
+    /**
+     * Places the current order by adding it to the list of placed orders.
+     * Clears the current order afterward.
+     */
     @FXML
     private void onPlaceOrderClick() {
         ArrayList<Pizza> pizzaList = new ArrayList<>();
@@ -221,6 +260,9 @@ public class CurrentOrdersController implements Initializable {
         orderNumberField.setText(Integer.toString(orderNumber));
     }
 
+    /**
+     * Removes the selected pizza from the current order and updates the pricing fields.
+     */
     @FXML
     private void onRemovePizzaClick(){
         String selectedPizza = pizzaListView.getSelectionModel().getSelectedItem();
@@ -230,7 +272,7 @@ public class CurrentOrdersController implements Initializable {
             if (selectedPizza.contains("Chicago Pizza")) {
                 for (Pizza pizza : chicagoPizzas) {
                     price = Math.ceil(pizza.price() * 100) / 100;
-                    if (selectedPizza.equals((price + " - Chicago Pizza " + pizza.toString()))) {
+                    if (selectedPizza.equals((price + " " + pizza.getClass().getSimpleName() + " - Chicago Pizza "+ pizza.toString()))) {
                         chicagoPizzas.remove(pizza);
                         refreshOrderList();
                         break;
@@ -239,7 +281,7 @@ public class CurrentOrdersController implements Initializable {
             } else if (selectedPizza.contains("New York Pizza")) {
                 for (Pizza pizza : nyPizzas) {
                     price = Math.ceil(pizza.price() * 100) / 100;
-                    if (selectedPizza.equals((price + " - New York Pizza " + pizza.toString()))) {
+                    if (selectedPizza.equals((price + " " + pizza.getClass().getSimpleName() + " - New York Pizza " + pizza.toString()))) {
                         nyPizzas.remove(pizza);
                         refreshOrderList();
                         break;
@@ -254,6 +296,11 @@ public class CurrentOrdersController implements Initializable {
         }
     }
 
+    /**
+     * Retrieves the current order as a list of pizzas.
+     *
+     * @return List of pizzas in the current order.
+     */
     private ArrayList<Pizza> getCurrOrder(){
         return currentOrder.getOrder();
     }

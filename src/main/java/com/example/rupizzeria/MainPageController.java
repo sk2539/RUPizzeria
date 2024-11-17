@@ -15,7 +15,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * This class serves as the controller for the main page of the RU Pizzeria application.
+ * It handles interactions with various UI elements and opens views for different pizza options,
+ * menu, current orders, and placed orders.
+ * @author Nithya Konduru, Dhyanashri Raman
+ */
 public class MainPageController implements Initializable {
+    /**
+     * Opens the Chicago Pizza ordering view.
+     * Loads the Chicago pizza view from FXML and displays it in a new window.
+     */
     @FXML
     private void handleOpenChicagoView() {
         try {
@@ -30,6 +40,10 @@ public class MainPageController implements Initializable {
         }
     }
 
+    /**
+     * Opens the New York Pizza ordering view.
+     * Loads the New York pizza view from FXML and displays it in a new window.
+     */
     @FXML
     private void handleOpenNewYorkView() {
         try {
@@ -44,6 +58,10 @@ public class MainPageController implements Initializable {
         }
     }
 
+    /**
+     * Opens the Current Orders view.
+     * Loads the current orders view from FXML and displays it in a new window.
+     */
     @FXML
     private void handleOpenCurrentOrdersView() {
         try {
@@ -58,6 +76,10 @@ public class MainPageController implements Initializable {
         }
     }
 
+    /**
+     * Opens the Menu view.
+     * Loads the menu view from FXML and displays it in a new window.
+     */
     @FXML
     private void handleOpenMenuView() {
         try {
@@ -72,6 +94,10 @@ public class MainPageController implements Initializable {
         }
     }
 
+    /**
+     * Opens the Orders Placed view.
+     * Loads the orders placed view from FXML and displays it in a new window.
+     */
     @FXML
     private void handleOpenOrdersPlacedView() {
         try {
@@ -104,6 +130,12 @@ public class MainPageController implements Initializable {
     @FXML
     private Rectangle shoppingCartRec;
 
+    /**
+     * Initializes the controller and sets up styles and event handlers for UI elements.
+     *
+     * @param url The location of the FXML file.
+     * @param resourceBundle The resources used for the UI.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         chicagoPizzaButton.setStyle("-fx-background-color: #f4f4f4;");
@@ -139,6 +171,9 @@ public class MainPageController implements Initializable {
         shoppingCart.setOnMouseExited(event -> shoppingCartRec.setVisible(false));
     }
 
+    /**
+     * Handles the click event for the Chicago button and opens the Chicago pizza selection view.
+     */
     @FXML
     private void handleChicagoClick() {
         try {
@@ -153,6 +188,9 @@ public class MainPageController implements Initializable {
         }
     }
 
+    /**
+     * Handles the click event for the New York button and opens the New York pizza selection view.
+     */
     @FXML
     private void handleNYClick() {
         try {
