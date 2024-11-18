@@ -13,7 +13,7 @@ public class BuildYourOwnTest {
         PizzaFactory chicagoPizza = new ChicagoPizza();
         Pizza pizza = chicagoPizza.createBuildYourOwn();
         pizza.setSize(Size.SMALL);
-        assertEquals(8.99, pizza.price(), 0.01);
+        assertEquals(8.99, pizza.price(), 0.001);
     }
 
     @Test
@@ -26,7 +26,7 @@ public class BuildYourOwnTest {
         toppings.add(Topping.MUSHROOM);
         toppings.add(Topping.CHEDDAR);
         pizza.setToppings(toppings);
-        assertEquals(10.99 + (3 * 1.69), pizza.price(), 0.01);
+        assertEquals(10.99 + (3 * 1.69), pizza.price(), 0.001);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class BuildYourOwnTest {
         toppings.add(Topping.SAUSAGE);
         toppings.add(Topping.GREENPEPPER);
         pizza.setToppings(toppings);
-        assertEquals(12.99 + (5 * 1.69), pizza.price(), 0.01);
+        assertEquals(12.99 + (5 * 1.69), pizza.price(), 0.001);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class BuildYourOwnTest {
         toppings.add(Topping.BROCCOLI);
         toppings.add(Topping.JALAPENO);
         pizza.setToppings(toppings);
-        assertEquals(8.99 + (7 * 1.69), pizza.price(), 0.01);
+        assertEquals(8.99 + (7 * 1.69), pizza.price(), 0.001);
     }
     @Test
     public void testPriceMediumPizzaWithOneTopping() {
@@ -75,7 +75,7 @@ public class BuildYourOwnTest {
         ArrayList<Topping> toppings = new ArrayList<>();
         toppings.add(Topping.ONION);
         pizza.setToppings(toppings);
-        assertEquals(10.99 + 1.69, pizza.price(), 0.01);
+        assertEquals(10.99 + 1.69, pizza.price(), 0.001);
     }
 
 }
