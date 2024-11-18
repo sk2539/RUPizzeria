@@ -256,13 +256,13 @@ public class OrdersPlacedController implements Initializable {
                 alert.setTitle("Export Successful!");
                 alert.setHeaderText(null);
                 alert.setContentText("Exported orders can be found here:\n" + file.getAbsolutePath());
-                alert.showAndWait();
+                alert.show();
             } catch (IOException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Export Failed");
                 alert.setHeaderText(null);
                 alert.setContentText("Error exporting orders:\n" + e.getMessage());
-                alert.showAndWait();
+                alert.show();
             }
         }
     }
