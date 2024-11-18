@@ -73,7 +73,7 @@ public class OrdersPlacedController implements Initializable {
 
     /**
      * Configures the columns of the orders table.
-     * Sets up the order number, total price, pizza count, and order details columns with appropriate formatting and styles.
+     * Sets up the order number, total price (subtotal + sales tax), pizza count, and order details columns with appropriate formatting and styles.
      */
     private void setColumns() {
         TableColumn<Order, Integer> orderNumColumn = new TableColumn<>("Order #");
