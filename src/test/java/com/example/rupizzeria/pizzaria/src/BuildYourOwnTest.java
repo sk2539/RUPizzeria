@@ -10,7 +10,7 @@ public class BuildYourOwnTest {
 
     @Test
     public void testSmallPizza() {
-        ChicagoPizza chicagoPizza = new ChicagoPizza();
+        PizzaFactory chicagoPizza = new ChicagoPizza();
         Pizza pizza = chicagoPizza.createBuildYourOwn();
         pizza.setSize(Size.SMALL);
         assertEquals(8.99, pizza.price(), 0.01);
@@ -18,7 +18,7 @@ public class BuildYourOwnTest {
 
     @Test
     public void testThreeToppingsSelectedForMedium() {
-        ChicagoPizza chicagoPizza = new ChicagoPizza();
+        PizzaFactory chicagoPizza = new ChicagoPizza();
         Pizza pizza = chicagoPizza.createBuildYourOwn();
         pizza.setSize(Size.MEDIUM);
         ArrayList<Topping> toppings = new ArrayList<>();
@@ -31,7 +31,7 @@ public class BuildYourOwnTest {
 
     @Test
     public void testFiveToppingSelectForLarge() {
-        NYPizza nyPizza = new NYPizza();
+        PizzaFactory nyPizza = new NYPizza();
         Pizza pizza = nyPizza.createBuildYourOwn();
         pizza.setSize(Size.LARGE);
         ArrayList<Topping> toppings = new ArrayList<>();
@@ -46,14 +46,14 @@ public class BuildYourOwnTest {
 
     @Test
     public void testPriceNoSizeSelected() {
-        NYPizza nyPizza = new NYPizza();
+        PizzaFactory nyPizza = new NYPizza();
         Pizza pizza = nyPizza.createBuildYourOwn();
         assertThrows(NullPointerException.class, pizza::price);
     }
 
     @Test
     public void testPriceSmallPizzaWithMaxToppings() {
-        NYPizza nyPizza = new NYPizza();
+        PizzaFactory nyPizza = new NYPizza();
         Pizza pizza = nyPizza.createBuildYourOwn();
         pizza.setSize(Size.SMALL);
         ArrayList<Topping> toppings = new ArrayList<>();
@@ -69,7 +69,7 @@ public class BuildYourOwnTest {
     }
     @Test
     public void testPriceMediumPizzaWithOneTopping() {
-        ChicagoPizza chicagoPizza = new ChicagoPizza();
+        PizzaFactory chicagoPizza = new ChicagoPizza();
         Pizza pizza = chicagoPizza.createBuildYourOwn();
         pizza.setSize(Size.MEDIUM);
         ArrayList<Topping> toppings = new ArrayList<>();

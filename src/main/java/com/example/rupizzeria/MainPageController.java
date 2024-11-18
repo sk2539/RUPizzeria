@@ -198,7 +198,7 @@ public class MainPageController implements Initializable {
             Scene newScene = new Scene(loader.load());
             Stage newStage = new Stage();
             newStage.setScene(newScene);
-            newStage.setTitle("Select a Chicago Style Pizza");
+            newStage.setTitle("Select a New York Style Pizza");
             newStage.show();
         } catch (Exception e) {
             e.printStackTrace();

@@ -214,7 +214,7 @@ public class ChicagoController implements Initializable {
     @FXML
     private Pizza makePizza() {
         Pizza newPizza = null;
-        ChicagoPizza chicagoPizza = new ChicagoPizza();
+        PizzaFactory chicagoPizza = new ChicagoPizza();
         if (chooseType.getValue() != null) {
             updateCrustType();
             if (chooseType.getValue().equals("Deluxe")) {
@@ -261,7 +261,7 @@ public class ChicagoController implements Initializable {
      * @return The updated Pizza object reflecting the user's choices.
      */
     @FXML
-    private Pizza makePizzaHelper(Pizza newPizza, ChicagoPizza cpizza) {
+    private Pizza makePizzaHelper(Pizza newPizza, PizzaFactory cpizza) {
         availableToppings.setDisable(true);
         selectedToppings.setDisable(false);
         leftArrowButton.setDisable(true);
@@ -515,7 +515,7 @@ public class ChicagoController implements Initializable {
     @FXML
     private void updateCrustType() {
         Pizza newPizza = null;
-        ChicagoPizza cpizza = new ChicagoPizza();
+        PizzaFactory cpizza = new ChicagoPizza();
         if (chooseType.getValue().equals("Deluxe")) {
             newPizza = cpizza.createDeluxe();
             crustTypeField.setText(newPizza.getCrust().toString());

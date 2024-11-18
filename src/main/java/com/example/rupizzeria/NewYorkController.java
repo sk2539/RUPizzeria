@@ -212,7 +212,7 @@ public class NewYorkController implements Initializable {
     @FXML
     private Pizza makePizza() {
         Pizza newPizza = null;
-        NYPizza nyPizza = new NYPizza();
+        PizzaFactory nyPizza = new NYPizza();
         if (chooseType.getValue() != null) {
             updateCrustType();
             if (chooseType.getValue().equals("Deluxe")) {
@@ -258,7 +258,7 @@ public class NewYorkController implements Initializable {
      * @return The updated Pizza object reflecting the user's choices.
      */
     @FXML
-    private Pizza makePizzaHelper(Pizza newPizza, NYPizza nypizza) {
+    private Pizza makePizzaHelper(Pizza newPizza, PizzaFactory nypizza) {
         availableToppings.setDisable(true);
         selectedToppings.setDisable(false);
         leftArrowButton.setDisable(true);
@@ -511,7 +511,7 @@ public class NewYorkController implements Initializable {
     @FXML
     private void updateCrustType() {
         Pizza newPizza = null;
-        NYPizza cpizza = new NYPizza();
+        PizzaFactory cpizza = new NYPizza();
         if (chooseType.getValue().equals("Deluxe")) {
             newPizza = cpizza.createDeluxe();
             crustTypeField.setText(newPizza.getCrust().toString());
