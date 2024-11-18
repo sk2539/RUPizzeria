@@ -184,19 +184,16 @@ public class CurrentOrdersController implements Initializable {
      * Updates the pizza list and pricing details accordingly.
      */
     private void addAllPizzas() {
-        pizzaList.clear(); // Clear the UI list
-        currentOrder.getOrder().clear(); // Clear the current order
+        pizzaList.clear();
+        currentOrder.getOrder().clear();
         currentPrice = 0.0;
-
-        // Iterate through the unified pizza list
         for (Pizza pizza : CurrentOrdersController.getUnifiedPizzaList()) {
             if (pizza != null && pizza.getSize() != null) {
                 double price = pizza.price();
-                // Add pizza details to the UI list
                 pizzaList.add(String.format("%.2f %s - %s", price, pizza.getClass().getSimpleName(), pizza.toString()));
-                pizzaListView.setItems(pizzaList); // Update the ListView
-                currentOrder.addPizza(pizza); // Add to the current order
-                currentPrice += price; // Update the total price
+                pizzaListView.setItems(pizzaList);
+                currentOrder.addPizza(pizza);
+                currentPrice += price;
             }
         }
         subtotal.setText(String.format("%.2f", currentPrice));
@@ -211,17 +208,10 @@ public class CurrentOrdersController implements Initializable {
      */
     @FXML
     private void onClearOrderClick() {
-        // Clear the unified pizza list
         CurrentOrdersController.getUnifiedPizzaList().clear();
-
-        // Clear the current order in the application
         currentOrder.getOrder().clear();
-
-        // Clear the UI pizza list
         pizzaList.clear();
         pizzaListView.setItems(pizzaList);
-
-        // Reset current price and UI fields
         currentPrice = 0.0;
         subtotal.setText("");
         salesTax.setText("");
@@ -234,10 +224,7 @@ public class CurrentOrdersController implements Initializable {
      */
     @FXML
     private void onPlaceOrderClick() {
-        // Retrieve the unified pizza list
         ObservableList<Pizza> unifiedPizzaList = CurrentOrdersController.getUnifiedPizzaList();
-
-        // Check if the list is empty
         if (unifiedPizzaList.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No Orders");
@@ -246,23 +233,11 @@ public class CurrentOrdersController implements Initializable {
             alert.showAndWait();
             return;
         }
-
-        // Increment the order number
         orderNumber += 1;
-
-        // Create a new order with the unified pizza list
         Order newOrder = new Order(orderNumber, new ArrayList<>(unifiedPizzaList));
-
-        // Add the order to the OrdersPlacedController
         OrdersPlacedController.addOrder(newOrder);
-
-        // Clear the current order
         onClearOrderClick();
-
-        // Reset the current order with the updated order number
         currentOrder = new Order(orderNumber, new ArrayList<>());
-
-        // Update the order number field
         orderNumberField.setText(Integer.toString(orderNumber));
     }
 
@@ -282,14 +257,15 @@ public class CurrentOrdersController implements Initializable {
     }
 
     /**
-     * Retrieves the current order as a list of pizzas.
+     * Provides access to the unified list of pizzas for the current order.
+     * This list consolidates all pizzas added from various controllers (e.g., Chicago and New York),
+     * maintaining the order in which they were added.
      *
-     * @return List of pizzas in the current order.
+     * The unified pizza list is used throughout the application to manage the current order,
+     * including displaying pizzas, calculating totals, and clearing or placing orders.
+     *
+     * @return An ObservableList containing all pizzas in the current order.
      */
-    private ArrayList<Pizza> getCurrOrder(){
-        return currentOrder.getOrder();
-    }
-
     public static ObservableList<Pizza> getUnifiedPizzaList() {
         return unifiedPizzaList;
     }
