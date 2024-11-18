@@ -216,17 +216,17 @@ public class NewYorkController implements Initializable {
         if (chooseType.getValue() != null) {
             updateCrustType();
             if (chooseType.getValue().equals("Deluxe")) {
-                Image image = new Image("file:src/main/resources/images/chicagodeluxepizza.jpg");
+                Image image = new Image("file:src/main/resources/images/nydeluxe.jpg");
                 dynamicImage.setImage(image);
                 return makePizzaHelper(newPizza, nyPizza);
             }
             if (chooseType.getValue().equals("BBQ Chicken")) {
-                Image image = new Image("file:src/main/resources/images/chicagobbqchicken.jpg");
+                Image image = new Image("file:src/main/resources/images/nybbqchicken.jpg");
                 dynamicImage.setImage(image);
                 return makePizzaHelper(newPizza, nyPizza);
             }
             if (chooseType.getValue().equals("Meatzza")) {
-                Image image = new Image("file:src/main/resources/images/chicagomeatzza.jpg");
+                Image image = new Image("file:src/main/resources/images/nymeattza.jpg");
                 dynamicImage.setImage(image);
                 return makePizzaHelper(newPizza, nyPizza);
             }
@@ -250,11 +250,11 @@ public class NewYorkController implements Initializable {
     }
 
     /**
-     * Creates and returns a pizza based on the selected type, size, and available Chicago-style options.
+     * Creates and returns a pizza based on the selected type, size, and available NY-style options.
      * Adjusts UI elements such as toppings and arrow buttons based on the chosen pizza type.
      *
      * @param newPizza An existing Pizza object to be updated.
-     * @param nypizza   A ChicagoPizza object used to create specific pizza types.
+     * @param nypizza   A NYPizza object used to create specific pizza types.
      * @return The updated Pizza object reflecting the user's choices.
      */
     @FXML
@@ -506,12 +506,12 @@ public class NewYorkController implements Initializable {
 
     /**
      * Updates the crust type displayed on the interface based on the selected pizza type.
-     * Fetches the appropriate Chicago pizza object and adjusts the crust type field accordingly.
+     * Fetches the appropriate New York pizza object and adjusts the crust type field accordingly.
      */
     @FXML
     private void updateCrustType() {
         Pizza newPizza = null;
-        ChicagoPizza cpizza = new ChicagoPizza();
+        NYPizza cpizza = new NYPizza();
         if (chooseType.getValue().equals("Deluxe")) {
             newPizza = cpizza.createDeluxe();
             crustTypeField.setText(newPizza.getCrust().toString());
@@ -538,7 +538,7 @@ public class NewYorkController implements Initializable {
     }
 
     /**
-     * Adds the currently selected pizza to the Chicago pizzas order list.
+     * Adds the currently selected pizza to the New York pizzas order list.
      * Validates the pizza size and type before adding and displays a confirmation message.
      */
     @FXML
@@ -560,7 +560,7 @@ public class NewYorkController implements Initializable {
                 Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
                 confirmationAlert.setTitle("Order Confirmation");
                 confirmationAlert.setHeaderText(null);
-                confirmationAlert.setContentText("Your " + getSizeFromToggleGroup().toString() + " " + chooseType.getValue() + " Chicago pizza has been successfully added to your order!");
+                confirmationAlert.setContentText("Your " + getSizeFromToggleGroup().toString() + " " + chooseType.getValue() + " New York pizza has been successfully added to your order!");
                 confirmationAlert.showAndWait();
             }
         }
