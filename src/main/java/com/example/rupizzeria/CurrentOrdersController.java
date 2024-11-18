@@ -86,7 +86,7 @@ public class CurrentOrdersController implements Initializable {
      * Calculates the subtotal, sales tax, and total price including tax.
      */
     private void updatePricing() {
-        currentPrice = chicagoPizzas.stream().mapToDouble(Pizza::price).sum() + nyPizzas.stream().mapToDouble(Pizza::price).sum();
+        currentPrice = unifiedPizzaList.stream().mapToDouble(Pizza::price).sum();
         subtotal.setText(String.format("%.2f", currentPrice));
         double salesTaxAmount = Math.ceil(currentPrice * SALES_TAX_RATE * 100) / 100;
         salesTax.setText(String.format("%.2f", salesTaxAmount));
