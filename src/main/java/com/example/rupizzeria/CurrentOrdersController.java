@@ -49,6 +49,9 @@ public class CurrentOrdersController implements Initializable {
 
     private static ObservableList<Pizza> unifiedPizzaList = FXCollections.observableArrayList();
 
+    @FXML
+    private TextField totalNumberOfPizzas;
+
     /**
      * Initializes the controller when the corresponding FXML is loaded.
      * Sets up event listeners, initializes UI components, and populates the pizza list.
@@ -65,6 +68,7 @@ public class CurrentOrdersController implements Initializable {
         pizzaListView.setItems(pizzaList);
         unifiedPizzaList.addListener((ListChangeListener<Pizza>) change -> refreshOrderList());
         orderNumberField.setText(String.valueOf(orderNumber));
+        totalNumberOfPizzas.setEditable(false);
     }
 
     /**
@@ -77,6 +81,7 @@ public class CurrentOrdersController implements Initializable {
             String pizzaDescription = String.format("%.2f %s - %s", pizza.price(), pizza.getClass().getSimpleName(), pizza.toString());
             pizzaList.add(pizzaDescription);
         }
+        totalNumberOfPizzas.setText(String.valueOf(unifiedPizzaList.size()));
         pizzaListView.setItems(pizzaList);
         updatePricing();
     }
@@ -196,6 +201,7 @@ public class CurrentOrdersController implements Initializable {
                 currentPrice += price;
             }
         }
+        totalNumberOfPizzas.setText(String.valueOf(unifiedPizzaList.size()));
         subtotal.setText(String.format("%.2f", currentPrice));
         double salesTaxAmount = Math.ceil(currentPrice * SALES_TAX_RATE * 100) / 100;
         salesTax.setText(String.format("%.2f", salesTaxAmount));
@@ -252,6 +258,7 @@ public class CurrentOrdersController implements Initializable {
                 String pizzaDescription = String.format("%.2f %s - %s", pizza.price(), pizza.getClass().getSimpleName(), pizza.toString());
                 return pizzaDescription.equals(selectedPizza);
             });
+            totalNumberOfPizzas.setText(String.valueOf(unifiedPizzaList.size()));
             refreshOrderList();
         }
     }
