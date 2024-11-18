@@ -177,6 +177,7 @@ public class OrdersPlacedController implements Initializable {
 
     /**
      * Displays the details of the selected order in the text area.
+     * Includes the price of each pizza in the order.
      * If no order is selected, shows a warning dialog.
      */
     @FXML
@@ -199,7 +200,10 @@ public class OrdersPlacedController implements Initializable {
             orderDetails.append("  No pizzas in this order.\n");
         } else {
             for (Pizza pizza : selectedOrder.getOrder()) {
-                orderDetails.append("  - ").append(pizza.getClass().getSimpleName()).append(" - ").append(pizza.toString()).append("\n");
+                orderDetails.append("  - ")
+                        .append(pizza.getClass().getSimpleName())
+                        .append(" - ").append(pizza.toString())
+                        .append(" ($").append(String.format("%.2f", pizza.price())).append(")\n");
             }
         }
         orderDetailsTextArea.setText(orderDetails.toString());
