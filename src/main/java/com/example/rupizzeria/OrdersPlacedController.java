@@ -82,8 +82,10 @@ public class OrdersPlacedController implements Initializable {
         TableColumn<Order, Double> totalColumn = new TableColumn<>("Total ($)");
         totalColumn.setCellValueFactory(data -> {
             Order order = data.getValue();
-            double total = order.getOrder().stream().mapToDouble(Pizza::price).sum();
-            return new SimpleDoubleProperty(total).asObject();
+            double subtotal = order.getOrder().stream().mapToDouble(Pizza::price).sum();
+            double totalWithTax = subtotal * 1.06625;
+            totalWithTax = Math.ceil(totalWithTax * 100.0) / 100.0;
+            return new SimpleDoubleProperty(totalWithTax).asObject();
         });
         totalColumn.setCellFactory(tc -> new TableCell<Order, Double>() {
             @Override
