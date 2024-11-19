@@ -5,7 +5,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
-
 public class BuildYourOwnTest {
 
     @Test
@@ -77,5 +76,4 @@ public class BuildYourOwnTest {
         pizza.setToppings(toppings);
         assertEquals(10.99 + 1.69, pizza.price(), 0.001);
     }
-
 }
