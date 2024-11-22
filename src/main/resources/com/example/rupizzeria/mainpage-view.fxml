@@ -38,17 +38,17 @@
       </Button>
       <Button fx:id="chicagoPizzaButton" layoutX="364.0" layoutY="336.0" mnemonicParsing="false" onAction="#handleOpenChicagoView" text="Chicago Pizza" />
       <Button fx:id="nyPizzaButton" layoutX="657.0" layoutY="336.0" mnemonicParsing="false" onAction="#handleOpenNewYorkView" text="New York Pizza" />
-      <ImageView fitHeight="414.0" fitWidth="349.0" layoutX="13.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="300.0" fitWidth="233.0" layoutX="13.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../images/papapizzeria_processed.jpg" />
+            <Image url="@../../../images/papapizzeria_processed_processed.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="chicagoPizzaImage" fitHeight="221.0" fitWidth="233.0" layoutX="294.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" onMousePressed="#handleChicagoClick">
+      <ImageView fx:id="chicagoPizzaImage" fitHeight="221.0" fitWidth="233.0" layoutX="294.0" layoutY="96.0" onMousePressed="#handleChicagoClick" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/chicagopizza.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="nyPizzaImage" fitHeight="221.0" fitWidth="224.0" layoutX="595.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" onMousePressed="#handleNYClick">
+      <ImageView fx:id="nyPizzaImage" fitHeight="221.0" fitWidth="224.0" layoutX="595.0" layoutY="96.0" onMousePressed="#handleNYClick" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/nypizza.jpg" />
          </image>
